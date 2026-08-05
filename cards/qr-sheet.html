@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Key2Nest — QR Codes for Business Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px 32px 56px; background: #FFFFFF; color: #0B1A2E;
+      font-family: "Source Sans 3", system-ui, sans-serif; }
+    .sheet-head { text-align: center; margin: 0 auto 34px; max-width: 900px; }
+    .sheet-head img { height: 78px; width: auto; }
+    .sheet-head h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 500;
+      font-size: 26px; letter-spacing: -0.02em; margin: 14px 0 4px; }
+    .sheet-head p { margin: 0; color: #5b6675; font-size: 13.5px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+      max-width: 900px; margin: 0 auto; }
+    .qr-card { margin: 0; border: 1px solid rgba(139,96,10,0.28); border-radius: 16px;
+      padding: 20px 16px; text-align: center; display: flex; flex-direction: column;
+      align-items: center; gap: 12px; break-inside: avoid; }
+    .qr-img { width: 150px; height: 150px; }
+    .qr-img svg { width: 100%; height: 100%; display: block; }
+    figcaption { display: flex; flex-direction: column; gap: 3px; }
+    .qr-name { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 16px; }
+    .qr-title { font-size: 11px; color: #6b7280; letter-spacing: 0.02em; }
+    .qr-url { font-family: ui-monospace, Menlo, monospace; font-size: 12px;
+      color: #8B600A; margin-top: 4px; word-break: break-all; }
+    @media (max-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .grid { grid-template-columns: 1fr; } }
+    @media print { body { padding: 16px; } .grid { gap: 14px; } a { color: inherit; } }
+  </style>
+</head>
+<body>
+  <header class="sheet-head">
+    <img src="./assets/Logo_LV-1x.png" srcset="./assets/Logo_LV-1x.png 1x, ./assets/Logo_LV-2x.png 2x" alt="Key2Nest Home Loans" />
+    <h1>Digital Business Card — QR Codes</h1>
+    <p>Scan to open each team member's card. Print-ready vectors: <code>qr/&lt;name&gt;.svg</code></p>
+  </header>
+  <div class="grid">
+    <figure class="qr-card">
+      <div class="qr-img"><svg xmlns="http://www.w3.org/2000/svg" width="410" height="410" class="segno"><path transform="scale(10)" class="qrline" stroke="#0b1a2e" d="M2 2.5h7m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m2 0h1m1 0h7m-37 1h1m5 0h1m1 0h2m2 0h7m1 0h4m2 0h3m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m1 0h3m3 0h1m2 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h2m1 0h7m1 0h2m3 0h1m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h2m2 0h1m3 0h2m1 0h3m5 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m3 0h1m2 0h1m4 0h1m1 0h3m2 0h2m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h4m1 0h1m3 0h1m1 0h1m3 0h1m4 0h1m-27 1h3m1 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m1 0h3m4 0h3m2 0h3m-37 1h1m3 0h2m1 0h2m4 0h8m2 0h3m1 0h1m1 0h1m1 0h1m2 0h1m-33 1h2m2 0h1m1 0h1m3 0h1m1 0h4m1 0h1m1 0h1m3 0h4m1 0h2m3 0h2m-36 1h2m5 0h1m1 0h1m1 0h2m2 0h2m3 0h3m2 0h1m3 0h1m1 0h2m1 0h1m-34 1h2m1 0h3m1 0h2m2 0h2m2 0h1m4 0h5m2 0h2m1 0h4m-33 1h2m3 0h2m2 0h2m4 0h1m4 0h3m2 0h2m3 0h3m-35 1h1m1 0h6m2 0h1m1 0h1m2 0h1m2 0h2m2 0h1m2 0h3m1 0h4m2 0h1m-37 1h1m1 0h1m4 0h1m1 0h2m1 0h2m2 0h3m1 0h2m1 0h1m2 0h1m1 0h2m5 0h2m-35 1h6m2 0h5m2 0h2m1 0h2m1 0h1m1 0h2m2 0h4m1 0h1m-34 1h5m3 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h3m2 0h2m1 0h1m1 0h1m-34 1h2m1 0h1m1 0h2m1 0h2m2 0h1m2 0h1m2 0h1m1 0h1m3 0h4m1 0h1m1 0h1m1 0h4m-37 1h1m4 0h1m1 0h1m1 0h1m2 0h3m1 0h3m1 0h1m5 0h2m3 0h1m4 0h1m-37 1h1m2 0h7m1 0h1m2 0h2m1 0h1m1 0h4m1 0h3m2 0h6m-33 1h2m1 0h1m4 0h2m1 0h2m3 0h2m1 0h6m4 0h1m1 0h1m-34 1h1m1 0h2m2 0h5m1 0h4m1 0h1m2 0h8m1 0h2m4 0h2m-36 1h2m4 0h3m1 0h1m3 0h3m1 0h1m2 0h4m5 0h1m3 0h2m-36 1h4m1 0h1m1 0h5m1 0h1m7 0h1m1 0h1m1 0h1m2 0h2m1 0h3m1 0h1m-37 1h1m4 0h1m2 0h2m1 0h2m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m-35 1h1m5 0h1m3 0h6m1 0h1m1 0h3m1 0h3m1 0h2m1 0h1m1 0h1m1 0h3m-37 1h1m2 0h2m4 0h1m2 0h6m1 0h2m1 0h2m2 0h4m1 0h1m4 0h1m-37 1h1m5 0h4m2 0h2m1 0h3m2 0h13m1 0h2m-28 1h2m1 0h2m1 0h2m1 0h1m4 0h2m3 0h2m3 0h1m2 0h1m-36 1h7m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m3 0h2m1 0h2m4 0h1m2 0h1m3 0h1m1 0h1m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h2m7 0h3m2 0h8m1 0h3m-37 1h1m1 0h3m1 0h1m1 0h3m3 0h1m3 0h2m2 0h1m1 0h1m3 0h1m1 0h3m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m3 0h4m4 0h2m1 0h1m1 0h1m1 0h2m1 0h1m-37 1h1m5 0h1m2 0h1m2 0h1m1 0h2m2 0h2m1 0h1m2 0h1m2 0h4m1 0h1m3 0h1m-37 1h7m2 0h3m1 0h5m2 0h2m2 0h3m3 0h7"/></svg>
+</div>
+      <figcaption>
+        <span class="qr-name">Sai Vivek Boddu</span>
+        <span class="qr-title">Co-Founder / Sr. Mortgage Loan Originator</span>
+        <span class="qr-url">https://key2nesthomeloans.com/team/vivek</span>
+      </figcaption>
+    </figure>
+    <figure class="qr-card">
+      <div class="qr-img"><svg xmlns="http://www.w3.org/2000/svg" width="410" height="410" class="segno"><path transform="scale(10)" class="qrline" stroke="#0b1a2e" d="M2 2.5h7m1 0h1m3 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h3m2 0h7m-37 1h1m5 0h1m1 0h3m2 0h3m2 0h2m1 0h1m2 0h1m1 0h2m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h4m2 0h1m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m4 0h2m1 0h2m1 0h2m1 0h2m5 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m6 0h2m1 0h2m3 0h2m2 0h2m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-28 1h1m2 0h1m2 0h1m2 0h2m2 0h1m-20 1h1m2 0h1m2 0h2m1 0h2m1 0h1m4 0h4m3 0h2m2 0h3m1 0h2m-34 1h2m3 0h1m2 0h2m2 0h1m4 0h2m6 0h1m1 0h1m3 0h3m-37 1h2m1 0h1m2 0h2m1 0h1m2 0h3m1 0h2m2 0h2m6 0h1m1 0h1m1 0h2m1 0h2m-37 1h3m4 0h1m2 0h1m2 0h1m2 0h6m1 0h1m1 0h1m1 0h2m2 0h3m1 0h2m-37 1h2m2 0h5m3 0h1m2 0h3m5 0h3m2 0h3m4 0h1m-36 1h1m2 0h3m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m5 0h1m4 0h1m2 0h1m2 0h1m-36 1h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h4m3 0h1m2 0h4m1 0h3m-36 1h2m1 0h1m2 0h1m1 0h2m1 0h1m3 0h1m1 0h2m1 0h1m2 0h3m1 0h1m1 0h2m-31 1h1m3 0h2m2 0h1m2 0h1m2 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h2m2 0h2m-35 1h1m2 0h1m3 0h4m2 0h1m3 0h1m2 0h2m1 0h1m2 0h1m1 0h3m1 0h2m2 0h1m-37 1h3m1 0h4m1 0h1m1 0h1m2 0h1m1 0h7m1 0h2m2 0h2m1 0h2m2 0h2m-30 1h2m2 0h1m1 0h2m2 0h1m2 0h1m1 0h3m1 0h6m2 0h1m-35 1h1m4 0h6m3 0h1m1 0h5m2 0h1m1 0h4m1 0h3m2 0h1m-35 1h1m1 0h1m3 0h1m4 0h1m1 0h5m2 0h2m1 0h3m2 0h2m2 0h1m1 0h2m-36 1h1m4 0h1m3 0h1m1 0h6m1 0h1m2 0h2m1 0h2m2 0h5m1 0h2m-36 1h1m7 0h1m1 0h2m3 0h3m1 0h3m2 0h2m3 0h1m1 0h1m2 0h1m-36 1h1m1 0h2m2 0h1m4 0h3m2 0h1m3 0h1m1 0h2m2 0h5m5 0h1m-34 1h2m3 0h3m3 0h2m1 0h5m1 0h1m1 0h1m3 0h3m3 0h2m-37 1h1m1 0h1m1 0h3m2 0h1m2 0h2m5 0h5m1 0h1m3 0h2m1 0h2m2 0h1m-36 1h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h1m2 0h1m-36 1h2m1 0h1m2 0h1m1 0h1m3 0h1m1 0h4m1 0h2m3 0h1m3 0h5m1 0h2m-28 1h2m1 0h1m1 0h3m1 0h2m3 0h7m3 0h1m2 0h2m-37 1h7m4 0h1m3 0h1m1 0h1m1 0h2m1 0h1m4 0h2m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m5 0h3m1 0h2m1 0h2m2 0h2m1 0h1m1 0h1m3 0h1m1 0h1m-35 1h1m1 0h3m1 0h1m8 0h3m1 0h2m2 0h4m1 0h6m2 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m3 0h2m3 0h1m1 0h1m1 0h4m2 0h2m2 0h1m1 0h3m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h3m3 0h1m2 0h1m1 0h1m1 0h1m-37 1h1m5 0h1m2 0h1m2 0h2m1 0h1m2 0h4m1 0h7m1 0h1m-32 1h7m2 0h1m3 0h1m2 0h4m2 0h4m1 0h2m1 0h2m3 0h2"/></svg>
+</div>
+      <figcaption>
+        <span class="qr-name">Naveen Cheedhalla</span>
+        <span class="qr-title">Co-Founder / Sr. Mortgage Loan Originator</span>
+        <span class="qr-url">https://key2nesthomeloans.com/team/naveen</span>
+      </figcaption>
+    </figure>
+    <figure class="qr-card">
+      <div class="qr-img"><svg xmlns="http://www.w3.org/2000/svg" width="410" height="410" class="segno"><path transform="scale(10)" class="qrline" stroke="#0b1a2e" d="M2 2.5h7m3 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h2m2 0h3m1 0h7m-37 1h1m5 0h1m1 0h2m2 0h1m3 0h1m2 0h1m2 0h2m1 0h1m2 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m6 0h1m2 0h1m1 0h2m3 0h2m1 0h1m3 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h3m1 0h3m4 0h4m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m4 0h2m1 0h2m2 0h1m3 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h2m2 0h1m6 0h1m1 0h2m1 0h3m1 0h1m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h2m2 0h1m3 0h1m1 0h2m2 0h2m-20 1h4m1 0h1m1 0h4m1 0h2m1 0h1m2 0h2m3 0h1m2 0h2m3 0h1m-36 1h6m3 0h1m3 0h6m4 0h1m2 0h3m3 0h3m-35 1h2m2 0h3m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h7m2 0h1m1 0h1m-32 1h3m2 0h1m2 0h1m3 0h1m2 0h1m4 0h1m2 0h2m1 0h1m3 0h2m1 0h1m-37 1h3m2 0h2m1 0h1m1 0h1m2 0h2m2 0h1m1 0h4m1 0h1m4 0h3m2 0h2m-35 1h2m5 0h1m5 0h2m2 0h4m1 0h2m1 0h4m1 0h2m1 0h2m-36 1h2m1 0h1m2 0h1m2 0h5m3 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h5m-34 1h1m1 0h1m3 0h3m2 0h1m7 0h2m1 0h1m1 0h1m3 0h1m3 0h1m-34 1h1m3 0h2m1 0h2m1 0h2m2 0h1m1 0h4m2 0h1m3 0h1m1 0h2m2 0h2m-26 1h3m1 0h1m1 0h1m1 0h4m2 0h2m1 0h4m2 0h1m-32 1h1m1 0h2m1 0h1m1 0h4m3 0h2m1 0h1m1 0h1m1 0h2m1 0h4m1 0h2m1 0h1m-26 1h1m1 0h5m3 0h3m1 0h3m1 0h6m2 0h1m1 0h1m-37 1h8m2 0h1m2 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2m3 0h1m-35 1h3m4 0h3m1 0h1m4 0h1m3 0h3m1 0h2m1 0h1m4 0h1m-33 1h1m3 0h6m1 0h1m1 0h2m3 0h1m1 0h1m1 0h1m4 0h2m5 0h1m-33 1h1m1 0h2m1 0h4m1 0h5m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m2 0h1m-35 1h1m1 0h1m1 0h1m1 0h2m2 0h3m6 0h2m1 0h3m2 0h1m1 0h2m3 0h1m1 0h1m-37 1h4m1 0h1m1 0h1m3 0h2m2 0h1m6 0h1m1 0h1m2 0h2m3 0h3m-31 1h3m8 0h2m1 0h4m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m-31 1h1m2 0h1m3 0h3m2 0h1m1 0h1m1 0h6m2 0h2m2 0h1m3 0h2m-36 1h2m1 0h1m2 0h1m1 0h1m3 0h3m1 0h2m1 0h1m2 0h1m1 0h1m3 0h8m-28 1h2m1 0h4m4 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h2m1 0h1m-36 1h7m1 0h2m4 0h1m2 0h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h3m-35 1h1m5 0h1m1 0h7m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h1m1 0h6m1 0h1m1 0h1m2 0h1m1 0h1m3 0h9m-37 1h1m1 0h3m1 0h1m2 0h5m1 0h1m1 0h1m2 0h3m1 0h5m1 0h1m2 0h2m-35 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m2 0h3m1 0h2m1 0h1m1 0h1m-36 1h1m5 0h1m2 0h4m1 0h4m1 0h4m4 0h1m4 0h1m1 0h2m-36 1h7m9 0h1m2 0h1m4 0h1m2 0h1m2 0h1m3 0h3"/></svg>
+</div>
+      <figcaption>
+        <span class="qr-name">Sreedhar Seelam</span>
+        <span class="qr-title">Co-Founder / Sr. Mortgage Loan Originator</span>
+        <span class="qr-url">https://key2nesthomeloans.com/team/sreedhar</span>
+      </figcaption>
+    </figure>
+    <figure class="qr-card">
+      <div class="qr-img"><svg xmlns="http://www.w3.org/2000/svg" width="410" height="410" class="segno"><path transform="scale(10)" class="qrline" stroke="#0b1a2e" d="M2 2.5h7m1 0h5m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m2 0h1m1 0h7m-37 1h1m5 0h1m1 0h1m4 0h4m1 0h6m2 0h3m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m3 0h2m4 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h7m4 0h2m2 0h2m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h2m3 0h1m2 0h2m1 0h4m4 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m3 0h1m2 0h2m3 0h1m1 0h1m3 0h3m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h4m1 0h5m1 0h1m1 0h1m4 0h1m1 0h1m-27 1h3m1 0h1m1 0h1m2 0h4m2 0h1m2 0h3m1 0h3m2 0h3m2 0h3m-37 1h2m1 0h3m1 0h2m8 0h4m2 0h3m2 0h1m2 0h1m2 0h1m-35 1h2m1 0h1m2 0h1m1 0h1m3 0h6m1 0h1m2 0h1m1 0h4m2 0h2m3 0h2m-37 1h2m6 0h1m1 0h1m1 0h6m5 0h1m2 0h2m2 0h1m2 0h1m1 0h1m-35 1h1m1 0h1m1 0h3m1 0h2m1 0h2m1 0h1m1 0h1m2 0h7m2 0h2m1 0h4m-33 1h1m7 0h3m4 0h2m2 0h4m2 0h2m3 0h3m-35 1h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h3m4 0h1m2 0h3m1 0h4m2 0h1m-37 1h1m1 0h1m1 0h1m2 0h2m1 0h1m2 0h1m2 0h2m2 0h2m1 0h1m2 0h1m1 0h2m5 0h2m-35 1h8m3 0h2m3 0h4m1 0h1m1 0h2m2 0h4m1 0h1m-34 1h5m2 0h1m1 0h3m1 0h1m2 0h5m1 0h3m2 0h2m1 0h1m1 0h1m-34 1h2m1 0h1m1 0h3m2 0h1m1 0h1m2 0h1m4 0h1m3 0h4m1 0h1m1 0h1m1 0h4m-37 1h1m4 0h1m2 0h4m1 0h2m1 0h1m2 0h1m6 0h2m3 0h1m-32 1h1m3 0h1m1 0h1m1 0h1m1 0h1m3 0h3m1 0h5m2 0h2m2 0h6m-33 1h2m6 0h2m2 0h1m3 0h2m2 0h1m2 0h2m4 0h1m1 0h1m-34 1h1m5 0h5m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2m3 0h1m7 0h2m-35 1h1m4 0h3m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m3 0h2m-36 1h4m1 0h1m1 0h6m7 0h2m1 0h1m4 0h2m1 0h3m1 0h1m-37 1h3m2 0h1m2 0h2m1 0h4m1 0h1m2 0h2m1 0h1m2 0h1m2 0h2m1 0h1m2 0h1m-35 1h1m5 0h1m3 0h3m1 0h2m1 0h1m1 0h2m1 0h4m1 0h2m1 0h1m3 0h3m-37 1h1m1 0h1m1 0h1m4 0h1m2 0h2m2 0h2m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m3 0h1m-37 1h1m5 0h4m2 0h1m2 0h3m3 0h1m1 0h13m-28 1h1m2 0h2m1 0h2m1 0h1m1 0h1m3 0h1m3 0h2m3 0h1m2 0h1m-36 1h7m3 0h1m3 0h1m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m2 0h1m3 0h2m3 0h1m3 0h1m3 0h1m1 0h1m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m5 0h3m1 0h2m1 0h9m1 0h3m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m4 0h2m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m2 0h3m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m-37 1h1m5 0h1m2 0h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m2 0h4m1 0h1m3 0h1m-37 1h7m6 0h3m2 0h4m2 0h3m3 0h7"/></svg>
+</div>
+      <figcaption>
+        <span class="qr-name">Sreelakshmi Jasti</span>
+        <span class="qr-title">Co-Founder / Sr. Mortgage Loan Originator</span>
+        <span class="qr-url">https://key2nesthomeloans.com/team/lakshmi</span>
+      </figcaption>
+    </figure>
+    <figure class="qr-card">
+      <div class="qr-img"><svg xmlns="http://www.w3.org/2000/svg" width="410" height="410" class="segno"><path transform="scale(10)" class="qrline" stroke="#0b1a2e" d="M2 2.5h7m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h3m1 0h1m2 0h1m1 0h7m-37 1h1m5 0h1m1 0h1m1 0h2m1 0h4m4 0h3m2 0h3m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m3 0h1m4 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h5m1 0h1m2 0h2m2 0h2m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h2m2 0h4m1 0h2m4 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h1m3 0h2m2 0h1m3 0h2m1 0h6m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h4m2 0h4m1 0h1m1 0h1m2 0h2m2 0h1m-27 1h3m1 0h1m1 0h1m2 0h2m1 0h1m2 0h1m2 0h1m1 0h3m1 0h1m1 0h4m2 0h3m-37 1h1m2 0h3m1 0h2m6 0h1m1 0h5m2 0h2m1 0h1m2 0h1m3 0h1m-34 1h2m3 0h1m1 0h1m3 0h1m2 0h1m1 0h1m1 0h1m5 0h4m1 0h1m1 0h1m2 0h2m-36 1h1m1 0h1m4 0h1m1 0h1m1 0h2m3 0h1m3 0h1m2 0h1m1 0h2m2 0h1m1 0h2m1 0h1m-36 1h1m2 0h1m1 0h6m1 0h2m1 0h1m1 0h1m6 0h4m1 0h2m1 0h4m-35 1h1m1 0h2m2 0h1m3 0h1m1 0h2m3 0h3m2 0h3m2 0h2m3 0h3m-35 1h1m1 0h4m1 0h2m2 0h2m2 0h1m6 0h1m2 0h3m1 0h4m2 0h1m-37 1h1m1 0h1m1 0h1m2 0h2m4 0h1m2 0h2m1 0h3m1 0h1m2 0h1m1 0h2m5 0h2m-35 1h3m1 0h1m3 0h2m1 0h2m3 0h2m1 0h1m1 0h1m1 0h2m2 0h4m1 0h1m-34 1h3m1 0h1m1 0h3m2 0h1m1 0h1m3 0h1m2 0h1m1 0h3m2 0h2m1 0h1m1 0h1m-34 1h2m1 0h1m1 0h3m2 0h3m2 0h1m1 0h1m1 0h1m4 0h4m1 0h1m1 0h1m1 0h4m-37 1h1m6 0h1m1 0h3m1 0h2m1 0h2m1 0h2m5 0h2m3 0h1m3 0h2m-37 1h1m2 0h1m1 0h6m3 0h3m1 0h1m1 0h3m1 0h3m2 0h8m-35 1h1m2 0h1m5 0h1m1 0h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m4 0h1m1 0h1m-34 1h3m3 0h5m1 0h4m1 0h1m2 0h3m4 0h1m2 0h1m4 0h2m-37 1h1m1 0h2m3 0h3m1 0h1m5 0h1m1 0h1m3 0h2m1 0h1m3 0h2m3 0h2m-36 1h1m2 0h1m1 0h1m1 0h5m1 0h3m4 0h3m6 0h1m1 0h3m1 0h1m-37 1h4m1 0h1m2 0h2m1 0h3m2 0h1m2 0h4m1 0h5m1 0h2m2 0h1m-35 1h1m1 0h1m3 0h1m3 0h4m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m4 0h1m1 0h1m1 0h3m-37 1h1m1 0h1m1 0h1m4 0h1m2 0h2m1 0h3m1 0h3m2 0h1m1 0h1m1 0h2m6 0h1m-37 1h1m1 0h1m3 0h4m2 0h1m3 0h2m2 0h1m3 0h3m1 0h5m1 0h2m-28 1h1m2 0h2m1 0h2m1 0h1m1 0h1m3 0h1m3 0h2m3 0h1m2 0h1m-36 1h7m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m2 0h1m3 0h2m2 0h2m3 0h1m3 0h1m1 0h1m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m1 0h2m8 0h1m2 0h2m1 0h9m1 0h3m-37 1h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m3 0h3m1 0h1m5 0h1m1 0h3m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h2m4 0h1m2 0h2m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m-37 1h1m5 0h1m2 0h4m1 0h2m2 0h1m1 0h2m1 0h1m3 0h4m1 0h1m3 0h1m-37 1h7m2 0h2m2 0h3m2 0h1m1 0h2m1 0h4m3 0h7"/></svg>
+</div>
+      <figcaption>
+        <span class="qr-name">(RJ) Venkata Rajaneesh Jandhyam</span>
+        <span class="qr-title">Co-Founder / Sr. Mortgage Loan Originator</span>
+        <span class="qr-url">https://key2nesthomeloans.com/team/rj</span>
+      </figcaption>
+    </figure>
+  </div>
+</body>
+</html>

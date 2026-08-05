@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Key2Nest — Design System</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap" rel="stylesheet" />
+
+  <!-- Same theme bootstrap as the site — shares the visitor's stored choice -->
+  <script>
+    try {
+      var t = localStorage.getItem('k2n-theme');
+      document.documentElement.dataset.theme = t || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  </script>
+
+  <!-- PRODUCTION stylesheet — this guide reads the real tokens, so it cannot drift -->
+  <link rel="stylesheet" href="styles.css?v=rev10" />
+
+  <style>
+    /* Guide-local layout only — every color below comes from production tokens */
+    .sg-nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 14px clamp(20px, 4vw, 48px);
+      background: color-mix(in srgb, var(--navy) 86%, transparent);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .sg-nav-title { display: flex; align-items: center; gap: 14px; }
+    /* Defer to the production .logo-img geometry — setting height/width here
+       would bypass the crop and render the padded canvas at 40px square. */
+    .sg-nav-title img { --logo-h: 46px; }
+    .sg-nav-title .t {
+      font-family: "Source Serif 4", serif; font-size: 18px; color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .sg-nav-title .v {
+      font-family: "Source Sans 3", sans-serif; font-size: 10px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold-text); border: 1px solid var(--hairline);
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .sg-main { max-width: 1180px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 48px) 96px; }
+    .sg-section { margin-top: clamp(48px, 6vw, 80px); }
+    .sg-h { display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid var(--hairline-soft); padding-bottom: 14px; margin-bottom: 26px; }
+    .sg-h .n { font-family: "Source Serif 4", serif; font-size: 15px; color: var(--gold-text); font-variant-numeric: tabular-nums; }
+    .sg-h h2 { font-size: clamp(24px, 2.6vw, 32px); margin: 0; color: var(--cream); font-weight: 500; letter-spacing: -0.015em; }
+    .sg-note { font-size: 13.5px; color: var(--text-muted); max-width: 76ch; line-height: 1.65; margin: 0 0 22px; }
+    .sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; }
+    .sg-group { margin-bottom: 30px; }
+    .sg-group-h { font-family: "Source Sans 3", sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 12px; font-weight: 500; }
+    .sw { border: 1px solid var(--hairline-soft); border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, var(--elev-1), var(--elev-2)), var(--navy); }
+    .sw-chip { height: 74px; }
+    .sw-meta { padding: 10px 14px; }
+    .sw-meta .nm { font-size: 13px; color: var(--cream); font-weight: 600; font-family: "Source Sans 3", sans-serif; }
+    .sw-meta .hx { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; font-family: "Source Sans 3", sans-serif; }
+    .sg-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .sg-table th { text-align: left; font-family: "Source Sans 3", sans-serif; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-text); font-weight: 500; padding: 10px 14px; border-bottom: 1px solid var(--hairline); }
+    .sg-table td { padding: 9px 14px; border-bottom: 1px solid var(--hairline-soft); color: var(--text-secondary); vertical-align: middle; }
+    .sg-table code { font-size: 12.5px; color: var(--cream); }
+    .sg-dot { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--hairline); vertical-align: -2px; margin-right: 8px; }
+    .sg-wrap-x { overflow-x: auto; border: 1px solid var(--hairline-soft); border-radius: 14px; }
+    .spec { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--hairline-soft); flex-wrap: wrap; }
+    .spec .sample { color: var(--cream); }
+    .spec .meta { font-family: "Source Sans 3", sans-serif; font-size: 12px; color: var(--text-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .elev-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px; }
+    .elev-card { border-radius: 16px; padding: 26px 22px; background: linear-gradient(180deg, var(--elev-2), var(--elev-1)), var(--navy); border: 1px solid var(--hairline-soft); }
+    .elev-card .nm { font-family: "Source Sans 3", sans-serif; font-size: 12px; color: var(--cream); font-weight: 600; margin: 0 0 4px; }
+    .elev-card .us { font-size: 12px; color: var(--text-muted); margin: 0; }
+    .comp-block { margin-bottom: 34px; }
+    .comp-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .comp-panel { border: 1px solid var(--hairline-soft); border-radius: 16px; padding: 24px; background: linear-gradient(180deg, var(--elev-1), var(--elev-2)), var(--navy); }
+    .sp-bar { height: 14px; background: linear-gradient(90deg, var(--brass-500), var(--brass-600)); border-radius: 4px; }
+    .sp-row { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; font-family: "Source Sans 3", sans-serif; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .sp-row .lbl { width: 64px; }
+    .rad-chip { width: 84px; height: 58px; border: 1.5px solid var(--brass-600); background: var(--tint-brass); display: inline-flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; font-family: "Source Sans 3", sans-serif; font-size: 11px; color: var(--text-muted); }
+    .motion-demo { display: inline-flex; flex-direction: column; gap: 8px; align-items: center; }
+    .motion-chip { width: 120px; height: 76px; border-radius: 14px; background: linear-gradient(180deg, var(--elev-2), var(--elev-1)), var(--navy); border: 1px solid var(--hairline-soft); transition: transform 350ms var(--ease-luxe), border-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
+    .motion-chip:hover { transform: translateY(-4px); border-color: var(--brass-500); box-shadow: var(--shadow-2); }
+    .motion-demo .lbl { font-size: 11px; color: var(--text-muted); font-family: "Source Sans 3", sans-serif; }
+    .pass { color: var(--success-text); font-weight: 600; }
+    .warn2 { color: var(--warning-text); font-weight: 600; }
+    footer.sg-foot { border-top: 1px solid var(--hairline-soft); margin-top: 80px; padding: 26px clamp(20px, 4vw, 48px); font-size: 12px; color: var(--text-quiet); }
+    a.sg-back { color: var(--gold-text); text-decoration: none; font-family: "Source Sans 3", sans-serif; font-size: 12.5px; letter-spacing: 0.06em; }
+    a.sg-back:hover { color: var(--gold-text-strong); }
+  </style>
+</head>
+<body>
+
+  <header class="sg-nav">
+    <div class="sg-nav-title">
+      <span class="logo-pill logo-bare" style="padding:6px 10px">
+        <img src="assets/Logo_DV-1x.png" srcset="assets/Logo_DV-1x.png 1x, assets/Logo_DV-2x.png 2x" alt="Key2Nest" width="288" height="288" decoding="async" class="logo-img logo-img-dark" />
+        <img src="assets/Logo_LV-1x.png" srcset="assets/Logo_LV-1x.png 1x, assets/Logo_LV-2x.png 2x" alt="Key2Nest" width="288" height="288" decoding="async" class="logo-img logo-img-light" />
+      </span>
+      <span class="t">Design System</span>
+      <span class="v">Rev 10</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px">
+      <a class="sg-back" href="index.html">← Back to site</a>
+      <button type="button" class="theme-toggle" aria-label="Switch between dark and light theme">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="sg-main">
+
+    <p class="eyebrow">Key2Nest Home Loans</p>
+    <h1 class="font-display" style="font-size:clamp(34px,4.5vw,56px); color:var(--cream); font-weight:400; letter-spacing:-0.02em; margin:0 0 16px; line-height:1.05">
+      One system. Two themes.<br /><em style="color:var(--gold-text)">Timeless by design.</em>
+    </h1>
+    <p class="sg-note" style="font-size:15.5px">
+      Deep navy, 22-karat gold, and soft ivory — rendered as design tokens so every component inherits
+      the brand automatically in both themes. This page reads the <strong style="color:var(--cream)">live production stylesheet</strong>;
+      what you see here is exactly what ships. Use the toggle (top right) to flip themes — token values and contrast
+      ratios below update in real time. Full rationale lives in <code style="color:var(--gold-text)">DESIGN-SYSTEM.md</code>.
+    </p>
+
+    <!-- 1 · PALETTE -->
+    <section class="sg-section" id="palette">
+      <div class="sg-h"><span class="n">01</span><h2 class="font-display">Brand palette</h2></div>
+      <p class="sg-note">Gold is used two ways: as a <strong style="color:var(--cream)">surface</strong> (buttons, badges — always the bright metallic ramp) and as <strong style="color:var(--cream)">text</strong> (deepens to #8B600A / #6E4B08 on ivory for contrast). Status hues are deliberately desaturated — sage, copper, refined red, and the teal already used as the site's cool counter-light.</p>
+      <div id="sw-root"></div>
+    </section>
+
+    <!-- 2 · LIVE TOKENS -->
+    <section class="sg-section" id="tokens">
+      <div class="sg-h"><span class="n">02</span><h2 class="font-display">Theme tokens — live values</h2></div>
+      <p class="sg-note">Read from <code>getComputedStyle()</code> at render time. Flip the theme and watch them change.</p>
+      <div class="sg-wrap-x"><table class="sg-table" id="token-table">
+        <thead><tr><th>Token</th><th>Current value</th><th>Role</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <!-- 3 · TYPOGRAPHY -->
+    <section class="sg-section" id="type">
+      <div class="sg-h"><span class="n">03</span><h2 class="font-display">Typography</h2></div>
+      <p class="sg-note"><strong style="color:var(--cream)">Source Serif 4</strong> (display &amp; headings — optical sizing on, weight 380–500) with <strong style="color:var(--cream)">Source Sans 3</strong> (body, UI, eyebrows). Scale is a Major Third (1.25) anchored at 16px: 13 · 16 · 20 · 25 · 31 · 39 · 49 · 61 · 76 · 95.</p>
+      <div class="spec"><span class="sample font-display" style="font-size:clamp(40px,6vw,76px); line-height:0.98; letter-spacing:-0.022em; font-variation-settings:'opsz' 60, 'wght' 420">Display — The smarter path</span><span class="meta">Serif 4 · 61–95px · wght 420 · lh 0.98</span></div>
+      <div class="spec"><span class="sample font-display" style="font-size:clamp(31px,4vw,49px); line-height:1.08; letter-spacing:-0.022em">H2 — Section title</span><span class="meta">Serif 4 · 31–61px · lh 1.08</span></div>
+      <div class="spec"><span class="sample font-display" style="font-size:25px; font-weight:500; letter-spacing:-0.015em">H3 — Card &amp; step titles</span><span class="meta">Serif 4 · 20–34px · wght 500</span></div>
+      <div class="spec"><span class="sample" style="font-size:16px; line-height:1.65; color:var(--text-secondary); max-width:56ch">Body — Access to 20+ lenders and necessary mortgage guidance, structured around your life rather than the other way around.</span><span class="meta">Sans 3 · 14.5–16px · lh 1.6–1.65</span></div>
+      <div class="spec"><span class="sample eyebrow" style="margin:0">Eyebrow label</span><span class="meta">Sans 3 · 10.5px · track 0.3em · uppercase</span></div>
+      <div class="spec" style="border-bottom:0"><span class="sample" style="font-size:12.5px; color:var(--text-muted); font-style:italic">Fine print — estimates only, not a commitment to lend.</span><span class="meta">Sans 3 · 11.5–12.5px · italic</span></div>
+    </section>
+
+    <!-- 4 · ELEVATION -->
+    <section class="sg-section" id="elevation">
+      <div class="sg-h"><span class="n">04</span><h2 class="font-display">Elevation</h2></div>
+      <p class="sg-note">Two-part shadows: a tight near shadow for edge definition plus a long, soft far shadow for depth. Navy-tinted in light mode, never gray. Gold glows are reserved for gold surfaces only.</p>
+      <div class="elev-row">
+        <div class="elev-card" style="box-shadow:var(--shadow-1)"><p class="nm">--shadow-1 · Rest</p><p class="us">Cards at rest, table containers</p></div>
+        <div class="elev-card" style="box-shadow:var(--shadow-2)"><p class="nm">--shadow-2 · Raised</p><p class="us">Hover states, active cards</p></div>
+        <div class="elev-card" style="box-shadow:var(--shadow-3)"><p class="nm">--shadow-3 · Floating</p><p class="us">Dropdowns, popovers, tooltips</p></div>
+        <div class="elev-card" style="box-shadow:var(--shadow-4)"><p class="nm">--shadow-4 · Modal</p><p class="us">Dialogs, team profile modal</p></div>
+      </div>
+    </section>
+
+    <!-- 5 · COMPONENTS -->
+    <section class="sg-section" id="components">
+      <div class="sg-h"><span class="n">05</span><h2 class="font-display">Components</h2></div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Buttons</p>
+        <div class="comp-row">
+          <button class="btn btn-primary"><span>Primary — gold shimmer</span></button>
+          <button class="btn btn-ghost"><span>Ghost — outline</span></button>
+          <button class="btn btn-primary btn-sm"><span>Small</span></button>
+          <button class="btn btn-primary" disabled><span>Disabled</span></button>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Form fields</p>
+        <div class="comp-panel" style="display:grid; gap:18px; max-width:560px">
+          <div class="form-row">
+            <label class="form-label">Full name <span class="form-req">*</span></label>
+            <input type="text" class="form-input" placeholder="Your name" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Email (error state)</label>
+            <input type="text" class="form-input is-invalid" value="bad@format" />
+            <p class="form-error" style="color:var(--error-text)">Please enter a valid email address (e.g. name@example.com).</p>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Preferred call time</label>
+            <div class="form-radio-group">
+              <label class="form-radio"><input type="radio" name="sg-r" /> <span>Morning</span></label>
+              <label class="form-radio"><input type="radio" name="sg-r" checked /> <span>Anytime</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Tabs · segmented control</p>
+        <div class="calc-tabs" role="tablist">
+          <button class="calc-tab" aria-selected="true">Mortgage Payment</button>
+          <button class="calc-tab" aria-selected="false">Affordability</button>
+          <button class="calc-tab" aria-selected="false">Refinance</button>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Accordion</p>
+        <div class="faq-list" style="margin-top:0">
+          <details class="faq-item" open>
+            <summary><span class="faq-q">How much do I need for a down payment?</span><span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            <div class="faq-a"><p>It depends on the loan program — conventional from 3%, FHA from 3.5%, VA and USDA zero down for eligible buyers.</p></div>
+          </details>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Badges &amp; chips</p>
+        <div class="comp-row">
+          <span class="badge badge-gold">Pending</span>
+          <span class="badge badge-success">Approved</span>
+          <span class="badge badge-warning">In review</span>
+          <span class="badge badge-error">Action needed</span>
+          <span class="badge badge-info">Update</span>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Alerts</p>
+        <div style="display:grid; gap:12px; max-width:640px">
+          <div class="alert alert-success"><strong>Success.</strong>&nbsp;Your inquiry is on its way — we reply within one business day.</div>
+          <div class="alert alert-warning"><strong>Heads up.</strong>&nbsp;Rates shown are illustrative and move with the market.</div>
+          <div class="alert alert-error"><strong>Something went wrong.</strong>&nbsp;Please call +1 469 · 481 · 6216 and we'll take care of you.</div>
+          <div class="alert alert-info"><strong>Good to know.</strong>&nbsp;A full pre-approval strengthens your offer in competitive markets.</div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <p class="sg-group-h">Data table</p>
+        <div class="amort-table-wrap" style="max-width:640px"><table class="amort-table">
+          <thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+          <tbody>
+            <tr class="amort-year"><td><span class="amort-year-chev">▸</span>Year 1 · 2026</td><td>$4,024</td><td>$23,282</td><td>$355,976</td></tr>
+            <tr class="amort-year"><td><span class="amort-year-chev">▸</span>Year 2 · 2027</td><td>$4,294</td><td>$23,013</td><td>$351,682</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- 6 · SPACING & RADIUS -->
+    <section class="sg-section" id="spacing">
+      <div class="sg-h"><span class="n">06</span><h2 class="font-display">Spacing &amp; radius</h2></div>
+      <p class="sg-note">4-pt grid: 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64 · 80 · 96 · 128. Section rhythm <code>--section-y</code> = clamp(56px, 5.5vw, 84px). Radii: 8–10px inputs, 12–16px cards, 18–20px feature panels, 999px pills &amp; buttons.</p>
+      <div style="max-width:560px; margin-bottom:26px">
+        <div class="sp-row"><span class="lbl">--sp-8</span><span class="sp-bar" style="width:8px"></span></div>
+        <div class="sp-row"><span class="lbl">--sp-16</span><span class="sp-bar" style="width:16px"></span></div>
+        <div class="sp-row"><span class="lbl">--sp-24</span><span class="sp-bar" style="width:24px"></span></div>
+        <div class="sp-row"><span class="lbl">--sp-40</span><span class="sp-bar" style="width:40px"></span></div>
+        <div class="sp-row"><span class="lbl">--sp-64</span><span class="sp-bar" style="width:64px"></span></div>
+        <div class="sp-row"><span class="lbl">--sp-96</span><span class="sp-bar" style="width:96px"></span></div>
+      </div>
+      <div class="comp-row">
+        <span class="rad-chip" style="border-radius:8px">8</span>
+        <span class="rad-chip" style="border-radius:12px">12</span>
+        <span class="rad-chip" style="border-radius:16px">16</span>
+        <span class="rad-chip" style="border-radius:20px">20</span>
+        <span class="rad-chip" style="border-radius:999px">pill</span>
+      </div>
+    </section>
+
+    <!-- 7 · MOTION -->
+    <section class="sg-section" id="motion">
+      <div class="sg-h"><span class="n">07</span><h2 class="font-display">Motion</h2></div>
+      <p class="sg-note">Philosophy: <em>calm confidence</em>. Nothing bounces, nothing spins for decoration. Reveals rise 24px once on scroll; hovers lift 2–4px; numbers tween with power2.out; everything honors <code>prefers-reduced-motion</code>.</p>
+      <div class="sg-wrap-x" style="max-width:640px; margin-bottom:26px"><table class="sg-table">
+        <thead><tr><th>Token</th><th>Curve</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>--ease-luxe</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Transforms — lifts, slides, chevrons</td></tr>
+          <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.2, 0.7, 0.2, 1)</td><td>Color &amp; border transitions</td></tr>
+          <tr><td>Durations</td><td>200–350ms UI · 600–900ms reveals</td><td>Micro vs. entrance</td></tr>
+        </tbody>
+      </table></div>
+      <div class="comp-row">
+        <span class="motion-demo"><span class="motion-chip"></span><span class="lbl">card hover — lift + gold edge</span></span>
+        <span class="motion-demo"><button class="btn btn-primary"><span>Sheen sweep →</span></button><span class="lbl">primary hover</span></span>
+      </div>
+    </section>
+
+    <!-- 8 · ACCESSIBILITY -->
+    <section class="sg-section" id="a11y">
+      <div class="sg-h"><span class="n">08</span><h2 class="font-display">Accessibility — live contrast</h2></div>
+      <p class="sg-note">Computed in-browser against the current theme. WCAG AA requires 4.5:1 for body text, 3:1 for large text and UI. Focus rings are 2px gold (<code>--focus-ring</code>), offset 3px, on every interactive element.</p>
+      <div class="sg-wrap-x" style="max-width:720px"><table class="sg-table" id="contrast-table">
+        <thead><tr><th>Pair</th><th>Sample</th><th>Ratio</th><th>Verdict</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+  </main>
+
+  <footer class="sg-foot">
+    Key2Nest Home Loans LLC · Design System Rev 10 · This page links the production stylesheet — it is the single source of truth.
+  </footer>
+
+  <script>
+    // Theme toggle — same storage key as the site
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('k2n-theme', next); } catch (e) {}
+      render();
+    });
+
+    const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    /* ---------- 1 · palette swatches ---------- */
+    const GROUPS = [
+      ['Navy & Ink', [['Ink', '#06111E'], ['Navy (canon)', '#0B1A2E'], ['Navy 700 text', '#16263D']]],
+      ['22K Gold ramp', [['brass-300', '#FFF3C4'], ['brass-400', '#F6D96A'], ['brass-500 (canon)', '#D4AF37'], ['brass-600', '#C89B1E'], ['brass-700', '#A8740B'], ['brass-800', '#8B600A'], ['brass-900', '#6E4B08']]],
+      ['Ivory & Cream', [['cream-soft', '#FAF6EC'], ['cream (canon)', '#F4EFE3'], ['cream-warm', '#EDE5D2'], ['paper white', '#FFFDF7']]],
+      ['Status — dark theme', [['success', '#8FCB9B'], ['warning', '#E8B07C'], ['error', '#F4A9A9'], ['info', '#8FC5CE']]],
+      ['Status — light theme', [['success', '#2E6B44'], ['warning', '#8A5420'], ['error', '#8C1D1D'], ['info', '#2C5A63']]],
+    ];
+    document.getElementById('sw-root').innerHTML = GROUPS.map(([g, items]) =>
+      `<div class="sg-group"><p class="sg-group-h">${g}</p><div class="sg-grid">` +
+      items.map(([n, hx]) => `<div class="sw"><div class="sw-chip" style="background:${hx}"></div><div class="sw-meta"><div class="nm">${n}</div><div class="hx">${hx}</div></div></div>`).join('') +
+      `</div></div>`).join('');
+
+    /* ---------- 2 · live token table ---------- */
+    const TOKENS = [
+      ['--navy', 'Page & section background'], ['--navy-deep', 'Footer / deepest surface'],
+      ['--cream', 'Primary text'], ['--text-secondary', 'Body text'], ['--text-muted', 'Supporting text'],
+      ['--gold-text', 'Gold accent text'], ['--gold-text-strong', 'Gold text — emphasis'],
+      ['--hairline', 'Borders'], ['--hairline-soft', 'Dividers'],
+      ['--elev-1', 'Card gradient start'], ['--elev-2', 'Card gradient end'],
+      ['--success-text', 'Success'], ['--warning-text', 'Warning'], ['--error-text', 'Error'], ['--info-text', 'Info'],
+      ['--focus-ring', 'Focus outline'],
+    ];
+
+    /* ---------- 8 · contrast math ---------- */
+    function parseColor(str, fallbackBg) {
+      const c = document.createElement('canvas').getContext('2d');
+      c.fillStyle = str; const norm = c.fillStyle;
+      let m = norm.match(/^#([0-9a-f]{6})$/i);
+      if (m) { const n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255, 1]; }
+      m = norm.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/);
+      if (m) return [+m[1], +m[2], +m[3], m[4] === undefined ? 1 : +m[4]];
+      return [0, 0, 0, 1];
+    }
+    function composite(fg, bg) { const a = fg[3]; return [0, 1, 2].map(i => fg[i] * a + bg[i] * (1 - a)); }
+    function lum(rgb) {
+      const s = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * s[0] + 0.7152 * s[1] + 0.0722 * s[2];
+    }
+    function ratio(fgStr, bgStr) {
+      const bg = parseColor(bgStr).slice(0, 3);
+      const fg = composite(parseColor(fgStr), bg);
+      const [l1, l2] = [lum(fg), lum(bg)].sort((a, b) => b - a);
+      return (l1 + 0.05) / (l2 + 0.05);
+    }
+
+    function render() {
+      // token table
+      document.querySelector('#token-table tbody').innerHTML = TOKENS.map(([t, role]) => {
+        const v = css(t);
+        return `<tr><td><code>${t}</code></td><td><span class="sg-dot" style="background:${v}"></span><code>${v}</code></td><td>${role}</td></tr>`;
+      }).join('');
+
+      // contrast table
+      const bg = css('--navy');
+      const PAIRS = [
+        ['Primary text / background', css('--cream'), bg],
+        ['Body text / background', css('--text-secondary'), bg],
+        ['Gold text / background', css('--gold-text'), bg],
+        ['Button label / gold surface', '#06111E', '#D4AF37'],
+        ['Success text / background', css('--success-text'), bg],
+        ['Warning text / background', css('--warning-text'), bg],
+        ['Error text / background', css('--error-text'), bg],
+        ['Info text / background', css('--info-text'), bg],
+      ];
+      document.querySelector('#contrast-table tbody').innerHTML = PAIRS.map(([name, fg, b]) => {
+        const r = ratio(fg, b);
+        const verdict = r >= 7 ? '<span class="pass">AAA</span>' : r >= 4.5 ? '<span class="pass">AA</span>' : r >= 3 ? '<span class="warn2">AA large</span>' : '<span style="color:var(--error-text)">fail</span>';
+        return `<tr><td>${name}</td><td><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:${b};color:${fg};border:1px solid var(--hairline-soft)">Aa</span></td><td>${r.toFixed(2)}:1</td><td>${verdict}</td></tr>`;
+      }).join('');
+    }
+    render();
+  </script>
+</body>
+</html>

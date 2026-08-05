@@ -1,0 +1,8 @@
+# Key2Nest robots.txt
+# All search engines welcome
+
+User-agent: *
+Allow: /
+Disallow: /assets/home_hero.mp4
+
+Sitemap: https://key2nesthomeloans.com/sitemap.xml

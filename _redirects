@@ -1,0 +1,10 @@
+# Key2Nest digital business cards — clean per-person URLs under /team/.
+# 200 rewrites keep the pretty URL in the address bar while serving the
+# card page from /cards/<slug>/. Card pages use absolute /cards/ asset
+# paths so they load correctly under the rewritten URL.
+# Managed alongside cards/build.py (URL_PREFIX="/team") — keep in sync.
+/team/vivek       /cards/vivek/index.html      200
+/team/naveen      /cards/naveen/index.html     200
+/team/sreedhar    /cards/sreedhar/index.html   200
+/team/lakshmi     /cards/lakshmi/index.html    200
+/team/rj          /cards/rj/index.html         200

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B1A2E" />
+  <meta name="description" content="Key2Nest Accessibility Statement — our commitment to making our mortgage services accessible to every borrower we serve." />
+  <meta name="robots" content="index, follow" />
+  <title>Accessibility Statement — Key2Nest</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="canonical" href="https://key2nesthomeloans.com/accessibility.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { ink:'#06111E', navy:{900:'#0B1A2E',800:'#0B1A2E',700:'#0B1A2E',600:'#0B1A2E',500:'#0B1A2E',DEFAULT:'#0B1A2E',deep:'#06111E'}, brass:{900:'#6E4B08',800:'#8B600A',700:'#A8740B',600:'#C89B1E',500:'#D4AF37',400:'#F6D96A',300:'#FFF3C4'}, cream:{DEFAULT:'#F4EFE3',soft:'#FAF6EC',warm:'#EDE5D2'} }, fontFamily:{ display:['"Source Serif 4"','ui-serif','Georgia','serif'], sans:['"Source Sans 3"','ui-sans-serif','system-ui','sans-serif'] }, maxWidth:{ site:'1240px' } } } };
+  </script>
+  <!-- Theme bootstrap — runs before first paint so there is no flash. Mirrors
+       index.html: a stored manual choice wins, otherwise follow the OS. Keeps
+       the browser chrome colour in step, and tracks live OS changes for
+       visitors who have never touched the toggle. -->
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('k2n-theme'); } catch (e) {}
+      var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
+      var apply = function (t) {
+        document.documentElement.dataset.theme = t;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', t === 'light' ? '#F4EFE3' : '#0B1A2E');
+      };
+      apply(stored || (mq && mq.matches ? 'light' : 'dark'));
+      if (!stored && mq && mq.addEventListener) {
+        mq.addEventListener('change', function (e) { apply(e.matches ? 'light' : 'dark'); });
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=rev27" />
+</head>
+<body class="bg-navy text-cream font-sans antialiased legal-page">
+  <header class="legal-nav">
+    <div class="mx-auto max-w-site px-5 md:px-8 legal-nav-inner">
+      <a href="index.html" class="brand-mark brand-mark-logo-only" aria-label="Key2Nest home">
+        <span class="logo-pill logo-bare">
+          <img src="assets/Logo_DV-1x.png" srcset="assets/Logo_DV-1x.png 1x, assets/Logo_DV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-dark" />
+          <img src="assets/Logo_LV-1x.png" srcset="assets/Logo_LV-1x.png 1x, assets/Logo_LV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-light" />
+        </span>
+      </a>
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="mx-auto max-w-site px-5 md:px-8 legal-main">
+      <a href="index.html" class="legal-back">← Back to Key2Nest</a>
+      <p class="eyebrow" style="display:inline-flex">Legal</p>
+      <h1 class="legal-h1 font-display">Accessibility Statement</h1>
+      <p class="legal-updated">Effective Date: June 29, 2026</p>
+
+      <div class="legal-content">
+        <p>Key2Nest is committed to making our mortgage services and digital presence accessible to people with disabilities. Home financing is one of the most consequential decisions a person can make, and we believe every borrower deserves equal access to clear information, calculators, and personal guidance — regardless of how they use the web.</p>
+
+        <h2>1. Conformance Target</h2>
+        <p>We aim to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1, Level AA</strong>, the standard recommended by the World Wide Web Consortium (W3C) and referenced by the U.S. Department of Housing and Urban Development (HUD) and the Consumer Financial Protection Bureau (CFPB).</p>
+
+        <h2>2. What We've Built In</h2>
+        <p>This Site has been designed with accessibility in mind. Specifically:</p>
+        <ul>
+          <li><strong>Keyboard navigation:</strong> all interactive elements (links, buttons, form fields, calculators, FAQ toggles) are reachable and operable using a keyboard alone, with a visible focus indicator.</li>
+          <li><strong>Screen reader support:</strong> semantic HTML, descriptive headings (H1–H3), labeled form fields, ARIA labels on icon-only controls, and a skip-to-main-content link.</li>
+          <li><strong>Color contrast:</strong> body text, controls, and key UI elements meet or exceed WCAG AA contrast ratios against background colors.</li>
+          <li><strong>Reduced motion:</strong> animations, parallax, and video respect the <code>prefers-reduced-motion</code> system setting — users who have requested less motion get a static experience.</li>
+          <li><strong>Responsive design:</strong> the Site adapts cleanly from 320px-wide phones to wide desktop displays, with no horizontal scroll or fixed-pixel traps.</li>
+          <li><strong>Scalable text:</strong> font sizes use relative units so users can zoom or scale text without breaking layout.</li>
+          <li><strong>Calculators:</strong> every interactive control is operable by keyboard and reads sensibly to a screen reader, with results announced via live regions where applicable.</li>
+        </ul>
+
+        <h2>3. Known Limitations</h2>
+        <p>We continue to test and improve the Site. Areas where we are still working include:</p>
+        <ul>
+          <li>The hero background video does not include captions because it contains no spoken content. It is decorative and disabled for users with <code>prefers-reduced-motion</code>.</li>
+          <li>The donut chart in the mortgage payment calculator presents data primarily through color; the same information is repeated in the numerical breakdown below it.</li>
+        </ul>
+
+        <h2>4. Reasonable Accommodations</h2>
+        <p>If any part of the Site is difficult to use, or if you would prefer to receive information in an alternative format (large print, plain text email, telephone walkthrough), please reach out to us — we are happy to accommodate.</p>
+
+        <h2>5. Feedback &amp; Contact</h2>
+        <p>If you encounter an accessibility barrier on this Site, or have suggestions for improvement, please contact us. We aim to respond within five business days.</p>
+        <p>
+          Sai Vivek Boddu — Accessibility contact<br />
+          Email: <a href="mailto:contact@key2nesthomeloans.com">contact@key2nesthomeloans.com</a><br />
+          Phone: <a href="tel:+14694816216">+1 (469) 481-6216</a><br />
+          Subject line: "Accessibility — Key2Nest"
+        </p>
+
+        <h2>6. Third-Party Content</h2>
+        <p>The Site links to third-party resources (NMLS Consumer Access, market-rate publications) over which we do not have direct accessibility control. Where those external resources fall short, please contact us and we will provide an accessible alternative or summary.</p>
+
+        <h2>7. Equal Housing Lender</h2>
+        <p>Key2Nest Home Loans LLC is an Equal Housing Lender. We do not discriminate on the basis of race, color, religion, national origin, sex, familial status, disability, or any other class protected under federal or applicable state law. If you believe you have experienced housing discrimination, you may file a complaint with the U.S. Department of Housing and Urban Development at <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener">hud.gov</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="mx-auto max-w-site px-5 md:px-8 py-12">
+      <p class="footer-copy" style="margin:0;text-align:center;font-size:12.5px;color:var(--text-muted)">© 2026 Key2Nest Home Loans LLC. All rights reserved. Licensed in States AR, AZ, FL, TN, and TX. NMLS #2819804. Equal Housing Lender.</p>
+    </div>
+  </footer>
+</body>
+</html>
