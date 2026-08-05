@@ -3965,9 +3965,9 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-main { padding: 56px 0 88px; }
 .careers-lede {
   color: var(--text-secondary);
-  font-size: 16.5px;
-  line-height: 1.65;
-  max-width: 640px;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 660px;
   margin: 0 0 6px;
 }
 .careers-meta {
@@ -3984,12 +3984,13 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-h2 {
   font-family: "Source Serif 4", serif;
   font-variation-settings: "opsz" 48, "wght" 500;
-  font-size: 26px;
+  font-size: clamp(24px, 3vw, 31px);
+  line-height: 1.15;
   color: var(--cream);
-  letter-spacing: -0.015em;
-  margin: 0 0 6px;
+  letter-spacing: -0.018em;
+  margin: 0 0 8px;
 }
-.careers-sub { color: var(--text-muted); font-size: 14px; margin: 0 0 20px; }
+.careers-sub { color: var(--text-muted); font-size: 14.5px; line-height: 1.6; margin: 0 0 22px; }
 
 .why-grid {
   display: grid;
@@ -4116,6 +4117,9 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .role-card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
 .role-card .role-apply-btn { margin-top: 24px; }
 @media (max-width: 640px) {
+  .careers-main { padding: 40px 0 64px; }
+  .careers-section { margin-top: 40px; }
+  .careers-lede { font-size: 16.5px; }
   .role-card { padding: 0 18px; }
   .role-card-cta-tx { display: none; }
   .role-card-cols { grid-template-columns: 1fr; gap: 0; }
@@ -4172,7 +4176,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
   justify-content: space-between;
   gap: 16px;
 }
-.apply-panel-head .careers-h2 { margin-bottom: 4px; }
+.apply-panel-head .careers-h2 { font-size: clamp(20px, 2.2vw, 24px); margin-bottom: 4px; }
 .apply-close {
   flex-shrink: 0;
   width: 32px;
