@@ -27,24 +27,46 @@
   const form = document.getElementById('careers-form');
   if (!form) return;
 
-  /* ---------- Role card "Apply" buttons → pre-select + pulse ---------- */
-  const roleSelect = document.getElementById('c-role');
+  /* ---------- Role "Apply" buttons → reveal the form, locked to that role ----------
+     There is no standalone form with a role dropdown. Each role's Apply button
+     (and the general-application link) reveals the form and fixes the role, so
+     the role recorded in the sheet + email is exactly the one applied to. */
+  const applySection = document.getElementById('apply');
+  const roleInput = document.getElementById('c-role');
+  const roleNameEls = ['apply-role-name', 'apply-role-locked'].map((id) => document.getElementById(id));
+  let formRevealed = false;
+
+  function revealApply(role) {
+    roleInput.value = role;
+    roleInput.setAttribute('value', role); // keep the role through form.reset()
+    roleNameEls.forEach((el) => { if (el) el.textContent = role; });
+    form.querySelectorAll('.form-success, .form-failure').forEach((b) => { b.hidden = true; });
+    applySection.hidden = false;
+    formRevealed = true;
+    if (window.__k2nTs && window.__k2nTs.ready) window.__k2nTsRender();
+    applySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const first = document.getElementById('c-name');
+    if (first) first.focus({ preventScroll: true });
+  }
+
   document.querySelectorAll('[data-role-apply]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const role = btn.getAttribute('data-role-apply');
-      const opt = Array.from(roleSelect.options).find((o) => o.value === role);
-      if (opt) {
-        roleSelect.value = role;
-        roleSelect.classList.add('is-prefilled');
-        setTimeout(() => roleSelect.classList.remove('is-prefilled'), 1400);
-      }
-    });
+    btn.addEventListener('click', () => revealApply(btn.getAttribute('data-role-apply')));
   });
+
+  const changeRoleBtn = document.getElementById('apply-change-role');
+  if (changeRoleBtn) {
+    changeRoleBtn.addEventListener('click', () => {
+      applySection.hidden = true;
+      const rolesHead = document.getElementById('roles-h');
+      if (rolesHead) rolesHead.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   /* ---------- Turnstile (explicit render, theme-aware) ---------- */
   let tsToken = '';
   let tsWidget = null;
   window.__k2nTsRender = function () {
+    if (!formRevealed) return; // don't render Turnstile into the still-hidden form
     const slot = document.getElementById('turnstile-careers');
     if (!slot || tsWidget !== null || !window.turnstile) return;
     tsWidget = window.turnstile.render(slot, {

@@ -145,7 +145,6 @@
           <img src="assets/Logo_LV-1x.png" srcset="assets/Logo_LV-1x.png 1x, assets/Logo_LV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-light" />
         </span>
       </a>
-      <a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a>
     </div>
   </header>
 
@@ -179,10 +178,10 @@
         <p class="careers-sub">Select a role for the full description, then apply below.</p>
 
         <!-- ROLE TEMPLATE — to add a role: copy one <details class="role-card">
-             block, edit the eyebrow/title/hook/lists, and add a matching
-             <option> to the form's role select (the data-role-apply value must
-             match the option value exactly). To close a role: add the `hidden`
-             attribute to its <details> tag and remove/comment its <option>. -->
+             block and edit the eyebrow/title/hook/lists. The button's
+             data-role-apply value is the role recorded in the sheet + email, so
+             set it to the exact role name you want stored. To close a role: add
+             the `hidden` attribute to its <details> tag. -->
         <div class="role-cards">
 
           <details class="role-card" id="role-retail">
@@ -217,7 +216,7 @@
                   </ul>
                 </div>
               </div>
-              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator (Retail)">Apply for this role</a>
+              <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator (Retail)">Apply for this role</button>
             </div>
           </details>
 
@@ -253,7 +252,7 @@
                   </ul>
                 </div>
               </div>
-              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Senior Mortgage Loan Originator">Apply for this role</a>
+              <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Senior Mortgage Loan Originator">Apply for this role</button>
             </div>
           </details>
 
@@ -289,7 +288,7 @@
                   </ul>
                 </div>
               </div>
-              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Purchase Specialist">Apply for this role</a>
+              <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Purchase Specialist">Apply for this role</button>
             </div>
           </details>
 
@@ -324,7 +323,7 @@
                   </ul>
                 </div>
               </div>
-              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Self-Generated Business">Apply for this role</a>
+              <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Self-Generated Business">Apply for this role</button>
             </div>
           </details>
 
@@ -360,17 +359,19 @@
                   </ul>
                 </div>
               </div>
-              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Entry-Level Mortgage Loan Originator">Apply for this role</a>
+              <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Entry-Level Mortgage Loan Originator">Apply for this role</button>
             </div>
           </details>
 
         </div>
+
+        <p class="role-general"><button type="button" class="apply-change-link" data-role-apply="Open application">Don't see your role? Submit a general application →</button></p>
       </section>
 
-      <!-- Apply form -->
-      <section class="careers-section" id="apply" aria-labelledby="apply-h">
-        <h2 class="careers-h2" id="apply-h">Apply today</h2>
-        <p class="careers-sub">Tell us who you are and attach your resume — we review every application.</p>
+      <!-- Apply form — hidden until a role's "Apply" button reveals it, locked to that role -->
+      <section class="careers-section" id="apply" aria-labelledby="apply-h" hidden>
+        <h2 class="careers-h2" id="apply-h">Apply &mdash; <span id="apply-role-name"></span></h2>
+        <p class="careers-sub">Attach your resume and tell us about yourself — we review every application. <button type="button" id="apply-change-role" class="apply-change-link">Choose a different role</button></p>
 
         <form id="careers-form" class="contact-form" method="POST" novalidate>
           <div class="form-row">
@@ -405,18 +406,9 @@
           </div>
 
           <div class="form-row">
-            <label for="c-role" class="form-label">Role <span class="form-req">*</span></label>
-            <div class="form-select-wrap">
-              <select id="c-role" name="role" class="form-input form-select">
-                <option value="Mortgage Loan Originator (Retail)">Mortgage Loan Originator (Retail)</option>
-                <option value="Senior Mortgage Loan Originator">Senior Mortgage Loan Originator</option>
-                <option value="Mortgage Loan Originator — Purchase Specialist">Mortgage Loan Originator — Purchase Specialist</option>
-                <option value="Mortgage Loan Originator — Self-Generated Business">Mortgage Loan Originator — Self-Generated Business</option>
-                <option value="Entry-Level Mortgage Loan Originator">Entry-Level Mortgage Loan Originator</option>
-                <option value="Open application">Open application — no specific role</option>
-              </select>
-              <svg class="form-select-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-            </div>
+            <span class="form-label">Role</span>
+            <p class="apply-role-locked" id="apply-role-locked">—</p>
+            <input type="hidden" id="c-role" name="role" value="" />
           </div>
 
           <div class="form-row">
@@ -458,7 +450,10 @@
             <p><strong>Something went wrong sending your application.</strong> Please email your resume to <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1 (972) 565-2199</a> — we'll make sure it's received.</p>
           </div>
         </form>
+      </section>
 
+      <!-- Closing: equal-opportunity notice + recruiting contact (always visible) -->
+      <section class="careers-section careers-closing" aria-label="Equal opportunity and recruiting contact">
         <p class="careers-eeo">Key2Nest Home Loans LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, or veteran status. If you need a reasonable accommodation to complete the application process, email <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1&nbsp;(972)&nbsp;565-2199</a>. Employment is contingent on satisfactory completion of a background check and verification of any NMLS and state mortgage licensing required for the role.</p>
 
         <!-- Apply Today — recruiting contact card -->
