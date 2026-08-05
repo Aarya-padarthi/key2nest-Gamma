@@ -4087,3 +4087,47 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-contact-line { margin-top: 12px; font-size: 14px; color: var(--text-secondary); }
 .careers-contact-line a { color: var(--gold-text); text-decoration: none; }
 .careers-contact-line a:hover { text-decoration: underline; }
+
+/* Apply Today — recruiting contact card (reuses why-chip surface language) */
+.careers-contact-card {
+  margin-top: 24px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  padding: 24px 22px;
+  background: linear-gradient(180deg, var(--elev-1), transparent);
+  text-align: center;
+}
+.careers-contact-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin: 0 0 10px;
+}
+.careers-contact-org {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+.careers-contact-nmls { font-size: 12.5px; color: var(--text-muted); margin: 0 0 18px; }
+.careers-contact-nmls a { color: var(--gold-text); text-decoration: none; }
+.careers-contact-nmls a:hover { text-decoration: underline; }
+.careers-contact-channels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 22px;
+}
+.careers-contact-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.careers-contact-channel:hover { color: var(--gold-text); }
+.careers-contact-channel svg { width: 16px; height: 16px; color: var(--gold-text); flex: none; }
