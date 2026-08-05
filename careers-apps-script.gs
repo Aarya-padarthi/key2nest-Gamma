@@ -11,8 +11,10 @@
  *   5. Returns JSON {ok:true} — careers.js reads this real verdict, so the
  *      applicant only sees success when the application actually landed.
  *
- * SETUP (one time, in the careers Google Sheet):
- *   1. Open the sheet → Extensions → Apps Script.
+ * SETUP (one time). The script targets the careers sheet by its SHEET_ID below,
+ * so it writes to that exact spreadsheet whether you bind the script to the
+ * sheet or run it as a standalone project. Binding is simplest:
+ *   1. Open the sheet (SHEET_ID below) → Extensions → Apps Script.
  *   2. Replace the default code with this file's contents. Save.
  *   3. Project Settings (gear) → Script Properties → Add property:
  *        TURNSTILE_SECRET_KEY = <the Cloudflare Turnstile secret>
@@ -31,6 +33,10 @@
  */
 
 const NOTIFY_EMAIL = 'admin@key2nesthomeloans.com';
+// Careers applications land in THIS specific spreadsheet, opened by ID so the
+// script targets it whether it is bound to the sheet or a standalone project:
+// https://docs.google.com/spreadsheets/d/1CsqHDqzYYPPv35H1szFWd2fo7SACY0xA2kDB_PcrcHc/edit
+const SHEET_ID = '1CsqHDqzYYPPv35H1szFWd2fo7SACY0xA2kDB_PcrcHc';
 const SHEET_NAME = 'Applications';
 const FOLDER_NAME = 'Key2Nest – Resumes';
 const MAX_RESUME_BYTES = 5 * 1024 * 1024;
@@ -48,7 +54,7 @@ const STATUS_VALUES = ['New', 'Reviewed', 'Interview', 'Offer', 'Hired', 'Declin
 
 /** Run once manually after pasting the script: builds the tab + folder. */
 function setup() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SHEET_ID);
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
   const head = sheet.getRange(1, 1, 1, HEADERS.length);
@@ -101,7 +107,8 @@ function doPost(e) {
     const file = getResumeFolder().createFile(blob);
     const resumeUrl = file.getUrl();
 
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = ss.getSheetByName(SHEET_NAME);
     if (!sheet) return json({ ok: false, error: 'Sheet not set up — run setup() first.' });
     sheet.appendRow([
       new Date(), safe(data.role), safe(data.name), safe(data.email), safe(data.phone),
@@ -114,6 +121,7 @@ function doPost(e) {
       subject: 'New Key2Nest Application — ' + safe(data.role) + ' — ' + safe(data.name),
       name: 'Key2Nest Careers',
       replyTo: safe(data.email),
+      attachments: [blob], // resume attached for convenience; also saved to Drive + linked in the sheet
       body:
         'New application received.\n\n' +
         'Role:      ' + safe(data.role) + '\n' +
@@ -122,9 +130,9 @@ function doPost(e) {
         'Phone:     ' + safe(data.phone) + '\n' +
         'Location:  ' + safe(data.location) + '\n' +
         'NMLS ID:   ' + safe(data.nmls || '—') + '\n' +
-        'Resume:    ' + resumeUrl + '\n\n' +
+        'Resume:    ' + resumeUrl + '  (also attached to this email)\n\n' +
         'Message:\n' + String(data.message || '—').slice(0, 2000) + '\n\n' +
-        'Sheet: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
+        'Sheet: ' + ss.getUrl()
     });
 
     return json({ ok: true });
