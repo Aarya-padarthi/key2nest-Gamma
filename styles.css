@@ -4155,6 +4155,40 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .apply-change-link:hover { color: var(--gold-text-strong); }
 .role-general { margin: 24px 0 0; text-align: center; }
 
+/* Inline apply panel — relocated by JS under the role the applicant clicked */
+.role-apply-mount:empty { display: none; }
+.role-apply-mount { text-align: left; }
+.apply-panel {
+  margin-top: 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--elev-2), transparent);
+  box-shadow: var(--shadow-2);
+  padding: 24px;
+}
+.apply-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.apply-panel-head .careers-h2 { margin-bottom: 4px; }
+.apply-close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: none;
+  color: var(--gold-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+}
+.apply-close:hover { border-color: var(--gold-text); color: var(--gold-text-strong); }
+@media (max-width: 640px) { .apply-panel { padding: 18px; } }
+
 /* Resume upload */
 .careers-file {
   width: 100%;

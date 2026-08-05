@@ -217,6 +217,7 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator (Retail)">Apply for this role</button>
+              <div class="role-apply-mount"></div>
             </div>
           </details>
 
@@ -253,6 +254,7 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Senior Mortgage Loan Originator">Apply for this role</button>
+              <div class="role-apply-mount"></div>
             </div>
           </details>
 
@@ -289,6 +291,7 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Purchase Specialist">Apply for this role</button>
+              <div class="role-apply-mount"></div>
             </div>
           </details>
 
@@ -324,6 +327,7 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Self-Generated Business">Apply for this role</button>
+              <div class="role-apply-mount"></div>
             </div>
           </details>
 
@@ -360,18 +364,26 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary role-apply-btn" data-role-apply="Entry-Level Mortgage Loan Originator">Apply for this role</button>
+              <div class="role-apply-mount"></div>
             </div>
           </details>
 
         </div>
 
-        <p class="role-general"><button type="button" class="apply-change-link" data-role-apply="Open application">Don't see your role? Submit a general application →</button></p>
+        <div class="role-general">
+          <button type="button" class="apply-change-link" data-role-apply="Open application">Don't see your role? Submit a general application →</button>
+          <div class="role-apply-mount"></div>
+        </div>
       </section>
 
-      <!-- Apply form — hidden until a role's "Apply" button reveals it, locked to that role -->
-      <section class="careers-section" id="apply" aria-labelledby="apply-h" hidden>
-        <h2 class="careers-h2" id="apply-h">Apply &mdash; <span id="apply-role-name"></span></h2>
-        <p class="careers-sub">Attach your resume and tell us about yourself — we review every application. <button type="button" id="apply-change-role" class="apply-change-link">Choose a different role</button></p>
+      <!-- Movable apply panel — JS relocates it into the mount under the role the
+           applicant clicked; only one is ever open at a time. Starts here, hidden. -->
+      <div class="apply-panel" id="apply-panel" role="region" aria-labelledby="apply-h" hidden>
+        <div class="apply-panel-head">
+          <h2 class="careers-h2" id="apply-h">Apply &mdash; <span id="apply-role-name"></span></h2>
+          <button type="button" id="apply-close" class="apply-close" aria-label="Close application form">&times;</button>
+        </div>
+        <p class="careers-sub">Attach your resume and tell us about yourself — we review every application.</p>
 
         <form id="careers-form" class="contact-form" method="POST" novalidate>
           <div class="form-row">
@@ -450,7 +462,7 @@
             <p><strong>Something went wrong sending your application.</strong> Please email your resume to <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1 (972) 565-2199</a> — we'll make sure it's received.</p>
           </div>
         </form>
-      </section>
+      </div>
 
       <!-- Closing: equal-opportunity notice + recruiting contact (always visible) -->
       <section class="careers-section careers-closing" aria-label="Equal opportunity and recruiting contact">

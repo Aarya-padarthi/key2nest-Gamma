@@ -27,38 +27,54 @@
   const form = document.getElementById('careers-form');
   if (!form) return;
 
-  /* ---------- Role "Apply" buttons → reveal the form, locked to that role ----------
-     There is no standalone form with a role dropdown. Each role's Apply button
-     (and the general-application link) reveals the form and fixes the role, so
-     the role recorded in the sheet + email is exactly the one applied to. */
-  const applySection = document.getElementById('apply');
+  /* ---------- Role "Apply" buttons → open the form inline under that role ----------
+     There is no standalone form with a dropdown. Each role card (and the
+     general-application link) carries a mount point; clicking Apply relocates
+     the single apply panel into that mount, locked to the role, which closes it
+     wherever it was before — so only one form is ever open, always under the
+     role being applied to, and the role recorded in the sheet + email matches. */
+  const applyPanel = document.getElementById('apply-panel');
   const roleInput = document.getElementById('c-role');
   const roleNameEls = ['apply-role-name', 'apply-role-locked'].map((id) => document.getElementById(id));
   let formRevealed = false;
 
-  function revealApply(role) {
+  /* Turnstile can't survive being reparented (moving an iframe reloads it), so
+     the widget is removed before each move and re-rendered in the new location. */
+  function resetTurnstile() {
+    if (tsWidget !== null && window.turnstile) {
+      try { window.turnstile.remove(tsWidget); } catch (e) { /* already gone */ }
+    }
+    tsWidget = null;
+    tsToken = '';
+  }
+
+  function revealApply(btn) {
+    const role = btn.getAttribute('data-role-apply');
+    const mount = btn.parentElement.querySelector('.role-apply-mount');
+    if (!mount || !applyPanel) return;
+    resetTurnstile();
+    mount.appendChild(applyPanel); // relocate under this role; any previous mount is left empty
     roleInput.value = role;
     roleInput.setAttribute('value', role); // keep the role through form.reset()
     roleNameEls.forEach((el) => { if (el) el.textContent = role; });
-    form.querySelectorAll('.form-success, .form-failure').forEach((b) => { b.hidden = true; });
-    applySection.hidden = false;
+    applyPanel.querySelectorAll('.form-success, .form-failure').forEach((b) => { b.hidden = true; });
+    applyPanel.hidden = false;
     formRevealed = true;
     if (window.__k2nTs && window.__k2nTs.ready) window.__k2nTsRender();
-    applySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    applyPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     const first = document.getElementById('c-name');
     if (first) first.focus({ preventScroll: true });
   }
 
   document.querySelectorAll('[data-role-apply]').forEach((btn) => {
-    btn.addEventListener('click', () => revealApply(btn.getAttribute('data-role-apply')));
+    btn.addEventListener('click', () => revealApply(btn));
   });
 
-  const changeRoleBtn = document.getElementById('apply-change-role');
-  if (changeRoleBtn) {
-    changeRoleBtn.addEventListener('click', () => {
-      applySection.hidden = true;
-      const rolesHead = document.getElementById('roles-h');
-      if (rolesHead) rolesHead.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const closeBtn = document.getElementById('apply-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      applyPanel.hidden = true;
+      resetTurnstile();
     });
   }
 
