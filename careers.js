@@ -11,7 +11,7 @@
   /* Paste the /exec URL of the deployed careers Apps Script here.
      Until it is set, submissions show the failure message with the
      email fallback instead of pretending to succeed. */
-  const CAREERS_ENDPOINT = '';
+  const CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
 
   const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
   const MAX_RESUME_BYTES = 5 * 1024 * 1024;
