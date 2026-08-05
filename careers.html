@@ -176,130 +176,191 @@
       <!-- Open roles -->
       <section class="careers-section" aria-labelledby="roles-h">
         <h2 class="careers-h2" id="roles-h">Open roles</h2>
-        <p class="careers-sub">Tap a role to see the full description, then apply below.</p>
+        <p class="careers-sub">Select a role for the full description, then apply below.</p>
 
-        <!-- ROLE TEMPLATE — to add a role: copy one <details> block, edit the
-             text, and add a matching <option> to the form's role select.
-             To close a role: add the `hidden` attribute to its <details> tag
-             and remove/comment its <option>. Never delete blocks. -->
-        <div class="faq-list">
+        <!-- ROLE TEMPLATE — to add a role: copy one <details class="role-card">
+             block, edit the eyebrow/title/hook/lists, and add a matching
+             <option> to the form's role select (the data-role-apply value must
+             match the option value exactly). To close a role: add the `hidden`
+             attribute to its <details> tag and remove/comment its <option>. -->
+        <div class="role-cards">
 
-          <details class="faq-item" id="role-retail">
-            <summary>
-              <span class="faq-q">Mortgage Loan Originator (Retail)</span>
-              <span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          <details class="role-card" id="role-retail">
+            <summary class="role-card-head">
+              <span class="role-card-lead">
+                <span class="role-card-loc">Texas · Remote / Hybrid · Full-Time</span>
+                <span class="role-card-title">Mortgage Loan Originator (Retail)</span>
+                <span class="role-card-hook">Grow purchase and refinance business, guiding borrowers from first call to closing.</span>
+              </span>
+              <span class="role-card-cta">
+                <span class="role-card-cta-tx">View role</span>
+                <span class="role-card-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
             </summary>
-            <div class="faq-a">
-              <p class="role-meta"><span class="role-tag">Texas</span><span class="role-tag">Remote / Hybrid</span><span class="role-tag">Full-Time</span></p>
-              <p class="role-block-h">Responsibilities</p>
-              <ul class="role-list">
-                <li>Generate purchase and refinance business</li>
-                <li>Build relationships with Realtors and referral partners</li>
-                <li>Guide borrowers from application to closing</li>
-                <li>Meet monthly production goals</li>
-              </ul>
-              <p class="role-block-h">Requirements</p>
-              <ul class="role-list">
-                <li>Active Texas MLO license</li>
-                <li>Strong sales and communication skills</li>
-                <li>Self-motivated and customer-focused</li>
-              </ul>
-              <a href="#apply" class="btn btn-ghost role-apply-btn" data-role-apply="Mortgage Loan Originator (Retail)">Apply for this role</a>
+            <div class="role-card-body">
+              <div class="role-card-cols">
+                <div>
+                  <p class="role-block-h">Responsibilities</p>
+                  <ul class="role-list">
+                    <li>Generate purchase and refinance business</li>
+                    <li>Build relationships with Realtors and referral partners</li>
+                    <li>Guide borrowers from application to closing</li>
+                    <li>Meet monthly production goals</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="role-block-h">Requirements</p>
+                  <ul class="role-list">
+                    <li>Active Texas MLO license</li>
+                    <li>Strong sales and communication skills</li>
+                    <li>Self-motivated and customer-focused</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator (Retail)">Apply for this role</a>
             </div>
           </details>
 
-          <details class="faq-item" id="role-senior">
-            <summary>
-              <span class="faq-q">Senior Mortgage Loan Originator</span>
-              <span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          <details class="role-card" id="role-senior">
+            <summary class="role-card-head">
+              <span class="role-card-lead">
+                <span class="role-card-loc">TX · FL · AR · AZ · TN · Remote · Full-Time</span>
+                <span class="role-card-title">Senior Mortgage Loan Originator</span>
+                <span class="role-card-hook">Originate across all five states, mentor the team, and build lasting referral partnerships.</span>
+              </span>
+              <span class="role-card-cta">
+                <span class="role-card-cta-tx">View role</span>
+                <span class="role-card-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
             </summary>
-            <div class="faq-a">
-              <p class="role-meta"><span class="role-tag">TX · FL · AR · AZ · TN</span><span class="role-tag">Remote</span><span class="role-tag">Full-Time</span></p>
-              <p class="role-block-h">Responsibilities</p>
-              <ul class="role-list">
-                <li>Originate residential mortgage loans</li>
-                <li>Mentor junior loan officers</li>
-                <li>Develop referral partnerships</li>
-                <li>Maintain high compliance standards</li>
-              </ul>
-              <p class="role-block-h">Requirements</p>
-              <ul class="role-list">
-                <li>Active NMLS license</li>
-                <li>Proven mortgage production history</li>
-                <li>Strong industry relationships</li>
-              </ul>
-              <a href="#apply" class="btn btn-ghost role-apply-btn" data-role-apply="Senior Mortgage Loan Originator">Apply for this role</a>
+            <div class="role-card-body">
+              <div class="role-card-cols">
+                <div>
+                  <p class="role-block-h">Responsibilities</p>
+                  <ul class="role-list">
+                    <li>Originate residential mortgage loans</li>
+                    <li>Mentor junior loan officers</li>
+                    <li>Develop referral partnerships</li>
+                    <li>Maintain high compliance standards</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="role-block-h">Requirements</p>
+                  <ul class="role-list">
+                    <li>Active NMLS license</li>
+                    <li>Proven mortgage production history</li>
+                    <li>Strong industry relationships</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Senior Mortgage Loan Originator">Apply for this role</a>
             </div>
           </details>
 
-          <details class="faq-item" id="role-purchase">
-            <summary>
-              <span class="faq-q">Mortgage Loan Originator — Purchase Specialist</span>
-              <span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          <details class="role-card" id="role-purchase">
+            <summary class="role-card-head">
+              <span class="role-card-lead">
+                <span class="role-card-loc">Remote — Licensed States · Full-Time</span>
+                <span class="role-card-title">Mortgage Loan Originator — Purchase Specialist</span>
+                <span class="role-card-hook">Own the purchase journey — partner with Realtors and builders, and win first-time buyers.</span>
+              </span>
+              <span class="role-card-cta">
+                <span class="role-card-cta-tx">View role</span>
+                <span class="role-card-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
             </summary>
-            <div class="faq-a">
-              <p class="role-meta"><span class="role-tag">Remote — Licensed States</span><span class="role-tag">Full-Time</span></p>
-              <p class="role-block-h">Responsibilities</p>
-              <ul class="role-list">
-                <li>Focus on home purchase transactions</li>
-                <li>Partner with Realtors and builders</li>
-                <li>Educate first-time homebuyers</li>
-                <li>Deliver exceptional customer service</li>
-              </ul>
-              <p class="role-block-h">Requirements</p>
-              <ul class="role-list">
-                <li>Active MLO license</li>
-                <li>Purchase loan experience preferred</li>
-                <li>Excellent communication skills</li>
-              </ul>
-              <a href="#apply" class="btn btn-ghost role-apply-btn" data-role-apply="Mortgage Loan Originator — Purchase Specialist">Apply for this role</a>
+            <div class="role-card-body">
+              <div class="role-card-cols">
+                <div>
+                  <p class="role-block-h">Responsibilities</p>
+                  <ul class="role-list">
+                    <li>Focus on home purchase transactions</li>
+                    <li>Partner with Realtors and builders</li>
+                    <li>Educate first-time homebuyers</li>
+                    <li>Deliver exceptional customer service</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="role-block-h">Requirements</p>
+                  <ul class="role-list">
+                    <li>Active MLO license</li>
+                    <li>Purchase loan experience preferred</li>
+                    <li>Excellent communication skills</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Purchase Specialist">Apply for this role</a>
             </div>
           </details>
 
-          <details class="faq-item" id="role-selfgen">
-            <summary>
-              <span class="faq-q">Mortgage Loan Originator — Self-Generated Business</span>
-              <span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          <details class="role-card" id="role-selfgen">
+            <summary class="role-card-head">
+              <span class="role-card-lead">
+                <span class="role-card-loc">Remote · Full-Time</span>
+                <span class="role-card-title">Mortgage Loan Originator — Self-Generated Business</span>
+                <span class="role-card-hook">Run your own pipeline — purchase, refinance, DSCR, HELOC, and Jumbo.</span>
+              </span>
+              <span class="role-card-cta">
+                <span class="role-card-cta-tx">View role</span>
+                <span class="role-card-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
             </summary>
-            <div class="faq-a">
-              <p class="role-meta"><span class="role-tag">Remote</span><span class="role-tag">Full-Time</span></p>
-              <p class="role-block-h">Responsibilities</p>
-              <ul class="role-list">
-                <li>Build and manage your own pipeline</li>
-                <li>Prospect through networking and marketing</li>
-                <li>Close purchase, refinance, DSCR, HELOC, and Jumbo loans</li>
-              </ul>
-              <p class="role-block-h">Requirements</p>
-              <ul class="role-list">
-                <li>Active NMLS license</li>
-                <li>Entrepreneurial mindset</li>
-                <li>Ability to consistently generate business</li>
-              </ul>
-              <a href="#apply" class="btn btn-ghost role-apply-btn" data-role-apply="Mortgage Loan Originator — Self-Generated Business">Apply for this role</a>
+            <div class="role-card-body">
+              <div class="role-card-cols">
+                <div>
+                  <p class="role-block-h">Responsibilities</p>
+                  <ul class="role-list">
+                    <li>Build and manage your own pipeline</li>
+                    <li>Prospect through networking and marketing</li>
+                    <li>Close purchase, refinance, DSCR, HELOC, and Jumbo loans</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="role-block-h">Requirements</p>
+                  <ul class="role-list">
+                    <li>Active NMLS license</li>
+                    <li>Entrepreneurial mindset</li>
+                    <li>Ability to consistently generate business</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Mortgage Loan Originator — Self-Generated Business">Apply for this role</a>
             </div>
           </details>
 
-          <details class="faq-item" id="role-entry">
-            <summary>
-              <span class="faq-q">Entry-Level Mortgage Loan Originator</span>
-              <span class="faq-toggle" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          <details class="role-card" id="role-entry">
+            <summary class="role-card-head">
+              <span class="role-card-lead">
+                <span class="role-card-loc">Remote · Full-Time</span>
+                <span class="role-card-title">Entry-Level Mortgage Loan Originator</span>
+                <span class="role-card-hook">Learn the business hands-on and grow into a full-time producer.</span>
+              </span>
+              <span class="role-card-cta">
+                <span class="role-card-cta-tx">View role</span>
+                <span class="role-card-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
             </summary>
-            <div class="faq-a">
-              <p class="role-meta"><span class="role-tag">Remote</span><span class="role-tag">Full-Time</span></p>
-              <p class="role-block-h">Responsibilities</p>
-              <ul class="role-list">
-                <li>Learn the mortgage process</li>
-                <li>Assist senior loan officers</li>
-                <li>Build a personal referral network</li>
-                <li>Develop into a full-time producer</li>
-              </ul>
-              <p class="role-block-h">Requirements</p>
-              <ul class="role-list">
-                <li>Active or eligible MLO license</li>
-                <li>Strong work ethic</li>
-                <li>Excellent customer service skills</li>
-              </ul>
-              <a href="#apply" class="btn btn-ghost role-apply-btn" data-role-apply="Entry-Level Mortgage Loan Originator">Apply for this role</a>
+            <div class="role-card-body">
+              <div class="role-card-cols">
+                <div>
+                  <p class="role-block-h">Responsibilities</p>
+                  <ul class="role-list">
+                    <li>Learn the mortgage process</li>
+                    <li>Assist senior loan officers</li>
+                    <li>Build a personal referral network</li>
+                    <li>Develop into a full-time producer</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="role-block-h">Requirements</p>
+                  <ul class="role-list">
+                    <li>Active or eligible MLO license</li>
+                    <li>Strong work ethic</li>
+                    <li>Excellent customer service skills</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#apply" class="btn btn-primary role-apply-btn" data-role-apply="Entry-Level Mortgage Loan Originator">Apply for this role</a>
             </div>
           </details>
 
