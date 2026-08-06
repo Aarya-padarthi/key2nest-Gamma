@@ -10,7 +10,7 @@
   const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const saveData = !!(conn && (conn.saveData || /(2g|slow-2g)/.test(conn.effectiveType || '')));
 
-  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwt7mpLIb2-PDYWD3hqLdu_szTyeiLRNursMFHVkKYvAGdeu_UlnOT7cE_EVBpeU4U/exec';
+  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbysqolgKHBm0Vh70-s-kx7_zVsa1__9DXfuGLwpjX4RJdW56RMZfHvJE2W7rLnQ_Oma/exec';
 
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
