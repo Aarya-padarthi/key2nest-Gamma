@@ -2309,6 +2309,15 @@ a, button { -webkit-tap-highlight-color: transparent; }
   font-size: 14px;
   line-height: 1.5;
 }
+.form-duplicate {
+  padding: 18px;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 12px;
+  color: var(--warning-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
 .form-failure p { margin: 0; }
 
 /* =====================  Pre-footer CTA  ===================== */
@@ -3965,9 +3974,9 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-main { padding: 56px 0 88px; }
 .careers-lede {
   color: var(--text-secondary);
-  font-size: 16.5px;
-  line-height: 1.65;
-  max-width: 640px;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 660px;
   margin: 0 0 6px;
 }
 .careers-meta {
@@ -3984,12 +3993,13 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-h2 {
   font-family: "Source Serif 4", serif;
   font-variation-settings: "opsz" 48, "wght" 500;
-  font-size: 26px;
+  font-size: clamp(24px, 3vw, 31px);
+  line-height: 1.15;
   color: var(--cream);
-  letter-spacing: -0.015em;
-  margin: 0 0 6px;
+  letter-spacing: -0.018em;
+  margin: 0 0 8px;
 }
-.careers-sub { color: var(--text-muted); font-size: 14px; margin: 0 0 20px; }
+.careers-sub { color: var(--text-muted); font-size: 14.5px; line-height: 1.6; margin: 0 0 22px; }
 
 .why-grid {
   display: grid;
@@ -4048,6 +4058,150 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .role-list li { margin: 4px 0; }
 .role-apply-btn { margin-top: 20px; }
 
+/* Open roles — premium expandable cards (replaces the FAQ-style accordion) */
+.role-cards { display: flex; flex-direction: column; gap: 14px; max-width: 880px; }
+.role-card {
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--elev-1), transparent);
+  padding: 2px 24px;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+.role-card:hover { border-color: var(--hairline); }
+.role-card[open] {
+  border-color: var(--hairline);
+  background: linear-gradient(180deg, var(--elev-2), transparent);
+  box-shadow: var(--shadow-1);
+}
+.role-card-head {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+}
+.role-card-head::-webkit-details-marker { display: none; }
+.role-card-lead { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.role-card-loc {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+.role-card-title {
+  font-family: "Source Serif 4", serif;
+  font-variation-settings: "opsz" 36, "wght" 500;
+  font-size: clamp(18px, 1.6vw, 22px);
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  transition: color 0.22s var(--ease-out);
+}
+.role-card-hook { font-size: 14px; color: var(--text-muted); line-height: 1.5; max-width: 54ch; }
+.role-card:hover .role-card-title { color: var(--gold-text-strong); }
+.role-card-cta { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; color: var(--gold-text); }
+.role-card-cta-tx { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.role-card-chev {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-text-mid);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+.role-card-chev svg { transition: transform 0.32s var(--ease-luxe); }
+.role-card[open] .role-card-chev {
+  border-color: var(--gold-text);
+  background: rgba(var(--brass-rgb), 0.08);
+  color: var(--gold-text-strong);
+}
+.role-card[open] .role-card-chev svg { transform: rotate(180deg); }
+.role-card-body { padding: 2px 0 24px; border-top: 1px solid var(--hairline-soft); }
+.role-card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
+.role-card .role-apply-btn { margin-top: 24px; }
+@media (max-width: 640px) {
+  .careers-main { padding: 40px 0 64px; }
+  .careers-section { margin-top: 40px; }
+  .careers-lede { font-size: 16.5px; }
+  .role-card { padding: 0 18px; }
+  .role-card-cta-tx { display: none; }
+  .role-card-cols { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* Careers whole-page polish: meta pills + interactive why-chips */
+.careers-meta span {
+  border: 1px solid var(--hairline-soft);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+.why-chip { transition: transform 0.3s var(--ease-luxe), border-color 0.3s, box-shadow 0.3s; }
+.why-chip:hover { transform: translateY(-2px); border-color: var(--hairline); box-shadow: var(--shadow-2); }
+
+/* Contextual apply: locked role field + change-role / general-application links */
+.apply-role-locked {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: rgba(var(--brass-rgb), 0.06);
+  color: var(--gold-text);
+  font-weight: 600;
+  font-size: 15px;
+}
+.apply-change-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--gold-text);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.22s var(--ease-out);
+}
+.apply-change-link:hover { color: var(--gold-text-strong); }
+.role-general { margin: 24px 0 0; text-align: center; }
+
+/* Inline apply panel — relocated by JS under the role the applicant clicked */
+.role-apply-mount:empty { display: none; }
+.role-apply-mount { text-align: left; }
+.apply-panel {
+  margin-top: 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--elev-2), transparent);
+  box-shadow: var(--shadow-2);
+  padding: 24px;
+}
+.apply-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.apply-panel-head .careers-h2 { font-size: clamp(20px, 2.2vw, 24px); margin-bottom: 4px; }
+.apply-close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: none;
+  color: var(--gold-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+}
+.apply-close:hover { border-color: var(--gold-text); color: var(--gold-text-strong); }
+@media (max-width: 640px) { .apply-panel { padding: 18px; } }
+
 /* Resume upload */
 .careers-file {
   width: 100%;
@@ -4087,3 +4241,47 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .careers-contact-line { margin-top: 12px; font-size: 14px; color: var(--text-secondary); }
 .careers-contact-line a { color: var(--gold-text); text-decoration: none; }
 .careers-contact-line a:hover { text-decoration: underline; }
+
+/* Apply Today — recruiting contact card (reuses why-chip surface language) */
+.careers-contact-card {
+  margin-top: 24px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  padding: 24px 22px;
+  background: linear-gradient(180deg, var(--elev-1), transparent);
+  text-align: center;
+}
+.careers-contact-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin: 0 0 10px;
+}
+.careers-contact-org {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+.careers-contact-nmls { font-size: 12.5px; color: var(--text-muted); margin: 0 0 18px; }
+.careers-contact-nmls a { color: var(--gold-text); text-decoration: none; }
+.careers-contact-nmls a:hover { text-decoration: underline; }
+.careers-contact-channels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 22px;
+}
+.careers-contact-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.careers-contact-channel:hover { color: var(--gold-text); }
+.careers-contact-channel svg { width: 16px; height: 16px; color: var(--gold-text); flex: none; }

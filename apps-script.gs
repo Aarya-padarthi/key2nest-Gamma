@@ -22,7 +22,7 @@
  *
  * ── DEPLOYMENT (~3 minutes) ───────────────────────────────────────────────
  *   1. Open your Google Sheet:
- *      https://docs.google.com/spreadsheets/d/1628Z84TsXOpDDg2Z15sJoD5j0Me7tCHbKduSGw5Cvkw/edit
+ *      https://docs.google.com/spreadsheets/d/1iRjyfZKua4N1Q6RP0ebwkqTxO8Q-WWnXfpPGNgQ7VpY/edit
  *   2. Make sure Row 1 of the target tab has these headers (in this exact order):
  *      A: Timestamp  |  B: Name  |  C: Email  |  D: Phone  |  E: Loan Type  |  F: Message  |  G: Source
  *   3. Click Extensions → Apps Script
@@ -53,6 +53,9 @@
  */
 
 const SHEET_NAME = 'Sheet1'; // Change to match the tab name where leads should land.
+// Leads land in THIS spreadsheet (opened by ID):
+// https://docs.google.com/spreadsheets/d/1iRjyfZKua4N1Q6RP0ebwkqTxO8Q-WWnXfpPGNgQ7VpY/edit
+const SHEET_ID = '1iRjyfZKua4N1Q6RP0ebwkqTxO8Q-WWnXfpPGNgQ7VpY';
 const NOTIFY_EMAIL = 'contact@key2nesthomeloans.com';
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
@@ -68,7 +71,7 @@ function doPost(e) {
     delete data.turnstileToken; // single-use, never stored
 
     // ── 2. Append the lead to the sheet ──
-    const ss = SpreadsheetApp.openById('1628Z84TsXOpDDg2Z15sJoD5j0Me7tCHbKduSGw5Cvkw');
+    const ss = SpreadsheetApp.openById(SHEET_ID);
     const sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
 
     const row = [
