@@ -50,10 +50,10 @@
 
   function revealApply(btn) {
     const role = btn.getAttribute('data-role-apply');
-    const mount = document.getElementById('apply-mount'); // single mount below the role carousel
+    const mount = btn.parentElement.querySelector('.role-apply-mount');
     if (!mount || !applyPanel) return;
     resetTurnstile();
-    mount.appendChild(applyPanel); // relocate below the carousel; closes it wherever it was
+    mount.appendChild(applyPanel); // relocate under this role; any previous mount is left empty
     roleInput.value = role;
     roleInput.setAttribute('value', role); // keep the role through form.reset()
     roleNameEls.forEach((el) => { if (el) el.textContent = role; });
@@ -238,107 +238,4 @@
       if (tsWidget !== null && window.turnstile) window.turnstile.reset(tsWidget);
     }
   });
-})();
-
-/* =========================================================================
-   Role carousel — 3D coverflow enhancement for the Loan Originator
-   Opportunities. Progressive: only enhances when motion is allowed; without JS
-   or under reduced-motion the markup stays an accessible stacked list of cards.
-   ========================================================================= */
-(function () {
-  'use strict';
-  const root = document.querySelector('[data-role-carousel]');
-  if (!root) return;
-  const viewport = root.querySelector('.role-carousel-viewport');
-  const slides = Array.prototype.slice.call(root.querySelectorAll('[data-role-slide]'));
-  const dots = Array.prototype.slice.call(root.querySelectorAll('[data-carousel-dot]'));
-  if (!viewport || slides.length < 2) return;
-
-  // Respect reduced-motion: leave the accessible stacked layout untouched.
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  root.classList.add('is-enhanced');
-  const n = slides.length;
-  let active = 0;
-
-  function stepPx() {
-    return Math.max(120, Math.min(210, viewport.clientWidth * 0.3));
-  }
-
-  function layout() {
-    const step = stepPx();
-    slides.forEach(function (slide, i) {
-      let d = (i - active + n) % n;
-      if (d > n / 2) d -= n;
-      const abs = Math.abs(d);
-      const tx = d * step;
-      const tz = d === 0 ? 0 : -160 - (abs - 1) * 40;
-      const ry = d === 0 ? 0 : (d < 0 ? 32 : -32);
-      const sc = d === 0 ? 1 : Math.max(0.78, 0.9 - abs * 0.06);
-      slide.style.transform =
-        'translateX(calc(-50% + ' + tx + 'px)) translateZ(' + tz + 'px) rotateY(' + ry + 'deg) scale(' + sc + ')';
-      slide.style.opacity = abs > 2 ? '0' : (d === 0 ? '1' : '0.5');
-      slide.style.zIndex = String(n - abs);
-      slide.style.pointerEvents = abs > 2 ? 'none' : 'auto';
-      slide.classList.toggle('is-active', d === 0);
-      slide.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
-      slide.querySelectorAll('button, a, input, textarea').forEach(function (el) {
-        el.tabIndex = d === 0 ? 0 : -1;
-      });
-    });
-    dots.forEach(function (dot, i) {
-      dot.classList.toggle('is-active', i === active);
-      dot.setAttribute('aria-current', i === active ? 'true' : 'false');
-    });
-  }
-
-  function go(i) { active = ((i % n) + n) % n; layout(); }
-  function next() { go(active + 1); }
-  function prev() { go(active - 1); }
-
-  // Click a non-active slide (but not its buttons/links) to bring it to centre.
-  slides.forEach(function (slide, i) {
-    slide.addEventListener('click', function (e) {
-      if (i !== active && !e.target.closest('button, a')) go(i);
-    });
-  });
-
-  const prevBtn = root.querySelector('[data-carousel-prev]');
-  const nextBtn = root.querySelector('[data-carousel-next]');
-  if (prevBtn) prevBtn.addEventListener('click', prev);
-  if (nextBtn) nextBtn.addEventListener('click', next);
-  dots.forEach(function (dot, i) { dot.addEventListener('click', function () { go(i); }); });
-
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') prev();
-    else if (e.key === 'ArrowRight') next();
-  });
-
-  // Touch swipe.
-  let startX = 0;
-  viewport.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener('touchend', function (e) {
-    const dx = startX - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 45) { if (dx > 0) next(); else prev(); }
-  }, { passive: true });
-
-  // Hover-tilt on the active slide, applied via CSS vars to its inner layer so
-  // it doesn't fight the positioning transition.
-  viewport.addEventListener('mousemove', function (e) {
-    const slide = slides[active];
-    if (!slide) return;
-    const r = slide.getBoundingClientRect();
-    const px = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2)));
-    const py = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2)));
-    slide.style.setProperty('--tiltY', (px * 9).toFixed(2) + 'deg');
-    slide.style.setProperty('--tiltX', (py * -6).toFixed(2) + 'deg');
-  });
-  viewport.addEventListener('mouseleave', function () {
-    slides.forEach(function (s) { s.style.setProperty('--tiltY', '0deg'); s.style.setProperty('--tiltX', '0deg'); });
-  });
-
-  let rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 120); });
-
-  layout();
 })();
