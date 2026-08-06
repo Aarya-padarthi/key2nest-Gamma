@@ -90,6 +90,16 @@ function doPost(e) {
       }
     }
 
+    // Open the sheet up front and reject duplicates BEFORE storing anything, so a
+    // duplicate never creates an orphan Drive file or notification email. Same
+    // applicant (email) + same role is a duplicate; other roles are allowed.
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) return json({ ok: false, error: 'Sheet not set up — run setup() first.' });
+    if (isDuplicate(sheet, data.email, data.role)) {
+      return json({ ok: false, code: 'duplicate', error: 'We have already received your application for this role.' });
+    }
+
     // Resume: decode, size- and type-check server-side (never trust the client).
     const bytes = Utilities.base64Decode(data.resumeData);
     if (bytes.length > MAX_RESUME_BYTES) return json({ ok: false, error: 'Resume over 5 MB.' });
@@ -107,9 +117,6 @@ function doPost(e) {
     const file = getResumeFolder().createFile(blob);
     const resumeUrl = file.getUrl();
 
-    const ss = SpreadsheetApp.openById(SHEET_ID);
-    const sheet = ss.getSheetByName(SHEET_NAME);
-    if (!sheet) return json({ ok: false, error: 'Sheet not set up — run setup() first.' });
     sheet.appendRow([
       new Date(), safe(data.role), safe(data.name), safe(data.email), safe(data.phone),
       safe(data.location), safe(data.nmls || ''), resumeUrl,
@@ -139,6 +146,28 @@ function doPost(e) {
   } catch (err) {
     return json({ ok: false, error: 'Server error: ' + err.message });
   }
+}
+
+/**
+ * Duplicate guard. The same applicant (identified by email) applying to the
+ * SAME role is a duplicate; the same person applying to a DIFFERENT role is
+ * allowed. Compares the Email and Role columns case-insensitively.
+ */
+function isDuplicate(sheet, email, role) {
+  const last = sheet.getLastRow();
+  if (last < 2) return false; // header only, no applications yet
+  const roleCol = HEADERS.indexOf('Role');
+  const emailCol = HEADERS.indexOf('Email');
+  const rows = sheet.getRange(2, 1, last - 1, HEADERS.length).getValues();
+  const e = String(email || '').trim().toLowerCase();
+  const r = String(role || '').trim().toLowerCase();
+  for (let i = 0; i < rows.length; i++) {
+    if (String(rows[i][emailCol] || '').trim().toLowerCase() === e &&
+        String(rows[i][roleCol] || '').trim().toLowerCase() === r) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /** Cloudflare Turnstile siteverify — fails closed, token never stored. */

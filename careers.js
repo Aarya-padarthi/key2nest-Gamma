@@ -57,7 +57,7 @@
     roleInput.value = role;
     roleInput.setAttribute('value', role); // keep the role through form.reset()
     roleNameEls.forEach((el) => { if (el) el.textContent = role; });
-    applyPanel.querySelectorAll('.form-success, .form-failure').forEach((b) => { b.hidden = true; });
+    applyPanel.querySelectorAll('.form-success, .form-failure, .form-duplicate').forEach((b) => { b.hidden = true; });
     applyPanel.hidden = false;
     formRevealed = true;
     if (window.__k2nTs && window.__k2nTs.ready) window.__k2nTsRender();
@@ -167,6 +167,7 @@
   const submitBtn = form.querySelector('.form-submit');
   const successBox = form.querySelector('.form-success');
   const failureBox = form.querySelector('.form-failure');
+  const duplicateBox = form.querySelector('.form-duplicate');
   let sending = false;
 
   form.addEventListener('submit', async (e) => {
@@ -174,6 +175,7 @@
     if (sending) return;
     successBox.hidden = true;
     failureBox.hidden = true;
+    if (duplicateBox) duplicateBox.hidden = true;
     if (!validate()) {
       const firstBad = form.querySelector('.is-invalid');
       if (firstBad) firstBad.focus();
@@ -211,6 +213,15 @@
         body: JSON.stringify(payload)
       });
       const out = await res.json();
+      if (out && out.code === 'duplicate') {
+        if (duplicateBox) {
+          const roleSpan = duplicateBox.querySelector('.dup-role');
+          if (roleSpan) roleSpan.textContent = roleInput.value ? ('the ' + roleInput.value + ' role') : 'this role';
+          duplicateBox.hidden = false;
+          duplicateBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        return; // not a failure — the applicant already applied to this role
+      }
       if (!out || out.ok !== true) throw new Error((out && out.error) || 'server-rejected');
 
       form.reset();

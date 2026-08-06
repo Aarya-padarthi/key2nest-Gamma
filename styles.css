@@ -2309,6 +2309,15 @@ a, button { -webkit-tap-highlight-color: transparent; }
   font-size: 14px;
   line-height: 1.5;
 }
+.form-duplicate {
+  padding: 18px;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 12px;
+  color: var(--warning-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
 .form-failure p { margin: 0; }
 
 /* =====================  Pre-footer CTA  ===================== */
