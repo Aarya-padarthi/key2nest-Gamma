@@ -55,6 +55,18 @@ URL_PREFIX = "/team"
 # if the cards ever move (e.g. "" if the cards folder becomes the site root).
 ASSET_BASE = "/cards"
 
+# Google Analytics 4 tag, injected into each per-person card page's <head> so
+# QR-code scan traffic shows up alongside the main site. Plain string (no
+# f-string) so the gtag() braces don't need escaping.
+GA_TAG = """  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLH3F0F15H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TLH3F0F15H');
+  </script>"""
+
 COMPANY = {
     "name": "Key2Nest Home Loans LLC",
     "nmls": "2819804",
@@ -228,6 +240,7 @@ def build_page(p, card_url):
   <meta name="theme-color" content="#F4EFE3" media="(prefers-color-scheme: light)" />
   <meta name="description" content="{meta_desc}" />
   <meta name="format-detection" content="telephone=no" />
+{GA_TAG}
   <title>{esc(p['name'])} — {esc(COMPANY['name'])}</title>
 
   <link rel="icon" href="{ASSET_BASE}/assets/favicon.ico" sizes="any" />

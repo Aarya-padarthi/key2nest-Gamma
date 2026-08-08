@@ -747,6 +747,7 @@
       });
       form.reset();
       successEl.hidden = false;
+      if (window.gtag) gtag('event', 'generate_lead', { form: 'contact' });
       successEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
     } catch (err) {
       console.error('Form submit failed:', err);
@@ -876,6 +877,7 @@
         });
         midForm.reset();
         midSuccess.hidden = false;
+        if (window.gtag) gtag('event', 'generate_lead', { form: 'midcap' });
         midSuccess.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
       } catch (err) {
         console.error('Mid-page submit failed:', err);

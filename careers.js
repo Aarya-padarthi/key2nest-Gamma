@@ -226,6 +226,7 @@
 
       form.reset();
       successBox.hidden = false;
+      if (window.gtag) gtag('event', 'submit_application', { role: payload.role });
       successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (err) {
       failureBox.hidden = false;
