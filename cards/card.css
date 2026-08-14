@@ -322,6 +322,33 @@ body::before {
 .apply-ar svg { width: 16px; height: 16px; transition: transform 0.3s var(--ease-luxe); }
 .apply:hover .apply-ar svg { transform: translateX(3px); }
 
+/* Primary variant — filled gold, matches the Save-to-Contacts button. Used
+   for the personalized 1003 "Apply Now" that lives above the Contact button. */
+.apply-primary {
+  color: var(--ink);
+  background: var(--gold-grad);
+  border: none;
+  box-shadow: var(--shadow-gold);
+  min-height: 56px;
+  font-size: 15.5px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.apply-primary::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--gold-sheen);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.apply-primary:hover { background: var(--gold-grad); }
+.apply-primary:active { transform: scale(0.985); }
+/* Tighten the gap when the two CTAs are stacked (primary above, secondary below). */
+.apply-primary + .apply { margin-top: 10px; }
+
 /* ---------- Footer ---------- */
 .foot {
   margin: 32px 0 0;
