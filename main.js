@@ -739,12 +739,16 @@
     }
 
     try {
-      await fetch(SHEETS_ENDPOINT, {
+      /* text/plain avoids a CORS preflight (Apps Script can't answer OPTIONS);
+         the real POST still returns CORS headers, so we read the JSON verdict
+         and show the truth instead of pretending every submit succeeded. */
+      const res = await fetch(SHEETS_ENDPOINT, {
         method: 'POST',
-        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload),
       });
+      const out = await res.json();
+      if (!out || out.ok !== true) throw new Error((out && out.error) || 'server-rejected');
       form.reset();
       successEl.hidden = false;
       if (window.gtag) gtag('event', 'generate_lead', { form: 'contact' });
@@ -752,6 +756,7 @@
     } catch (err) {
       console.error('Form submit failed:', err);
       failEl.hidden = false;
+      failEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
     } finally {
       submitBtn.classList.remove('is-loading');
       submitBtn.disabled = false;
@@ -869,12 +874,13 @@
       };
 
       try {
-        await fetch(SHEETS_ENDPOINT, {
+        const res = await fetch(SHEETS_ENDPOINT, {
           method: 'POST',
-          mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload),
         });
+        const out = await res.json();
+        if (!out || out.ok !== true) throw new Error((out && out.error) || 'server-rejected');
         midForm.reset();
         midSuccess.hidden = false;
         if (window.gtag) gtag('event', 'generate_lead', { form: 'midcap' });
