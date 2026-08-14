@@ -919,6 +919,7 @@
           <div class="team-modal-divider"></div>
           <p class="team-modal-bio" id="tm-bio"></p>
           <div class="team-modal-contact" id="tm-contact"></div>
+          <a id="tm-apply" class="btn btn-primary team-modal-apply" href="#" target="_blank" rel="noopener" hidden>Apply Now</a>
         </div>
       </div>
     </div>`);
@@ -947,6 +948,25 @@
     document.getElementById('tm-bio').textContent   = card.querySelector('.team-bio')?.textContent || '';
     // Clone the card's contact lines (phone / email / WhatsApp) into the modal
     document.getElementById('tm-contact').innerHTML = card.querySelector('.team-contact')?.innerHTML || '';
+
+    /* Wire the personalized "Apply Now" CTA. The NMLS number is the last
+       token of the card's .team-nmls text (e.g. "NMLS #2331676"). If we
+       can't parse a number, hide the button rather than sending applicants
+       to a broken /register URL. */
+    const applyBtn = document.getElementById('tm-apply');
+    const nmlsText = card.querySelector('.team-nmls')?.textContent || '';
+    const nmlsMatch = nmlsText.match(/\d{5,}/);
+    if (applyBtn && nmlsMatch) {
+      const nmls = nmlsMatch[0];
+      const advisorName = card.querySelector('.team-name')?.textContent.trim() || '';
+      applyBtn.href = `https://key2nesthomeloans.my1003app.com/${nmls}/register`;
+      applyBtn.hidden = false;
+      applyBtn.onclick = () => {
+        if (window.gtag) gtag('event', 'apply_now_click', { mlo: advisorName, nmls });
+      };
+    } else if (applyBtn) {
+      applyBtn.hidden = true;
+    }
 
     lastTrigger = trigger || document.activeElement;
     lockY = window.scrollY;

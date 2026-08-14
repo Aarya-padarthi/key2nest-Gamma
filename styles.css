@@ -3766,6 +3766,18 @@ html[data-theme="light"] .site-nav.is-scrolled {
 .team-modal-contact { display: flex; flex-direction: column; gap: 3px; margin-top: var(--sp-20); }
 .team-modal-contact .team-contact-line { font-size: 14px; padding: 8px 6px; }
 .team-modal-contact .team-contact-line .tc-text { white-space: normal; }
+/* Personalized Apply Now CTA — routes to the MLO's my1003app.com/<NMLS>/register.
+   Full-width, primary/gold, sits below the contact rows so applicants have a
+   clear next step once they've decided this is their loan officer. */
+.team-modal-apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: var(--sp-20);
+  min-height: 48px;
+  text-decoration: none;
+}
 @media (max-width: 640px) {
   .team-modal-card-split { flex-direction: column; overflow-y: auto; }
   .team-modal-photo-lg { flex: 0 0 auto; height: 240px; width: 100%; }

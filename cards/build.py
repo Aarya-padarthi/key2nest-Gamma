@@ -259,7 +259,7 @@ def build_page(p, card_url):
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{ASSET_BASE}/card.css" />
+  <link rel="stylesheet" href="{ASSET_BASE}/card.css?v=rev31" />
 
   <script type="application/ld+json">
   {{
@@ -316,8 +316,15 @@ def build_page(p, card_url):
 {contact_rows}
     </nav>
 
-    <a class="apply" href="{esc(COMPANY['apply_url'])}" target="_blank" rel="noopener">
+    <a class="apply apply-primary" href="https://key2nesthomeloans.my1003app.com/{p['nmls']}/register" target="_blank" rel="noopener" data-mlo="{esc(p['slug'])}">
       <span class="apply-tx">Apply Now</span>
+      <span class="apply-ar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="apply" href="{esc(COMPANY['apply_url'])}" target="_blank" rel="noopener">
+      <span class="apply-tx">Contact</span>
       <span class="apply-ar" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </span>
