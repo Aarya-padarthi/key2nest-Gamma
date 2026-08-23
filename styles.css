@@ -3755,31 +3755,38 @@ html[data-theme="light"] .site-nav.is-scrolled {
 .team-card-hint:hover { background: rgba(var(--brass-rgb), 0.12); border-color: var(--brass-400); color: var(--gold-text-strong); }
 
 /* Primary "Apply with {First}" CTA — sits directly above View Profile.
-   Filled gold to draw the eye first; View Profile stays as the softer
-   "learn more" option below. */
+   Typography mirrors the site-wide .btn-primary (hero / prefooter CTAs):
+   normal case, subtle 0.04em tracking, weight 600, Source Sans 3. That's
+   the elegant convention the rest of the site uses — utility all-caps
+   tracking reads out of place next to it. Gold shimmer + inset highlight
+   also lifted from .btn-primary so the button feels part of the same
+   family. Works unchanged in both dark (navy card) and light (cream
+   card) modes because the reference .btn-primary already does. */
 .team-card-apply {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   margin-top: 14px;
-  padding: 10px 14px;
+  padding: 12px 22px;
+  border: 0;
   border-radius: 999px;
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, var(--brass-400) 0%, var(--brass-600) 100%);
+  background: var(--gold-shimmer), linear-gradient(135deg, var(--brass-400) 0%, var(--brass-600) 100%);
   color: #06111E;
   text-decoration: none;
-  font-family: inherit;
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
   font-size: 13px;
-  font-variation-settings: "wght" 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  box-shadow: 0 6px 18px -8px rgba(var(--brass-rgb), 0.55);
-  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px -12px rgba(var(--brass-rgb), 0.55),
+              inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 250ms var(--ease-luxe), box-shadow 300ms var(--ease-out);
 }
 .team-card-apply:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px -8px rgba(var(--brass-rgb), 0.65);
+  box-shadow: 0 14px 34px -12px rgba(var(--brass-rgb), 0.65),
+              inset 0 1px 0 rgba(255, 255, 255, 0.42);
   color: #06111E;
 }
 .team-card-apply:focus-visible {
