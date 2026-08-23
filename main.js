@@ -964,7 +964,7 @@
       applyBtn.textContent = firstName ? `Apply with ${firstName}` : 'Apply Now';
       applyBtn.hidden = false;
       applyBtn.onclick = () => {
-        if (window.gtag) gtag('event', 'apply_now_click', { mlo: advisorName, nmls });
+        if (window.gtag) gtag('event', 'apply_now_click', { mlo: advisorName, nmls, source: 'team_modal' });
       };
     } else if (applyBtn) {
       applyBtn.hidden = true;
@@ -1040,6 +1040,30 @@
   // structured text. The whole-card click survives as a mouse-only nicety.
   document.querySelectorAll('.team-card').forEach((card) => {
     const advisor = card.querySelector('.team-name')?.textContent.trim() || 'this advisor';
+
+    /* Personalized Apply CTA — sits above View Profile so the primary
+       revenue action is the first thing a decided visitor can click.
+       Only inject when we have both a first name and a parseable NMLS;
+       a missing MLO shouldn't yield a broken /register URL. */
+    const firstName = card.dataset.firstName || '';
+    const nmlsMatch = (card.querySelector('.team-nmls')?.textContent || '').match(/\d{5,}/);
+    if (firstName && nmlsMatch) {
+      const nmls = nmlsMatch[0];
+      const apply = document.createElement('a');
+      apply.className = 'team-card-apply';
+      apply.href = `https://key2nesthomeloans.my1003app.com/${nmls}/register`;
+      apply.target = '_blank';
+      apply.rel = 'noopener';
+      apply.setAttribute('aria-label', `Apply with ${firstName} — opens loan application in a new tab`);
+      apply.textContent = `Apply with ${firstName}`;
+      // Card has a whole-card click handler that opens the profile — Apply
+      // must not also open the modal.
+      apply.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.gtag) gtag('event', 'apply_now_click', { mlo: advisor, nmls, source: 'team_card' });
+      });
+      card.appendChild(apply);
+    }
 
     // The single accessible trigger. Its name starts with the visible label so
     // "click View profile" still matches for speech-input users (WCAG 2.5.3),
