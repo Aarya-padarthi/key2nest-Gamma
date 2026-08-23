@@ -959,7 +959,9 @@
     if (applyBtn && nmlsMatch) {
       const nmls = nmlsMatch[0];
       const advisorName = card.querySelector('.team-name')?.textContent.trim() || '';
+      const firstName = card.dataset.firstName || '';
       applyBtn.href = `https://key2nesthomeloans.my1003app.com/${nmls}/register`;
+      applyBtn.textContent = firstName ? `Apply with ${firstName}` : 'Apply Now';
       applyBtn.hidden = false;
       applyBtn.onclick = () => {
         if (window.gtag) gtag('event', 'apply_now_click', { mlo: advisorName, nmls });

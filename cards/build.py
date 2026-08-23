@@ -82,6 +82,7 @@ PEOPLE = [
         "slug": "vivek",
         "name": "Sai Vivek Boddu",
         "first": "Sai Vivek", "last": "Boddu",
+        "apply_name": "Vivek",
         "title": "Co-Founder / Sr. Mortgage Loan Originator",
         "nmls": "2331676",
         "photo": "Vivek.jpeg",
@@ -94,6 +95,7 @@ PEOPLE = [
         "slug": "naveen",
         "name": "Naveen Cheedhalla",
         "first": "Naveen", "last": "Cheedhalla",
+        "apply_name": "Naveen",
         "title": "Co-Founder / Sr. Mortgage Loan Originator",
         "nmls": "2666486",
         "photo": "Naveen.jpeg",
@@ -106,6 +108,7 @@ PEOPLE = [
         "slug": "sreedhar",
         "name": "Sreedhar Seelam",
         "first": "Sreedhar", "last": "Seelam",
+        "apply_name": "Sreedhar",
         "title": "Co-Founder / Sr. Mortgage Loan Originator",
         "nmls": "2085620",
         "photo": "Sreedhar.jpeg",
@@ -118,6 +121,7 @@ PEOPLE = [
         "slug": "lakshmi",
         "name": "Sreelakshmi Jasti",
         "first": "Sreelakshmi", "last": "Jasti",
+        "apply_name": "Lakshmi",
         "title": "Co-Founder / Sr. Mortgage Loan Originator",
         "nmls": "2565439",
         "photo": "Lakshmi.jpeg",
@@ -130,6 +134,7 @@ PEOPLE = [
         "slug": "rj",
         "name": "(RJ) Venkata Rajaneesh Jandhyam",
         "first": "Venkata Rajaneesh", "last": "Jandhyam",
+        "apply_name": "RJ",
         "title": "Co-Founder / Sr. Mortgage Loan Originator",
         "nmls": "2142434",
         "photo": "Rajaneesh_new.png",
@@ -317,7 +322,7 @@ def build_page(p, card_url):
     </nav>
 
     <a class="apply apply-primary" href="https://key2nesthomeloans.my1003app.com/{p['nmls']}/register" target="_blank" rel="noopener" data-mlo="{esc(p['slug'])}">
-      <span class="apply-tx">Apply Now</span>
+      <span class="apply-tx">Apply with {esc(p['apply_name'])}</span>
       <span class="apply-ar" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </span>
