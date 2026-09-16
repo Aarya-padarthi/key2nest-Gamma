@@ -71,7 +71,7 @@ COMPANY = {
     "name": "Key2Nest Home Loans LLC",
     "nmls": "2819804",
     "nmls_url": "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2819804",
-    "states": "Licensed in Arizona, Arkansas, Florida, Connecticut, Tennessee & Texas",
+    "states": "Licensed in Arizona, Arkansas, Connecticut, Florida, Georgia, Kansas, Tennessee & Texas",
     "apply_url": "https://key2nesthomeloans.com/#contact",
     "site_url": "https://key2nesthomeloans.com",
 }
