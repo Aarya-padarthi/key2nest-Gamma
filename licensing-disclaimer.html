@@ -45,7 +45,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev37" />
+  <link rel="stylesheet" href="styles.css?v=rev38" />
 </head>
 <body class="bg-navy text-cream font-sans antialiased legal-page">
   <header class="legal-nav">
@@ -56,7 +56,13 @@
           <img src="assets/Logo_LV-1x.png" srcset="assets/Logo_LV-1x.png 1x, assets/Logo_LV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-light" />
         </span>
       </a>
-      <a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a>
+      <div class="legal-nav-actions">
+        <button type="button" class="theme-toggle" aria-label="Switch between dark and light theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a>
+      </div>
     </div>
   </header>
 
@@ -94,5 +100,23 @@
       <p class="footer-copy" style="margin:0;text-align:center;font-size:12.5px;color:var(--text-muted)">© 2026 Key2Nest Home Loans LLC. All rights reserved. Licensed in States AR, AZ, CT, FL, GA, KS, TN and TX. NMLS #2819804. Equal Housing Lender.</p>
     </div>
   </footer>
+
+  <!-- Theme toggle handler — legal pages don't include main.js, so wire the
+       toggle inline. Same behaviour as the main site: click flips the theme,
+       persists to localStorage under 'k2n-theme', and updates theme-color meta. -->
+  <script>
+    (function () {
+      var btn = document.querySelector('.theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.dataset.theme;
+        var next = current === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('k2n-theme', next); } catch (e) {}
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', next === 'light' ? '#F4EFE3' : '#0B1A2E');
+      });
+    })();
+  </script>
 </body>
 </html>

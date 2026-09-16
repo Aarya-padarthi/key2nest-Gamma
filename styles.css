@@ -2787,6 +2787,13 @@ a, button { -webkit-tap-highlight-color: transparent; }
   justify-content: space-between;
   gap: 16px;
 }
+/* Right-side action group in legal-nav — hosts the theme toggle next to
+   the Contact button so users can switch themes without leaving the page. */
+.legal-nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
 .legal-main {
   padding: 64px 0 96px;
   max-width: 760px;
