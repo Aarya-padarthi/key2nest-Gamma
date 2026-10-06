@@ -82,6 +82,87 @@
     });
   });
 
+  /* ------------------- Nav dropdown (Team parent → Founders / Team) -------------------
+     Desktop mouse: hover-open with a small close delay so cursor can travel
+     from the trigger into the panel without it vanishing. Click on the
+     trigger still navigates to /team (the parent is a real link).
+     Keyboard: Enter on the trigger follows the link; Down Arrow opens the
+     panel and moves focus to the first item (so keyboard users have a
+     non-hover way in); Escape closes and restores focus to the trigger.
+     aria-expanded on the trigger stays in sync for assistive tech. */
+  document.querySelectorAll('.nav-item-dropdown').forEach((item) => {
+    const trigger = item.querySelector('[data-dropdown-trigger]');
+    const panel = item.querySelector('[data-dropdown-panel]');
+    if (!trigger || !panel) return;
+    const items = Array.from(panel.querySelectorAll('a'));
+    let closeTimer = null;
+
+    const open = () => {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      item.dataset.open = 'true';
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      item.dataset.open = 'false';
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+    const closeSoon = () => {
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(close, 160); // forgiving window for cursor travel
+    };
+
+    // Mouse (desktop) — these events don't fire on touch
+    item.addEventListener('mouseenter', open);
+    item.addEventListener('mouseleave', closeSoon);
+
+    // Keyboard — Down Arrow on the trigger opens the panel + focuses first item.
+    // Enter is NOT hijacked — the trigger is a real <a>, so Enter navigates to /team.
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        open();
+        items[0]?.focus();
+      }
+    });
+
+    // Arrow keys within the panel cycle through items
+    items.forEach((link, i) => {
+      link.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+      });
+    });
+
+    // Escape anywhere inside closes and restores focus to the trigger
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && item.dataset.open === 'true') {
+        e.preventDefault();
+        close();
+        trigger.focus();
+      }
+    });
+
+    // Click-outside closes
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target) && item.dataset.open === 'true') close();
+    });
+  });
+
+  /* ------------------- Mobile Team submenu (tap-expand) -------------------
+     The parent 'Team' is a <button>, not an <a>, so it does NOT trigger the
+     mobile-nav auto-close above (which only runs on <a> clicks). It just
+     toggles the submenu panel. The actual <a> children still auto-close
+     the mobile nav on tap. */
+  document.querySelectorAll('[data-mobile-dropdown-trigger]').forEach((btn) => {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!panel) return;
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      panel.hidden = expanded;
+    });
+  });
+
   /* ------------------- Nav scroll state ------------------- */
   const nav = document.getElementById('site-nav');
   const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 24);

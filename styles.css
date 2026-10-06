@@ -413,6 +413,145 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .nav-link:hover { color: var(--cream); }
 .nav-link:hover::after { transform: scaleX(1); }
 
+/* ---------- Nav dropdown (Team parent → Founders / Team children) ---------- */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-link-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.nav-chev {
+  transition: transform 220ms var(--ease-out);
+  opacity: 0.75;
+  margin-top: 1px;
+}
+.nav-item-dropdown[data-open="true"] .nav-chev,
+.nav-link-dropdown[aria-expanded="true"] .nav-chev { transform: rotate(180deg); }
+.nav-item-dropdown[data-open="true"] .nav-link-dropdown { color: var(--cream); }
+
+/* Panel — small, premium, hairline-bordered, sits directly under the trigger */
+.nav-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 180px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: rgba(var(--navy-rgb), 0.96);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px -18px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.03) inset;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-luxe), visibility 0s linear 200ms;
+  z-index: 40;
+}
+/* Invisible hover bridge — stops the panel closing while cursor moves from
+   trigger to item. The 10px gap above is covered by this ::before so the
+   hover intent survives the vertical travel. */
+.nav-dropdown-panel::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: 0; right: 0;
+  height: 10px;
+}
+.nav-item-dropdown[data-open="true"] .nav-dropdown-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-luxe), visibility 0s linear 0s;
+}
+.nav-dropdown-link {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--cream-rgb), 0.78);
+  text-decoration: none;
+  transition: background 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+.nav-dropdown-link:hover,
+.nav-dropdown-link:focus-visible {
+  background: rgba(var(--brass-rgb), 0.08);
+  color: var(--cream);
+  outline: none;
+}
+
+/* Light-theme dropdown panel: cream surface, dark gold accents on hover. */
+html[data-theme="light"] .nav-dropdown-panel {
+  background: rgba(255, 253, 247, 0.96);
+  border-color: rgba(139, 96, 10, 0.22);
+  box-shadow: 0 18px 44px -18px rgba(11,26,46,0.22);
+}
+html[data-theme="light"] .nav-dropdown-link { color: rgba(11,26,46,0.72); }
+html[data-theme="light"] .nav-dropdown-link:hover,
+html[data-theme="light"] .nav-dropdown-link:focus-visible {
+  background: rgba(212, 175, 55, 0.14);
+  color: #0B1A2E;
+}
+
+/* ---------- Mobile submenu (Team parent is tap-expandable) ---------- */
+.mobile-group { display: flex; flex-direction: column; }
+.mobile-group-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.mobile-group-toggle .nav-chev { margin-left: 8px; }
+.mobile-group-toggle[aria-expanded="true"] .nav-chev { transform: rotate(180deg); }
+.mobile-subnav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 6px 14px;
+  margin-left: 2px;
+  border-left: 1px solid var(--hairline-soft);
+}
+.mobile-sublink {
+  display: block;
+  padding: 9px 12px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(var(--cream-rgb), 0.78);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+.mobile-sublink:hover,
+.mobile-sublink:focus-visible {
+  background: rgba(var(--brass-rgb), 0.08);
+  color: var(--cream);
+  outline: none;
+}
+html[data-theme="light"] .mobile-sublink { color: rgba(11,26,46,0.72); }
+html[data-theme="light"] .mobile-sublink:hover,
+html[data-theme="light"] .mobile-sublink:focus-visible {
+  background: rgba(212, 175, 55, 0.14);
+  color: #0B1A2E;
+}
+
 .nav-toggle {
   width: 40px; height: 40px;
   display: inline-flex;
