@@ -73,7 +73,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev41" />
+  <link rel="stylesheet" href="styles.css?v=rev42" />
 </head>
 <body class="bg-navy text-cream font-sans antialiased">
 
@@ -287,7 +287,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 
   <!-- Nav / theme toggle / dropdown handlers from the main bundle. -->
-  <script src="main.js?v=rev41" defer></script>
+  <script src="main.js?v=rev42" defer></script>
 
   <!-- =============================================================
        TEAM DIRECTORY DATA + DRAWER BEHAVIOR
@@ -316,7 +316,7 @@
           whatsapp: '18643597122',
           email: 'vivek.boddu@key2nesthomeloans.com',
           image: 'assets/Vivek.jpeg?v=3',
-          bio: 'A seasoned mortgage loan originator — known for being exceptionally responsive. Guides first-time buyers, refinances, and investors through every step with access to a wide range of loan products and clear, patient communication.',
+          bio: "Hi, I'm Sai Vivek Boddu, President & CEO and Senior Mortgage Loan Originator at Key2Nest Home Loans.\n\nI help first-time homebuyers, homeowners, and real estate investors explore financing options that fit their needs and long-term goals. Whether you're purchasing a home, refinancing, financing an investment property, or exploring your home equity, I'm here to help you understand your options and make informed decisions.\n\nBefore entering the mortgage industry, I spent more than nine years in technology and application development. That experience shaped my analytical approach to comparing loan options, solving problems, and making the financing process easier to navigate.\n\nAs both a company leader and a hands-on mortgage advisor, I stay involved from our first conversation through closing. You can count on responsive service, clear explanations, and consistent updates along the way. My goal is to build a lasting relationship and be someone you can turn to as your home financing needs evolve.",
         },
         {
           slug: 'naveen',
@@ -430,7 +430,12 @@
           ? `<a href="https://www.nmlsconsumeraccess.org/EntityDetails.aspx/INDIVIDUAL/${escape(m.nmls)}" target="_blank" rel="noopener">NMLS&nbsp;#${escape(m.nmls)}</a>`
           : '';
         nmlsEl.hidden = !m.nmls;
-        bioEl.textContent = m.bio || '';
+        bioEl.innerHTML = (m.bio || '')
+          .split(/\n\s*\n/)
+          .map((p) => p.trim())
+          .filter(Boolean)
+          .map((p) => `<p>${escape(p)}</p>`)
+          .join('');
         photoEl.src = m.image;
         photoEl.alt = 'Portrait of ' + m.displayName;
         countEl.textContent = (index + 1) + '/' + members.length;

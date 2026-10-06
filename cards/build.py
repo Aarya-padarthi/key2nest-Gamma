@@ -89,7 +89,7 @@ PEOPLE = [
         "phone": "+18643597122", "phone_display": "+1 (864) 359-7122",
         "email": "vivek.boddu@key2nesthomeloans.com",
         "whatsapp": "18643597122",
-        "bio": "A seasoned mortgage loan originator known for being exceptionally responsive — guiding first-time buyers, refinances, and investors through every step with clear, patient communication.",
+        "bio": "Hi, I'm Sai Vivek Boddu, President & CEO and Senior Mortgage Loan Originator at Key2Nest Home Loans.\n\nI help first-time homebuyers, homeowners, and real estate investors explore financing options that fit their needs and long-term goals. Whether you're purchasing a home, refinancing, financing an investment property, or exploring your home equity, I'm here to help you understand your options and make informed decisions.\n\nBefore entering the mortgage industry, I spent more than nine years in technology and application development. That experience shaped my analytical approach to comparing loan options, solving problems, and making the financing process easier to navigate.\n\nAs both a company leader and a hands-on mortgage advisor, I stay involved from our first conversation through closing. You can count on responsive service, clear explanations, and consistent updates along the way. My goal is to build a lasting relationship and be someone you can turn to as your home financing needs evolve.",
     },
     {
         "slug": "naveen",

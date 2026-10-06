@@ -4770,6 +4770,8 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
   line-height: 1.65;
   color: var(--text-secondary);
 }
+.member-drawer-bio p { margin: 0 0 14px; }
+.member-drawer-bio p:last-child { margin-bottom: 0; }
 .member-drawer-contact {
   list-style: none;
   margin: 4px 0 0;
