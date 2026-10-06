@@ -4835,3 +4835,24 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   background: rgba(212, 175, 55, 0.14);
   color: #0B1A2E;
 }
+
+/* /team — back-to-home link mirrors .legal-back pattern but with a bit of
+   top space so it sits cleanly below the sticky nav. */
+.team-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--gold-text);
+  margin: 0 0 20px;
+  font-family: "Source Sans 3", sans-serif;
+  text-decoration: none;
+  transition: color 180ms var(--ease-out);
+}
+.team-back:hover { color: var(--gold-text-strong); }
+.team-back:focus-visible {
+  outline: 2px solid var(--brass-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
