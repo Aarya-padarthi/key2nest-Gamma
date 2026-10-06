@@ -68,12 +68,13 @@
       { "@type": "Person", "name": "Naveen Cheedhalla", "jobTitle": "Senior Mortgage Loan Originator", "identifier": "NMLS #2666486", "worksFor": { "@type": "Organization", "name": "Key2Nest Home Loans LLC" } },
       { "@type": "Person", "name": "Venkata Rajaneesh Jandhyam", "jobTitle": "Senior Mortgage Loan Originator", "identifier": "NMLS #2142434", "worksFor": { "@type": "Organization", "name": "Key2Nest Home Loans LLC" } },
       { "@type": "Person", "name": "Sreelakshmi Jasti", "jobTitle": "Senior Mortgage Loan Originator", "identifier": "NMLS #2565439", "worksFor": { "@type": "Organization", "name": "Key2Nest Home Loans LLC" } },
+      { "@type": "Person", "name": "Vasudev Sindhura Reddy Purumandla", "jobTitle": "Mortgage Loan Originator", "identifier": "NMLS #2814496", "worksFor": { "@type": "Organization", "name": "Key2Nest Home Loans LLC" } },
       { "@type": "Person", "name": "Sreedhar Seelam", "jobTitle": "Senior Mortgage Loan Originator", "identifier": "NMLS #2085620", "worksFor": { "@type": "Organization", "name": "Key2Nest Home Loans LLC" } }
     ]
   }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev43" />
+  <link rel="stylesheet" href="styles.css?v=rev44" />
 </head>
 <body class="bg-navy text-cream font-sans antialiased">
 
@@ -287,7 +288,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 
   <!-- Nav / theme toggle / dropdown handlers from the main bundle. -->
-  <script src="main.js?v=rev43" defer></script>
+  <script src="main.js?v=rev44" defer></script>
 
   <!-- =============================================================
        TEAM DIRECTORY DATA + DRAWER BEHAVIOR
@@ -359,6 +360,20 @@
           email: 'sreelakshmi@key2nesthomeloans.com',
           image: 'assets/Lakshmi.jpeg?v=2',
           bio: 'Top Performer with a leading national lender. Knowledgeable guidance and competitive options across all loan types — with prompt, clear, patient communication. Always available to answer questions and provide support.',
+        },
+        {
+          slug: 'sindhura',
+          firstName: 'Vasudev Sindhura Reddy',
+          lastName: 'Purumandla',
+          displayName: 'Vasudev Sindhura Reddy Purumandla',
+          title: 'Mortgage Loan Originator',
+          nmls: '2814496',
+          phone: '+14848366613',
+          phoneDisplay: '+1 (484) 836-6613',
+          whatsapp: '14848366613',
+          email: '', // pending from client
+          image: 'assets/Sindhura.jpeg',
+          bio: '', // pending from client
         },
         {
           slug: 'sreedhar',
@@ -436,6 +451,7 @@
           .filter(Boolean)
           .map((p) => `<p>${escape(p)}</p>`)
           .join('');
+        bioEl.hidden = !(m.bio && m.bio.trim());
         photoEl.src = m.image;
         photoEl.alt = 'Portrait of ' + m.displayName;
         countEl.textContent = (index + 1) + '/' + members.length;
