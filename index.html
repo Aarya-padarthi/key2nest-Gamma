@@ -80,7 +80,7 @@
     } catch (e) { document.documentElement.dataset.theme = 'dark'; }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev38" />
+  <link rel="stylesheet" href="styles.css?v=rev44" />
 
   <!-- Cloudflare Turnstile — bot protection for inquiry forms.
        Bootstrap runs first so the async loader's onload callback always exists,
@@ -150,7 +150,16 @@
         <a href="#programs" class="nav-link">Programs</a>
         <a href="#calculator" class="nav-link">Calculators</a>
         <a href="#process" class="nav-link">Process</a>
-        <a href="#team" class="nav-link">Team</a>
+        <div class="nav-item nav-item-dropdown">
+          <a href="/team" class="nav-link nav-link-dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
+            Team
+            <svg class="nav-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="nav-dropdown-panel" role="menu" data-dropdown-panel>
+            <li role="none"><a href="/#founders" class="nav-dropdown-link" role="menuitem">Founders</a></li>
+            <li role="none"><a href="/team" class="nav-dropdown-link" role="menuitem">Team</a></li>
+          </ul>
+        </div>
         <a href="#faq" class="nav-link">FAQ</a>
         <a href="careers.html" class="nav-link">Careers</a>
         <a href="#contact" class="nav-link">Contact</a>
@@ -177,7 +186,16 @@
         <a href="#programs" class="mobile-link">Programs</a>
         <a href="#calculator" class="mobile-link">Calculators</a>
         <a href="#process" class="mobile-link">Process</a>
-        <a href="#team" class="mobile-link">Team</a>
+        <div class="mobile-group">
+          <button type="button" class="mobile-link mobile-group-toggle" aria-expanded="false" aria-controls="mobile-team-sub" data-mobile-dropdown-trigger>
+            Team
+            <svg class="nav-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="mobile-team-sub" class="mobile-subnav" hidden>
+            <a href="/#founders" class="mobile-sublink">Founders</a>
+            <a href="/team" class="mobile-sublink">Team</a>
+          </div>
+        </div>
         <a href="#faq" class="mobile-link">FAQ</a>
         <a href="careers.html" class="mobile-link">Careers</a>
         <a href="#contact" class="mobile-link">Contact</a>
@@ -935,7 +953,7 @@
     </section>
 
     <!-- TEAM -->
-    <section id="team" class="section">
+    <section id="founders" class="section">
       <div class="mx-auto max-w-site px-5 md:px-8">
         <header class="section-head" data-reveal>
           <p class="eyebrow">Founders</p>
@@ -1326,7 +1344,7 @@
             <li><a href="#programs">Loan Programs</a></li>
             <li><a href="#calculator">Calculators</a></li>
             <li><a href="#process">Process</a></li>
-            <li><a href="#team">Team</a></li>
+            <li><a href="/team">Team</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="careers.html">Careers</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -1370,6 +1388,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="main.js?v=rev38" defer></script>
+  <script src="main.js?v=rev44" defer></script>
 </body>
 </html>
