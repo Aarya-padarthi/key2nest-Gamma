@@ -386,7 +386,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
               border-color 400ms var(--ease-out);
   border-bottom: 1px solid transparent;
 }
-.site-nav.is-scrolled {
+.site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(11, 26, 46, 0.8);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -394,31 +394,13 @@ a, button { -webkit-tap-highlight-color: transparent; }
 }
 
 /* Modifier for pages that do NOT have a dark hero (video / image) sitting
-   behind the nav. The default .site-nav is transparent until scroll > 24px,
-   which leaves cream-coloured nav links invisible on a cream page in light
-   mode. Pages like /team opt in with this class so the nav carries its
-   solid backdrop from first paint — AND the backdrop + text colour swap
-   with the theme so a navy bar isn't forced on a light page. Scoped only
-   to .site-nav-opaque so index.html (transparent-over-hero) is unaffected. */
-.site-nav.site-nav-opaque {
-  background: rgba(var(--navy-rgb), 0.88);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border-bottom-color: var(--hairline-soft);
-}
-/* Light-mode text overrides — the nav's Tailwind text-cream/75 class is a
-   hardcoded hex that doesn't swap, so a cream backdrop + cream text would
-   be invisible. Flip to dark navy here. Hover and dropdown-open states go
-   full-opacity navy to mirror the "dim → bright" pattern dark mode uses. */
-html[data-theme="light"] .site-nav.site-nav-opaque,
-html[data-theme="light"] .site-nav.site-nav-opaque nav {
-  color: rgba(11, 26, 46, 0.78);
-}
-html[data-theme="light"] .site-nav.site-nav-opaque .nav-link:hover,
-html[data-theme="light"] .site-nav.site-nav-opaque .nav-link-dropdown[aria-expanded="true"],
-html[data-theme="light"] .site-nav.site-nav-opaque a[aria-label="Call Key2Nest"]:hover {
-  color: #0B1A2E;
-}
+   behind the nav (e.g. /team). .site-nav-opaque is injected into every
+   `.site-nav.is-scrolled` and `.site-nav:not(.is-scrolled)` selector via
+   :is() / :not() grouping, so it inherits the full set of scrolled-state
+   styles the site already carefully tunes per theme — cream backdrop +
+   navy text in light mode, navy backdrop + cream text in dark mode,
+   plus the correct logo variant swap. No extra per-element overrides
+   needed. */
 
 .nav-link {
   position: relative;
@@ -3067,7 +3049,7 @@ html[data-theme="light"] .mobile-sublink:focus-visible {
   /* 40px minimum touch target */
   .team-contact-icon { width: 40px; height: 40px; }
 
-  .site-nav.is-scrolled { padding-top: 0; padding-bottom: 0; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) { padding-top: 0; padding-bottom: 0; }
   .logo-pill img { --logo-h: 46px; }
   .logo-pill-lg img { --logo-h: 74px; }
   .brand-wordmark { font-size: 19px; }
@@ -3627,33 +3609,33 @@ html[data-theme="light"] .hero .btn-ghost:hover {
 html[data-theme="light"] .scroll-cue { color: #FFF3C4; }
 
 /* ---------- Nav: transparent over dark hero, ivory once scrolled ---------- */
-html[data-theme="light"] .site-nav.is-scrolled {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(250, 246, 236, 0.85);
   border-bottom-color: rgba(139, 96, 10, 0.22);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-link,
-html[data-theme="light"] .site-nav.is-scrolled a[href^="tel"] {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-link,
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) a[href^="tel"] {
   color: rgba(11, 26, 46, 0.75);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-link:hover { color: #0B1A2E; }
-html[data-theme="light"] .site-nav.is-scrolled a[href^="tel"]:hover { color: #8B600A; }
-html[data-theme="light"] .site-nav.is-scrolled .theme-toggle {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-link:hover { color: #0B1A2E; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) a[href^="tel"]:hover { color: #8B600A; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .theme-toggle {
   color: rgba(11, 26, 46, 0.72);
   border-color: rgba(11, 26, 46, 0.2);
   background: rgba(11, 26, 46, 0.03);
 }
-html[data-theme="light"] .site-nav.is-scrolled .theme-toggle:hover {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .theme-toggle:hover {
   color: #8B600A;
   border-color: #8B600A;
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-toggle {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-toggle {
   border-color: rgba(11, 26, 46, 0.18);
   background: rgba(11, 26, 46, 0.03);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-toggle span { background: #0B1A2E; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-toggle span { background: #0B1A2E; }
 /* Unscrolled = transparent over the dark hero — hamburger must stay light */
-html[data-theme="light"] .site-nav:not(.is-scrolled) .nav-toggle span { background: #F4EFE3; }
-html[data-theme="light"] .site-nav:not(.is-scrolled) .nav-toggle { border-color: rgba(244, 239, 227, 0.15); }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .nav-toggle span { background: #F4EFE3; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .nav-toggle { border-color: rgba(244, 239, 227, 0.15); }
 html[data-theme="light"] .mobile-nav nav { color: rgba(11, 26, 46, 0.85); }
 
 /* ---------- Inputs: dark glass chips → warm paper ---------- */
@@ -3797,8 +3779,8 @@ html[data-theme="light"] .logo-img-light { display: block !important; }
    pages use .legal-nav and the footer lockup is outside the header, so both keep
    the plain light-mode logo. Both <img> tags are in the DOM and eager-loaded, so
    the swap is a cached display toggle — nothing re-fetches, nothing flickers. */
-html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-dark { display: block !important; }
-html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: none !important; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .logo-img-dark { display: block !important; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .logo-img-light { display: none !important; }
 
 
 /* =========================================================================
@@ -3829,8 +3811,8 @@ html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: 
    alive and returns screen to the content, small enough that it never pulls
    focus. Same 400ms/--ease-out as the nav's colour change, so the surface,
    the logo swap and the height settle as a single movement rather than three. */
-.site-nav.is-scrolled .nav-inner { padding-block: 9px; }
-.site-nav.is-scrolled .brand-mark .logo-pill img { --logo-h: 70px; }
+.site-nav:is(.is-scrolled, .site-nav-opaque) .nav-inner { padding-block: 9px; }
+.site-nav:is(.is-scrolled, .site-nav-opaque) .brand-mark .logo-pill img { --logo-h: 70px; }
 /* margin rides along: it is derived from --logo-h too, so if it jumped while
    height/width eased the mark would jitter mid-compaction. */
 .site-nav .logo-img {
@@ -3851,11 +3833,11 @@ html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: 
    instead of on moving hero footage, plus a shadow deep enough to separate
    the bar from the page and shallow enough that you never notice it. The
    hairline border keeps doing the real work. */
-.site-nav.is-scrolled {
+.site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(11, 26, 46, 0.86);
   box-shadow: 0 12px 32px -28px rgba(0, 0, 0, 0.9);
 }
-html[data-theme="light"] .site-nav.is-scrolled {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(250, 246, 236, 0.9);
   box-shadow: 0 12px 32px -28px rgba(11, 26, 46, 0.28);
 }
@@ -3895,8 +3877,8 @@ html[data-theme="light"] .site-nav.is-scrolled {
      padding-for-box trade as desktop — identical bar heights, mark +17%. */
   .site-nav .nav-inner { padding-block: 9px; }
   .site-nav .brand-mark .logo-pill img { --logo-h: 70px; }
-  .site-nav.is-scrolled .nav-inner { padding-block: 6px; }
-  .site-nav.is-scrolled .brand-mark .logo-pill img { --logo-h: 60px; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-inner { padding-block: 6px; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) .brand-mark .logo-pill img { --logo-h: 60px; }
 }
 
 
