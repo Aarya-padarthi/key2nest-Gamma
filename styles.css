@@ -397,12 +397,27 @@ a, button { -webkit-tap-highlight-color: transparent; }
    behind the nav. The default .site-nav is transparent until scroll > 24px,
    which leaves cream-coloured nav links invisible on a cream page in light
    mode. Pages like /team opt in with this class so the nav carries its
-   solid dark backdrop from first paint. */
+   solid backdrop from first paint — AND the backdrop + text colour swap
+   with the theme so a navy bar isn't forced on a light page. Scoped only
+   to .site-nav-opaque so index.html (transparent-over-hero) is unaffected. */
 .site-nav.site-nav-opaque {
-  background: rgba(11, 26, 46, 0.85);
+  background: rgba(var(--navy-rgb), 0.88);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom-color: var(--hairline-soft);
+}
+/* Light-mode text overrides — the nav's Tailwind text-cream/75 class is a
+   hardcoded hex that doesn't swap, so a cream backdrop + cream text would
+   be invisible. Flip to dark navy here. Hover and dropdown-open states go
+   full-opacity navy to mirror the "dim → bright" pattern dark mode uses. */
+html[data-theme="light"] .site-nav.site-nav-opaque,
+html[data-theme="light"] .site-nav.site-nav-opaque nav {
+  color: rgba(11, 26, 46, 0.78);
+}
+html[data-theme="light"] .site-nav.site-nav-opaque .nav-link:hover,
+html[data-theme="light"] .site-nav.site-nav-opaque .nav-link-dropdown[aria-expanded="true"],
+html[data-theme="light"] .site-nav.site-nav-opaque a[aria-label="Call Key2Nest"]:hover {
+  color: #0B1A2E;
 }
 
 .nav-link {
