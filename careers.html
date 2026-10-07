@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev52" />
+  <link rel="stylesheet" href="styles.css?v=rev53" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -158,18 +158,80 @@
   </script>
 </head>
 <body class="bg-navy text-cream font-sans antialiased legal-page">
-  <header class="legal-nav">
-    <div class="mx-auto max-w-site px-5 md:px-8 legal-nav-inner">
-      <a href="index.html" class="brand-mark brand-mark-logo-only" aria-label="Key2Nest home">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- =============================================================
+       SITE HEADER (same nav + Team dropdown + theme toggle as /team)
+       Cross-page section links use "/#…" so they load the home page
+       and scroll to the right section.
+       ============================================================= -->
+  <header id="site-nav" class="site-nav site-nav-opaque">
+    <div class="mx-auto max-w-site px-5 md:px-8 py-4 flex items-center justify-between gap-6">
+      <a href="/" class="brand-mark brand-mark-logo-only" aria-label="Key2Nest home">
         <span class="logo-pill logo-bare">
           <img src="assets/Logo_DV-1x.png" srcset="assets/Logo_DV-1x.png 1x, assets/Logo_DV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-dark" />
           <img src="assets/Logo_LV-1x.png" srcset="assets/Logo_LV-1x.png 1x, assets/Logo_LV-2x.png 2x" alt="Key2Nest" width="288" height="288" loading="eager" decoding="async" class="logo-img logo-img-light" />
         </span>
       </a>
+
+      <nav aria-label="Primary" class="hidden lg:flex items-center gap-8 text-[12.5px] tracking-wider-2 uppercase text-cream/75">
+        <a href="/#programs" class="nav-link">Programs</a>
+        <a href="/#calculator" class="nav-link">Calculators</a>
+        <a href="/#process" class="nav-link">Process</a>
+        <div class="nav-item nav-item-dropdown">
+          <a href="/team" class="nav-link nav-link-dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
+            Team
+            <svg class="nav-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="nav-dropdown-panel" role="menu" data-dropdown-panel>
+            <li role="none"><a href="/#founders" class="nav-dropdown-link" role="menuitem">Founders</a></li>
+            <li role="none"><a href="/team" class="nav-dropdown-link" role="menuitem">Team</a></li>
+          </ul>
+        </div>
+        <a href="/#faq" class="nav-link">FAQ</a>
+        <a href="careers.html" class="nav-link" aria-current="page">Careers</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="tel:+14694816216" class="hidden md:inline-flex items-center gap-2 py-1.5 text-[12.5px] tracking-wider-2 uppercase text-cream/75 hover:text-brass-400 transition-colors" aria-label="Call Key2Nest">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          <span>469 · 481 · 6216</span>
+        </a>
+        <button type="button" class="theme-toggle" aria-label="Switch between dark and light theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" class="lg:hidden nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav" class="mobile-nav" hidden>
+      <nav aria-label="Mobile" class="flex flex-col gap-1 px-5 py-6 text-cream/85">
+        <a href="/#programs" class="mobile-link">Programs</a>
+        <a href="/#calculator" class="mobile-link">Calculators</a>
+        <a href="/#process" class="mobile-link">Process</a>
+        <div class="mobile-group">
+          <button type="button" class="mobile-link mobile-group-toggle" aria-expanded="false" aria-controls="mobile-team-sub" data-mobile-dropdown-trigger>
+            Team
+            <svg class="nav-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="mobile-team-sub" class="mobile-subnav" hidden>
+            <a href="/#founders" class="mobile-sublink">Founders</a>
+            <a href="/team" class="mobile-sublink">Team</a>
+          </div>
+        </div>
+        <a href="/#faq" class="mobile-link">FAQ</a>
+        <a href="careers.html" class="mobile-link" aria-current="page">Careers</a>
+        <a href="/#contact" class="mobile-link">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <div class="mx-auto max-w-site px-5 md:px-8 careers-main" style="max-width:860px">
       <a href="index.html" class="legal-back">← Back to Key2Nest</a>
       <p class="eyebrow" style="display:inline-flex">Careers</p>
@@ -519,10 +581,11 @@
 
   <footer class="site-footer">
     <div class="mx-auto max-w-site px-5 md:px-8 py-12">
-      <p class="footer-copy" style="margin:0;text-align:center;font-size:12.5px;color:var(--text-muted)">© 2026 Key2Nest Home Loans LLC. All rights reserved. Licensed in States AR, AZ, CT, FL, GA, KS, TN and TX. NMLS #2819804. Equal Housing Lender.</p>
+      <p class="footer-copy" style="margin:0;text-align:center;font-size:12.5px;color:var(--text-muted)">© <span id="footer-year">2026</span> Key2Nest Home Loans LLC. All rights reserved. Licensed in States AR, AZ, CT, FL, GA, KS, TN and TX. NMLS #2819804. Equal Housing Lender.</p>
     </div>
   </footer>
 
-  <script src="careers.js?v=rev52" defer></script>
+  <script src="main.js?v=rev53" defer></script>
+  <script src="careers.js?v=rev53" defer></script>
 </body>
 </html>
