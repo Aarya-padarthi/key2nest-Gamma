@@ -4523,28 +4523,43 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 
 .member-card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
   border-radius: 14px;
   background: rgba(var(--cream-rgb), 0.03);
   border: 1px solid var(--hairline-soft);
+  overflow: hidden;
   cursor: pointer;
   outline: none;
   isolation: isolate;
+  transition: transform 320ms var(--ease-luxe),
+              border-color 320ms var(--ease-out),
+              box-shadow 320ms var(--ease-out);
 }
 @media (max-width: 1024px) {
   .member-card {
-    flex: 0 0 70vw;
-    max-width: 320px;
-    aspect-ratio: 3 / 4;
+    flex: 0 0 60vw;
+    max-width: 260px;
     scroll-snap-align: start;
   }
+}
+.member-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--brass-rgb), 0.3);
 }
 .member-card:focus-visible {
   outline: 2px solid var(--brass-400);
   outline-offset: 3px;
+}
+
+/* Square photo at the top of the card */
+.member-card-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: rgba(var(--cream-rgb), 0.04);
 }
 .member-card-photo {
   position: absolute;
@@ -4557,81 +4572,56 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 }
 .member-card:hover .member-card-photo {
   filter: grayscale(1);
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
-/* Top-right "+" badge — always visible on tablet/mobile, fades in on desktop hover */
+/* Top-right "+" badge — always visible to signal 'click for more' */
 .member-card-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 2;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: opacity 200ms var(--ease-out);
+  transition: background 200ms var(--ease-out), transform 320ms var(--ease-luxe);
   pointer-events: none;
 }
-.member-card:hover .member-card-badge { opacity: 1; }
-@media (max-width: 1024px) {
-  .member-card-badge { opacity: 1; }
+.member-card:hover .member-card-badge {
+  background: rgba(var(--brass-rgb), 0.9);
+  color: #06111E;
+  transform: rotate(90deg);
 }
 
-/* Bottom caption bar — slides up on hover, always visible on tablet/mobile */
-.member-card-cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 16px;
-  background: rgba(11, 26, 46, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--cream);
-  transform: translateY(100%);
-  transition: transform 320ms var(--ease-luxe);
-  pointer-events: none;
+/* Name + title block — ALWAYS visible below the photo */
+.member-card-info {
+  padding: 16px 18px 18px;
 }
-.member-card:hover .member-card-cap { transform: translateY(0); }
-@media (max-width: 1024px) {
-  .member-card-cap { transform: translateY(0); }
-}
-.member-card-cap-text { min-width: 0; }
 .member-card-name {
   margin: 0;
-  font-size: 15px;
-  font-weight: 500;
+  font-family: "Source Serif 4", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 36, "wght" 500;
+  font-size: 17px;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--cream);
+  text-wrap: balance;
 }
 .member-card-title {
-  margin: 2px 0 0;
+  margin: 6px 0 0;
   font-size: 11.5px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(var(--cream-rgb), 0.72);
+  color: var(--text-muted);
+  line-height: 1.4;
 }
-.member-card-arrow {
-  flex: 0 0 auto;
-  color: var(--brass-400);
-  transform: translateY(2px);
-  transition: transform 320ms var(--ease-luxe);
-}
-.member-card:hover .member-card-arrow { transform: translate(2px, 0); }
 
 /* ---------- Drawer ---------- */
 .member-drawer {
@@ -4809,16 +4799,15 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 
 /* ---------- Light-theme overrides ---------- */
 html[data-theme="light"] .member-card {
-  background: rgba(255, 253, 247, 0.6);
+  background: rgba(255, 253, 247, 0.5);
   border-color: rgba(139, 96, 10, 0.14);
 }
-html[data-theme="light"] .member-card-cap {
-  background: rgba(244, 239, 227, 0.9);
-  color: #0B1A2E;
+html[data-theme="light"] .member-card:hover {
+  border-color: rgba(139, 96, 10, 0.32);
 }
 html[data-theme="light"] .member-card-name { color: #0B1A2E; }
-html[data-theme="light"] .member-card-title { color: rgba(11, 26, 46, 0.68); }
-html[data-theme="light"] .member-card-arrow { color: #8B600A; }
+html[data-theme="light"] .member-card-title { color: rgba(11, 26, 46, 0.56); }
+html[data-theme="light"] .member-card-photo-wrap { background: rgba(11, 26, 46, 0.04); }
 
 html[data-theme="light"] .member-drawer-overlay { background: rgba(11, 26, 46, 0.35); }
 html[data-theme="light"] .member-drawer-panel {

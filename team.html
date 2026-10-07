@@ -74,7 +74,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev50" />
+  <link rel="stylesheet" href="styles.css?v=rev51" />
 </head>
 <body class="bg-navy text-cream font-sans antialiased">
 
@@ -288,7 +288,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 
   <!-- Nav / theme toggle / dropdown handlers from the main bundle. -->
-  <script src="main.js?v=rev50" defer></script>
+  <script src="main.js?v=rev51" defer></script>
 
   <!-- =============================================================
        TEAM DIRECTORY DATA + DRAWER BEHAVIOR
@@ -401,16 +401,15 @@
 
       grid.innerHTML = members.map((m) => `
         <article class="member-card" data-slug="${escape(m.slug)}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open profile for ${escape(m.displayName)}">
-          <img class="member-card-photo" src="${escape(m.image)}" alt="Portrait of ${escape(m.displayName)}" width="700" height="700" loading="lazy" decoding="async" />
-          <span class="member-card-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </span>
-          <div class="member-card-cap">
-            <div class="member-card-cap-text">
-              <p class="member-card-name font-display">${escape(m.displayName)}</p>
-              <p class="member-card-title">${escape(m.title)}</p>
-            </div>
-            <svg class="member-card-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          <div class="member-card-photo-wrap">
+            <img class="member-card-photo" src="${escape(m.image)}" alt="Portrait of ${escape(m.displayName)}" width="700" height="700" loading="lazy" decoding="async" />
+            <span class="member-card-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </div>
+          <div class="member-card-info">
+            <p class="member-card-name font-display">${escape(m.displayName)}</p>
+            <p class="member-card-title">${escape(m.title)}</p>
           </div>
         </article>
       `).join('');
