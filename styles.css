@@ -4178,7 +4178,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
    Reuses the legal-page shell, faq accordion, and form-* components.
    Tokens only — no literal hexes (Rev10 rule).
    ========================================================================= */
-.careers-main { padding: 56px 0 88px; }
+.careers-main { padding: 128px 0 88px; }
 .careers-lede {
   color: var(--text-secondary);
   font-size: 18px;
@@ -4333,7 +4333,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .role-card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
 .role-card .role-apply-btn { margin-top: 24px; }
 @media (max-width: 640px) {
-  .careers-main { padding: 40px 0 64px; }
+  .careers-main { padding: 108px 0 64px; }
   .careers-section { margin-top: 40px; }
   .careers-lede { font-size: 16.5px; }
   .role-card { padding: 0 18px; }
