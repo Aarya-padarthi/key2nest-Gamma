@@ -386,12 +386,21 @@ a, button { -webkit-tap-highlight-color: transparent; }
               border-color 400ms var(--ease-out);
   border-bottom: 1px solid transparent;
 }
-.site-nav.is-scrolled {
+.site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(11, 26, 46, 0.8);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom-color: var(--hairline-soft);
 }
+
+/* Modifier for pages that do NOT have a dark hero (video / image) sitting
+   behind the nav (e.g. /team). .site-nav-opaque is injected into every
+   `.site-nav.is-scrolled` and `.site-nav:not(.is-scrolled)` selector via
+   :is() / :not() grouping, so it inherits the full set of scrolled-state
+   styles the site already carefully tunes per theme — cream backdrop +
+   navy text in light mode, navy backdrop + cream text in dark mode,
+   plus the correct logo variant swap. No extra per-element overrides
+   needed. */
 
 .nav-link {
   position: relative;
@@ -3040,7 +3049,7 @@ html[data-theme="light"] .mobile-sublink:focus-visible {
   /* 40px minimum touch target */
   .team-contact-icon { width: 40px; height: 40px; }
 
-  .site-nav.is-scrolled { padding-top: 0; padding-bottom: 0; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) { padding-top: 0; padding-bottom: 0; }
   .logo-pill img { --logo-h: 46px; }
   .logo-pill-lg img { --logo-h: 74px; }
   .brand-wordmark { font-size: 19px; }
@@ -3600,33 +3609,33 @@ html[data-theme="light"] .hero .btn-ghost:hover {
 html[data-theme="light"] .scroll-cue { color: #FFF3C4; }
 
 /* ---------- Nav: transparent over dark hero, ivory once scrolled ---------- */
-html[data-theme="light"] .site-nav.is-scrolled {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(250, 246, 236, 0.85);
   border-bottom-color: rgba(139, 96, 10, 0.22);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-link,
-html[data-theme="light"] .site-nav.is-scrolled a[href^="tel"] {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-link,
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) a[href^="tel"] {
   color: rgba(11, 26, 46, 0.75);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-link:hover { color: #0B1A2E; }
-html[data-theme="light"] .site-nav.is-scrolled a[href^="tel"]:hover { color: #8B600A; }
-html[data-theme="light"] .site-nav.is-scrolled .theme-toggle {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-link:hover { color: #0B1A2E; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) a[href^="tel"]:hover { color: #8B600A; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .theme-toggle {
   color: rgba(11, 26, 46, 0.72);
   border-color: rgba(11, 26, 46, 0.2);
   background: rgba(11, 26, 46, 0.03);
 }
-html[data-theme="light"] .site-nav.is-scrolled .theme-toggle:hover {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .theme-toggle:hover {
   color: #8B600A;
   border-color: #8B600A;
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-toggle {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-toggle {
   border-color: rgba(11, 26, 46, 0.18);
   background: rgba(11, 26, 46, 0.03);
 }
-html[data-theme="light"] .site-nav.is-scrolled .nav-toggle span { background: #0B1A2E; }
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-toggle span { background: #0B1A2E; }
 /* Unscrolled = transparent over the dark hero — hamburger must stay light */
-html[data-theme="light"] .site-nav:not(.is-scrolled) .nav-toggle span { background: #F4EFE3; }
-html[data-theme="light"] .site-nav:not(.is-scrolled) .nav-toggle { border-color: rgba(244, 239, 227, 0.15); }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .nav-toggle span { background: #F4EFE3; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .nav-toggle { border-color: rgba(244, 239, 227, 0.15); }
 html[data-theme="light"] .mobile-nav nav { color: rgba(11, 26, 46, 0.85); }
 
 /* ---------- Inputs: dark glass chips → warm paper ---------- */
@@ -3770,8 +3779,8 @@ html[data-theme="light"] .logo-img-light { display: block !important; }
    pages use .legal-nav and the footer lockup is outside the header, so both keep
    the plain light-mode logo. Both <img> tags are in the DOM and eager-loaded, so
    the swap is a cached display toggle — nothing re-fetches, nothing flickers. */
-html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-dark { display: block !important; }
-html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: none !important; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .logo-img-dark { display: block !important; }
+html[data-theme="light"] .site-nav:not(.is-scrolled, .site-nav-opaque) .logo-img-light { display: none !important; }
 
 
 /* =========================================================================
@@ -3802,8 +3811,8 @@ html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: 
    alive and returns screen to the content, small enough that it never pulls
    focus. Same 400ms/--ease-out as the nav's colour change, so the surface,
    the logo swap and the height settle as a single movement rather than three. */
-.site-nav.is-scrolled .nav-inner { padding-block: 9px; }
-.site-nav.is-scrolled .brand-mark .logo-pill img { --logo-h: 70px; }
+.site-nav:is(.is-scrolled, .site-nav-opaque) .nav-inner { padding-block: 9px; }
+.site-nav:is(.is-scrolled, .site-nav-opaque) .brand-mark .logo-pill img { --logo-h: 70px; }
 /* margin rides along: it is derived from --logo-h too, so if it jumped while
    height/width eased the mark would jitter mid-compaction. */
 .site-nav .logo-img {
@@ -3824,11 +3833,11 @@ html[data-theme="light"] .site-nav:not(.is-scrolled) .logo-img-light { display: 
    instead of on moving hero footage, plus a shadow deep enough to separate
    the bar from the page and shallow enough that you never notice it. The
    hairline border keeps doing the real work. */
-.site-nav.is-scrolled {
+.site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(11, 26, 46, 0.86);
   box-shadow: 0 12px 32px -28px rgba(0, 0, 0, 0.9);
 }
-html[data-theme="light"] .site-nav.is-scrolled {
+html[data-theme="light"] .site-nav:is(.is-scrolled, .site-nav-opaque) {
   background: rgba(250, 246, 236, 0.9);
   box-shadow: 0 12px 32px -28px rgba(11, 26, 46, 0.28);
 }
@@ -3868,8 +3877,8 @@ html[data-theme="light"] .site-nav.is-scrolled {
      padding-for-box trade as desktop — identical bar heights, mark +17%. */
   .site-nav .nav-inner { padding-block: 9px; }
   .site-nav .brand-mark .logo-pill img { --logo-h: 70px; }
-  .site-nav.is-scrolled .nav-inner { padding-block: 6px; }
-  .site-nav.is-scrolled .brand-mark .logo-pill img { --logo-h: 60px; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) .nav-inner { padding-block: 6px; }
+  .site-nav:is(.is-scrolled, .site-nav-opaque) .brand-mark .logo-pill img { --logo-h: 60px; }
 }
 
 
@@ -4169,7 +4178,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
    Reuses the legal-page shell, faq accordion, and form-* components.
    Tokens only — no literal hexes (Rev10 rule).
    ========================================================================= */
-.careers-main { padding: 56px 0 88px; }
+.careers-main { padding: 128px 0 88px; }
 .careers-lede {
   color: var(--text-secondary);
   font-size: 18px;
@@ -4324,7 +4333,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 .role-card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
 .role-card .role-apply-btn { margin-top: 24px; }
 @media (max-width: 640px) {
-  .careers-main { padding: 40px 0 64px; }
+  .careers-main { padding: 108px 0 64px; }
   .careers-section { margin-top: 40px; }
   .careers-lede { font-size: 16.5px; }
   .role-card { padding: 0 18px; }
@@ -4495,7 +4504,7 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 
 .member-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 @media (max-width: 1024px) {
@@ -4514,28 +4523,43 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 
 .member-card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
   border-radius: 14px;
   background: rgba(var(--cream-rgb), 0.03);
   border: 1px solid var(--hairline-soft);
+  overflow: hidden;
   cursor: pointer;
   outline: none;
   isolation: isolate;
+  transition: transform 320ms var(--ease-luxe),
+              border-color 320ms var(--ease-out),
+              box-shadow 320ms var(--ease-out);
 }
 @media (max-width: 1024px) {
   .member-card {
-    flex: 0 0 70vw;
-    max-width: 320px;
-    aspect-ratio: 3 / 4;
+    flex: 0 0 60vw;
+    max-width: 260px;
     scroll-snap-align: start;
   }
+}
+.member-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--brass-rgb), 0.3);
 }
 .member-card:focus-visible {
   outline: 2px solid var(--brass-400);
   outline-offset: 3px;
+}
+
+/* Square photo at the top of the card */
+.member-card-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: rgba(var(--cream-rgb), 0.04);
 }
 .member-card-photo {
   position: absolute;
@@ -4548,81 +4572,56 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 }
 .member-card:hover .member-card-photo {
   filter: grayscale(1);
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
-/* Top-right "+" badge — always visible on tablet/mobile, fades in on desktop hover */
+/* Top-right "+" badge — always visible to signal 'click for more' */
 .member-card-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 2;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: opacity 200ms var(--ease-out);
+  transition: background 200ms var(--ease-out), transform 320ms var(--ease-luxe);
   pointer-events: none;
 }
-.member-card:hover .member-card-badge { opacity: 1; }
-@media (max-width: 1024px) {
-  .member-card-badge { opacity: 1; }
+.member-card:hover .member-card-badge {
+  background: rgba(var(--brass-rgb), 0.9);
+  color: #06111E;
+  transform: rotate(90deg);
 }
 
-/* Bottom caption bar — slides up on hover, always visible on tablet/mobile */
-.member-card-cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 16px;
-  background: rgba(11, 26, 46, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--cream);
-  transform: translateY(100%);
-  transition: transform 320ms var(--ease-luxe);
-  pointer-events: none;
+/* Name + title block — ALWAYS visible below the photo */
+.member-card-info {
+  padding: 16px 18px 18px;
 }
-.member-card:hover .member-card-cap { transform: translateY(0); }
-@media (max-width: 1024px) {
-  .member-card-cap { transform: translateY(0); }
-}
-.member-card-cap-text { min-width: 0; }
 .member-card-name {
   margin: 0;
-  font-size: 15px;
-  font-weight: 500;
+  font-family: "Source Serif 4", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 36, "wght" 500;
+  font-size: 17px;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--cream);
+  text-wrap: balance;
 }
 .member-card-title {
-  margin: 2px 0 0;
+  margin: 6px 0 0;
   font-size: 11.5px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(var(--cream-rgb), 0.72);
+  color: var(--text-muted);
+  line-height: 1.4;
 }
-.member-card-arrow {
-  flex: 0 0 auto;
-  color: var(--brass-400);
-  transform: translateY(2px);
-  transition: transform 320ms var(--ease-luxe);
-}
-.member-card:hover .member-card-arrow { transform: translate(2px, 0); }
 
 /* ---------- Drawer ---------- */
 .member-drawer {
@@ -4800,16 +4799,15 @@ html[data-theme="light"] .ehl-mark-light { display: block; }
 
 /* ---------- Light-theme overrides ---------- */
 html[data-theme="light"] .member-card {
-  background: rgba(255, 253, 247, 0.6);
+  background: rgba(255, 253, 247, 0.5);
   border-color: rgba(139, 96, 10, 0.14);
 }
-html[data-theme="light"] .member-card-cap {
-  background: rgba(244, 239, 227, 0.9);
-  color: #0B1A2E;
+html[data-theme="light"] .member-card:hover {
+  border-color: rgba(139, 96, 10, 0.32);
 }
 html[data-theme="light"] .member-card-name { color: #0B1A2E; }
-html[data-theme="light"] .member-card-title { color: rgba(11, 26, 46, 0.68); }
-html[data-theme="light"] .member-card-arrow { color: #8B600A; }
+html[data-theme="light"] .member-card-title { color: rgba(11, 26, 46, 0.56); }
+html[data-theme="light"] .member-card-photo-wrap { background: rgba(11, 26, 46, 0.04); }
 
 html[data-theme="light"] .member-drawer-overlay { background: rgba(11, 26, 46, 0.35); }
 html[data-theme="light"] .member-drawer-panel {
