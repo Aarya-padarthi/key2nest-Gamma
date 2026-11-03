@@ -2533,6 +2533,37 @@ html[data-theme="light"] .mobile-sublink:focus-visible {
   line-height: 1.7;
   color: var(--text-muted);
 }
+
+/* Social icons — used in the "Get in touch" column of the rich footer
+   (index + team), and as a compact centered row above the copy line on
+   the simple footers (careers + legal pages). Monochrome outline icons
+   so they inherit the current text colour and theme cleanly. */
+.footer-socials {
+  margin-top: 18px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-soft);
+  color: var(--text-secondary);
+  transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+.footer-socials a:hover,
+.footer-socials a:focus-visible {
+  color: var(--gold-text);
+  border-color: var(--gold-text);
+}
+.footer-socials svg { width: 16px; height: 16px; }
+.footer-socials-center { justify-content: center; margin: 0 0 14px; }
 /* .footer-eho-block (the bordered card that used to wrap the EHL mark) was
    removed with the badge redesign — the mark now sits bare on the footer. */
 .footer-eho-title {
