@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev55" />
+  <link rel="stylesheet" href="styles.css?v=rev57" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -241,6 +241,73 @@
         <span>Remote-friendly</span>
         <span>Licensed in AR, AZ, CT, FL, GA, KS, TN and TX</span>
       </p>
+
+      <!-- Quick-interest form + recruiter card — low-commitment entry point -->
+      <section class="careers-section careers-top-cta" aria-labelledby="interest-h">
+        <div class="careers-top-cta-grid">
+
+          <div class="careers-interest-form-wrap">
+            <p class="eyebrow">Have a conversation first</p>
+            <h2 class="careers-h2" id="interest-h">Not ready to apply? Let's chat.</h2>
+            <p class="careers-interest-lede">Share a few details and we'll reach out within one business day for a short, no-pressure conversation — no application required.</p>
+
+            <form id="careers-interest-form" class="careers-interest-form" novalidate>
+              <div class="careers-interest-row">
+                <div class="form-field">
+                  <label for="qi-name" class="form-label">Name <span class="form-req">*</span></label>
+                  <input type="text" id="qi-name" name="name" class="form-input" required autocomplete="name" />
+                </div>
+                <div class="form-field">
+                  <label for="qi-email" class="form-label">Email <span class="form-req">*</span></label>
+                  <input type="email" id="qi-email" name="email" class="form-input" required autocomplete="email" />
+                </div>
+              </div>
+              <div class="careers-interest-row">
+                <div class="form-field">
+                  <label for="qi-phone" class="form-label">Phone <span class="form-opt">(optional)</span></label>
+                  <input type="tel" id="qi-phone" name="phone" class="form-input" autocomplete="tel" />
+                </div>
+                <div class="form-field">
+                  <label for="qi-role" class="form-label">Role of interest</label>
+                  <select id="qi-role" name="role" class="form-input form-select">
+                    <option value="">Not sure / general interest</option>
+                    <option value="Senior Mortgage Loan Originator">Senior Mortgage Loan Originator</option>
+                    <option value="MLO — Purchase Specialist">MLO — Purchase Specialist</option>
+                    <option value="MLO — Self-Generated Business">MLO — Self-Generated Business</option>
+                    <option value="Entry-Level MLO">Entry-Level MLO</option>
+                  </select>
+                </div>
+              </div>
+              <div id="turnstile-careers-interest" class="careers-interest-turnstile"></div>
+              <button type="submit" class="btn btn-primary careers-interest-submit">Request a 15-min chat</button>
+
+              <div class="careers-interest-success" hidden role="status" aria-live="polite">
+                <p><strong>Thanks — we'll reach out within one business day.</strong></p>
+              </div>
+              <div class="careers-interest-failure" hidden role="alert">
+                <p>Couldn't send that. Please email <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1&nbsp;(972)&nbsp;565-2199</a>.</p>
+              </div>
+            </form>
+          </div>
+
+          <aside class="careers-top-contact-card" aria-label="Contact Key2Nest recruiting directly">
+            <p class="careers-contact-eyebrow">Prefer direct contact?</p>
+            <p class="careers-contact-org font-display">Key2Nest Recruiting</p>
+            <p class="careers-top-contact-blurb">We respond within one business day. Explore, ask questions, or share where you are in your search — happy to talk.</p>
+            <div class="careers-contact-channels">
+              <a class="careers-contact-channel" href="tel:+19725652199">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>+1 (972) 565-2199</span>
+              </a>
+              <a class="careers-contact-channel" href="mailto:admin@key2nesthomeloans.com">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                <span>admin@key2nesthomeloans.com</span>
+              </a>
+            </div>
+          </aside>
+
+        </div>
+      </section>
 
       <!-- Why join -->
       <section class="careers-section" aria-labelledby="why-h">
@@ -585,7 +652,112 @@
     </div>
   </footer>
 
-  <script src="main.js?v=rev55" defer></script>
-  <script src="careers.js?v=rev55" defer></script>
+  <script src="main.js?v=rev57" defer></script>
+  <script src="careers.js?v=rev57" defer></script>
+
+  <!-- Careers quick-interest form handler.
+       Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js
+       uses for the full application) with submissionType='interest' so the
+       dual-mode backend routes it correctly: lands in the careers sheet
+       (1CsqHDqz…) and emails admin@key2nesthomeloans.com, not the customer
+       leads pipeline. Turnstile widget is rendered on page load and the
+       token is included on submit; same site-key as the full apply form. -->
+  <script>
+    (function () {
+      'use strict';
+      const form = document.getElementById('careers-interest-form');
+      if (!form) return;
+      // Same /exec URL careers.js posts to. Keeping it inline (rather than
+      // sharing with careers.js) so this handler is self-contained; a change
+      // of endpoint needs to be mirrored in careers.js and here.
+      const CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
+      const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
+
+      let tsToken = '';
+      let tsWidget = null;
+
+      function renderTs() {
+        const slot = document.getElementById('turnstile-careers-interest');
+        if (!slot || tsWidget !== null || !window.turnstile) return;
+        tsWidget = window.turnstile.render(slot, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+          size: 'flexible',
+          'refresh-expired': 'auto',
+          callback: (t) => { tsToken = t; },
+          'expired-callback': () => { tsToken = ''; },
+          'error-callback': () => { tsToken = ''; }
+        });
+      }
+      // Wait for the turnstile global the shared loader exposes
+      if (window.turnstile) renderTs();
+      else {
+        const poll = setInterval(() => { if (window.turnstile) { clearInterval(poll); renderTs(); } }, 150);
+        setTimeout(() => clearInterval(poll), 10000);
+      }
+
+      const successEl = form.querySelector('.careers-interest-success');
+      const failureEl = form.querySelector('.careers-interest-failure');
+      const submitBtn = form.querySelector('.careers-interest-submit');
+      let sending = false;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (sending) return;
+        successEl.hidden = true;
+        failureEl.hidden = true;
+
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const phone = form.phone.value.trim();
+        const role = form.role.value;
+
+        if (!name || !email || !/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+          failureEl.hidden = false;
+          return;
+        }
+        if (!tsToken) {
+          failureEl.hidden = false;
+          return;
+        }
+
+        sending = true;
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Sending…';
+
+        try {
+          const res = await fetch(CAREERS_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              submissionType: 'interest',
+              name,
+              email,
+              phone,
+              role,
+              message: 'Candidate requested a short conversation before applying.',
+              source: 'Careers — Quick interest',
+              turnstileToken: tsToken
+            })
+          });
+          const out = await res.json();
+          if (!out || out.ok !== true) throw new Error('rejected');
+          form.reset();
+          successEl.hidden = false;
+          successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (window.gtag) gtag('event', 'generate_lead', { form: 'careers_interest' });
+        } catch (err) {
+          failureEl.hidden = false;
+        } finally {
+          sending = false;
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+          tsToken = '';
+          if (window.turnstile && tsWidget !== null) window.turnstile.reset(tsWidget);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

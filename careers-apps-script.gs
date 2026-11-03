@@ -83,6 +83,30 @@ function doPost(e) {
     const ts = verifyTurnstile(data.turnstileToken);
     if (!ts.ok) return json({ ok: false, error: ts.error });
 
+    /* ------------------------------------------------------------------
+       Two submission types land in this script and the same careers sheet:
+
+       - 'application' (default, legacy) — the full job application with
+         resume upload. Requires every applicant field. Resume saved to
+         Drive, duplicate (email + role) blocked, email to admin@ carries
+         the resume as attachment.
+
+       - 'interest' — the lightweight quick-interest form at the top of
+         /careers. No resume, no location required, no duplicate guard
+         (people can inquire about multiple roles). Appends a row with
+         Role='Interest — <chosen role>' so the Status column still works
+         and the row is distinguishable in the sheet. Email to admin@ is
+         a short summary.
+
+       Backward-compatible: a payload without submissionType falls through
+       to 'application' so existing deployments keep working.
+       ------------------------------------------------------------------ */
+    const submissionType = (data.submissionType === 'interest') ? 'interest' : 'application';
+
+    if (submissionType === 'interest') {
+      return handleInterest(data);
+    }
+
     const required = ['role', 'name', 'email', 'phone', 'location', 'resumeName', 'resumeData'];
     for (const k of required) {
       if (!data[k] || typeof data[k] !== 'string') {
@@ -146,6 +170,52 @@ function doPost(e) {
   } catch (err) {
     return json({ ok: false, error: 'Server error: ' + err.message });
   }
+}
+
+/**
+ * Lightweight 'interest' submission from the top-of-page /careers quick form.
+ * Only name + email are required. Lands in the same Applications sheet so the
+ * careers team has one place to look; Role column shows 'Interest — <role>'
+ * so filtering / sorting still works.
+ */
+function handleInterest(data) {
+  if (!data.name || typeof data.name !== 'string' || !data.name.trim()) {
+    return json({ ok: false, error: 'Missing field: name' });
+  }
+  if (!data.email || typeof data.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(data.email)) {
+    return json({ ok: false, error: 'Missing field: email' });
+  }
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) return json({ ok: false, error: 'Sheet not set up — run setup() first.' });
+
+  const safe = (s) => String(s || '').replace(/[^\w .,'@()+-]/g, ' ').trim().slice(0, 200);
+  const chosenRole = safe(data.role || '').trim() || 'General';
+  const roleLabel = 'Interest — ' + chosenRole;
+
+  sheet.appendRow([
+    new Date(), roleLabel, safe(data.name), safe(data.email), safe(data.phone || ''),
+    safe(data.location || ''), safe(data.nmls || ''), '', // empty Resume column
+    String(data.message || '').slice(0, 2000),
+    safe(data.source || 'Careers — Quick interest'), 'New', '', ''
+  ]);
+
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'New Career Inquiry — ' + safe(data.name) + ' — ' + chosenRole,
+    name: 'Key2Nest Careers',
+    replyTo: safe(data.email),
+    body:
+      'New career inquiry (not a full application — candidate asked for a conversation first).\n\n' +
+      'Role of interest: ' + chosenRole + '\n' +
+      'Name:             ' + safe(data.name) + '\n' +
+      'Email:            ' + safe(data.email) + '\n' +
+      'Phone:            ' + safe(data.phone || '—') + '\n\n' +
+      'Message:\n' + String(data.message || '—').slice(0, 2000) + '\n\n' +
+      'Sheet: ' + ss.getUrl()
+  });
+
+  return json({ ok: true });
 }
 
 /**

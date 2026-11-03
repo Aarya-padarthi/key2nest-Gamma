@@ -4856,3 +4856,73 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* =============================================================
+   Careers — Quick-interest form + elevated recruiter card
+   Sits right after the hero on /careers so candidates have a
+   low-commitment way to start a conversation without clicking
+   into a role and filling the full application.
+   ============================================================= */
+.careers-top-cta { margin-top: 32px; }
+.careers-top-cta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .careers-top-cta-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+.careers-interest-lede {
+  color: var(--text-secondary);
+  margin: 10px 0 20px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  max-width: 540px;
+}
+.careers-interest-form { margin-top: 8px; }
+.careers-interest-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+.careers-interest-row:first-of-type { margin-top: 0; }
+@media (max-width: 540px) {
+  .careers-interest-row { grid-template-columns: 1fr; }
+}
+.careers-interest-turnstile { margin-top: 16px; }
+.careers-interest-submit { margin-top: 18px; }
+.careers-interest-success,
+.careers-interest-failure {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.careers-interest-success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+.careers-interest-failure {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid var(--error-border);
+}
+.careers-interest-success p,
+.careers-interest-failure p { margin: 0; line-height: 1.5; }
+
+/* Elevated recruiter card next to the form */
+.careers-top-contact-card {
+  background: linear-gradient(180deg, rgba(var(--brass-rgb), 0.055), rgba(var(--brass-rgb), 0.015));
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 26px 24px;
+}
+.careers-top-contact-blurb {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 10px 0 20px;
+}
