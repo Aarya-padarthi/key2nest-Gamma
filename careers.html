@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev66" />
+  <link rel="stylesheet" href="styles.css?v=rev67" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -396,25 +396,122 @@
           <a class="link-brass" href="/team">Meet the full team →</a>
         </p>
 
-        <!-- Compact social-proof strip — replaces the full 6-card Google
-             Reviews block previously here. The research pass (top 10 US
-             mortgage recruiters: Rocket, Guild, loanDepot, Movement, CCM,
-             Fairway, UWM, Better, NFM, Churchill) found that none run
-             borrower reviews on their careers pages — borrower-facing
-             social proof is weaker than recruit-facing signals. So we
-             keep the rating + count as a one-liner and frame it for an
-             MLO audience: "here's the bar you'd be joining." Full
-             6-card experience lives on the homepage where it belongs.
-             Previous dev commit with the full cards: 071bb62 — revert
-             that commit to restore the 6-card layout here. -->
-        <div class="careers-social-strip">
-          <div class="careers-social-strip-rating">
-            <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
-            <span class="careers-social-strip-score font-display">5.0</span>
-            <span class="careers-social-strip-count">· 16 Google reviews</span>
+        <!-- Google Reviews — client feedback explicitly asked for testimonials
+             on the careers page alongside the website. Full 6-card wall here
+             mirrors the homepage so direct /careers visitors (from job boards,
+             LinkedIn, etc.) see borrower voices without first visiting the
+             homepage. Cards use the shared testimonial drawer in
+             testimonials.js — click any to read the full review + reply. -->
+        <div class="careers-google-reviews">
+          <p class="eyebrow">In their words</p>
+          <h3 class="careers-google-reviews-h font-display">What borrowers say about working with the team.</h3>
+
+          <div class="google-stats">
+            <div class="google-stats-rating">
+              <span class="google-stats-score font-display">5.0</span>
+              <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
+              <span class="google-stats-sr-only">5 out of 5 stars</span>
+            </div>
+            <p class="google-stats-meta">Based on <strong>16 Google reviews</strong></p>
           </div>
-          <p class="careers-social-strip-frame">Our clients consistently rate the team 5 stars. That's the bar you'd be joining.</p>
-          <a class="btn btn-ghost btn-sm careers-social-strip-cta" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read on Google →</a>
+
+          <div class="testimonials-grid">
+
+            <article class="testimonial-card" data-testimonial-id="manju-h" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Manju H">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The entire team was professional, knowledgeable, and highly responsive throughout the process. They explained every step clearly and made sure I was comfortable with the decisions being made.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">M</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Manju H</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="naveen" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Naveen">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">He was extremely patient and knowledgeable, and genuinely cared about understanding our needs. Working with Vivek made our entire mortgage experience smooth, seamless, and stress-free.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">N</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Naveen</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="shravan" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Shravan Kumar Amjala">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The process was smooth, quick, and hassle-free from start to finish. They kept me informed every step of the way and made sure everything went smoothly through closing.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">S</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Shravan Kumar Amjala <span class="google-local-guide">· Local Guide</span></p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="anik-das" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Anik Das">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The team was very responsive, professional, and easy to work with throughout the entire loan process. The loan process was quick and smooth, which made the whole experience much less stressful.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Anik Das</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="amrth-ganapathy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amrth Ganapathy">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">Worked with RJ twice and both has been exceptional experience. Quick connect with reasonable solutions.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Amrth Ganapathy</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="amruth-reddy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amruth Reddy">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">They help you to understand every line item and walk you through all possible options. Love to recommend their services for anyone interested.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Amruth Reddy <span class="google-local-guide">· Local Guide</span></p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="google-reviews-cta">
+            <a class="btn btn-ghost btn-sm" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read all reviews on Google →</a>
+          </p>
         </div>
       </section>
 
@@ -801,9 +898,9 @@
     </aside>
   </div>
 
-  <script src="main.js?v=rev66" defer></script>
-  <script src="careers.js?v=rev66" defer></script>
-  <script src="testimonials.js?v=rev66" defer></script>
+  <script src="main.js?v=rev67" defer></script>
+  <script src="careers.js?v=rev67" defer></script>
+  <script src="testimonials.js?v=rev67" defer></script>
 
   <!-- Careers quick-interest form handler.
        Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js
