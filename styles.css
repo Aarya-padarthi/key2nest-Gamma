@@ -5130,6 +5130,100 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
    below the stat tile. */
 .careers-google-reviews .testimonials-grid { margin-top: 24px; }
 
+/* =====================  /careers — Stats row + Social strip  =====================
+   Replaces the 6-card Google Reviews block that lived here before. Industry
+   research (top 10 US mortgage recruiters) showed none use borrower reviews
+   on their careers pages; we substitute with recruit-facing signals instead.
+
+   Pattern 1: a numeric stats row ("The team you'd join") above the team
+              photos — small-shop transparency advantage vs. the big lenders.
+   Pattern 2: a single compact social-proof strip below the team photos that
+              keeps the Google rating signal without duplicating the homepage
+              testimonial wall. */
+
+.careers-stats-row {
+  list-style: none;
+  padding: 24px 28px;
+  margin: 24px 0 40px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.careers-stats-row li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  border-right: 1px solid var(--hairline-soft);
+}
+.careers-stats-row li:last-child { border-right: 0; }
+.careers-stat-num {
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.1;
+  color: var(--cream);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.careers-stat-label {
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+@media (max-width: 640px) {
+  .careers-stats-row { grid-template-columns: 1fr; padding: 20px 16px; }
+  .careers-stats-row li { border-right: 0; border-bottom: 1px solid var(--hairline-soft); padding-bottom: 14px; }
+  .careers-stats-row li:last-child { border-bottom: 0; padding-bottom: 4px; }
+}
+
+.careers-social-strip {
+  margin: 56px 0 0;
+  padding: 24px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.careers-social-strip-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.careers-social-strip-score {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 600;
+}
+.careers-social-strip-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.careers-social-strip-frame {
+  flex: 1;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  min-width: 200px;
+}
+.careers-social-strip-cta {
+  flex-shrink: 0;
+}
+@media (max-width: 720px) {
+  .careers-social-strip { padding: 20px; gap: 14px; }
+  .careers-social-strip-cta { width: 100%; text-align: center; }
+}
+
 /* =====================  Testimonials — Editorial layout  =====================
    Homepage uses a featured hero testimonial (pull-quote style) above a
    horizontal stat strip and a 5-up grid of supporting reviews. /careers
