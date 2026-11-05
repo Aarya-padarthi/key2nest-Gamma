@@ -80,7 +80,7 @@
     } catch (e) { document.documentElement.dataset.theme = 'dark'; }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev60" />
+  <link rel="stylesheet" href="styles.css?v=rev69" />
 
   <!-- Cloudflare Turnstile — bot protection for inquiry forms.
        Bootstrap runs first so the async loader's onload callback always exists,
@@ -865,46 +865,136 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS — HIDDEN until real client quotes arrive (client decision 2026-07-04).
-         To re-enable: remove the `hidden` attribute below and swap the 3 placeholder cards. -->
-    <section id="testimonials" class="section section-tinted" hidden>
+    <!-- TESTIMONIALS — Google Reviews, editorial layout.
+         One featured testimonial anchors the section (Naveen's — the most
+         detailed and specific), followed by a stat strip and a 5-up grid
+         of supporting reviews. Each card opens a drawer with the full
+         verbatim review + Key2Nest's response (reusing the same drawer
+         pattern /team uses for member profiles). Data + drawer behavior
+         live in testimonials.js so both this page and /careers share one
+         source of truth. -->
+    <section id="testimonials" class="section section-tinted" aria-labelledby="testimonials-h">
       <div class="mx-auto max-w-site px-5 md:px-8">
         <header class="section-head" data-reveal>
           <p class="eyebrow">In their words</p>
-          <h2 class="section-title font-display">What clients say after closing.</h2>
-          <p class="section-lede">A few stories from borrowers we've helped move from <em>"I'm not sure I qualify"</em> to <em>"we got the keys."</em></p>
+          <h2 class="section-title font-display" id="testimonials-h">What clients say after closing.</h2>
+          <p class="section-lede">Verbatim reviews from the <a class="link-brass" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Key2Nest Google Business Profile</a>. Tap any quote to read the full review.</p>
         </header>
+
+        <!-- Featured testimonial (hero pull-quote treatment) -->
+        <article
+          class="testimonial-featured"
+          data-testimonial-id="naveen"
+          role="button"
+          tabindex="0"
+          aria-haspopup="dialog"
+          aria-label="Read the full review from Naveen"
+          data-reveal
+        >
+          <span class="testimonial-featured-mark" aria-hidden="true">&ldquo;</span>
+          <blockquote class="testimonial-featured-quote font-display">Working with Vivek made our entire mortgage experience smooth, seamless, and stress-free.</blockquote>
+          <p class="testimonial-featured-sub">He was extremely patient and knowledgeable, and genuinely cared about understanding our needs.</p>
+          <div class="testimonial-featured-attribution">
+            <span class="testimonial-initial testimonial-initial-lg font-display" aria-hidden="true">N</span>
+            <div class="testimonial-featured-ident">
+              <p class="testimonial-featured-name">Naveen</p>
+              <p class="testimonial-featured-meta">
+                <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="google-badge">via Google</span>
+              </p>
+            </div>
+            <span class="testimonial-featured-expand" aria-hidden="true">Read full review →</span>
+          </div>
+        </article>
+
+        <!-- Stat strip -->
+        <div class="google-stats-strip" data-reveal>
+          <div class="google-stats-rating">
+            <span class="google-stats-score font-display">5.0</span>
+            <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
+            <span class="google-stats-sr-only">5 out of 5 stars</span>
+          </div>
+          <span class="google-stats-divider" aria-hidden="true">·</span>
+          <p class="google-stats-meta">Based on <strong>16 Google reviews</strong></p>
+          <span class="google-stats-divider" aria-hidden="true">·</span>
+          <a class="google-stats-link link-brass" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read all on Google →</a>
+        </div>
 
         <div class="testimonials-grid mt-6 md:mt-8">
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-testimonial-id="manju-h" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Manju H" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote about working with Key2Nest — what changed, how it felt, the outcome.</blockquote>
+            <blockquote class="testimonial-quote font-display">The entire team was professional, knowledgeable, and highly responsive throughout the process. They explained every step clearly and made sure I was comfortable with the decisions being made.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <span class="testimonial-initial font-display" aria-hidden="true">M</span>
+              <div class="testimonial-identity">
+                <p class="testimonial-name">Manju H</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
           </article>
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-testimonial-id="shravan" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Shravan Kumar Amjala" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote — ideally with a concrete detail (days to close, savings, complexity).</blockquote>
+            <blockquote class="testimonial-quote font-display">The process was smooth, quick, and hassle-free from start to finish. They kept me informed every step of the way and made sure everything went smoothly through closing.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <span class="testimonial-initial font-display" aria-hidden="true">S</span>
+              <div class="testimonial-identity">
+                <p class="testimonial-name">Shravan Kumar Amjala <span class="google-local-guide">· Local Guide</span></p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
           </article>
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-testimonial-id="anik-das" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Anik Das" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote — pull out one detail that another buyer would relate to.</blockquote>
+            <blockquote class="testimonial-quote font-display">The team was very responsive, professional, and easy to work with throughout the entire loan process. The loan process was quick and smooth, which made the whole experience much less stressful.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+              <div class="testimonial-identity">
+                <p class="testimonial-name">Anik Das</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
+          </article>
+
+          <article class="testimonial-card" data-testimonial-id="amrth-ganapathy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amrth Ganapathy" data-reveal>
+            <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-quote font-display">Worked with RJ twice and both has been exceptional experience. Quick connect with reasonable solutions.</blockquote>
+            <div class="testimonial-attribution">
+              <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+              <div class="testimonial-identity">
+                <p class="testimonial-name">Amrth Ganapathy</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" data-testimonial-id="amruth-reddy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amruth Reddy" data-reveal>
+            <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-quote font-display">They help you to understand every line item and walk you through all possible options. Love to recommend their services for anyone interested.</blockquote>
+            <div class="testimonial-attribution">
+              <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+              <div class="testimonial-identity">
+                <p class="testimonial-name">Amruth Reddy <span class="google-local-guide">· Local Guide</span></p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </div>
           </article>
 
         </div>
@@ -1397,8 +1487,57 @@
     </div>
   </footer>
 
+  <!-- Testimonial drawer — shared behavior for all testimonial cards. The
+       markup is static; testimonials.js reads the clicked card's
+       data-testimonial-id, looks up the full review + owner response from
+       its internal array, and populates the fields below. Reuses the
+       visual language of the /team member drawer so the whole site feels
+       like one interaction vocabulary. -->
+  <div id="testimonial-drawer" class="testimonial-drawer" hidden aria-hidden="true">
+    <div class="testimonial-drawer-overlay" data-td-close aria-hidden="true"></div>
+    <aside class="testimonial-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="td-name">
+      <div class="testimonial-drawer-content">
+        <div class="testimonial-drawer-top">
+          <button type="button" class="testimonial-drawer-close" data-td-close aria-label="Close review">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+          </button>
+          <span class="testimonial-drawer-count" data-td-count>1 of 6</span>
+        </div>
+
+        <div class="testimonial-drawer-head">
+          <span class="testimonial-initial testimonial-initial-xl font-display" data-td-initial aria-hidden="true">N</span>
+          <div class="testimonial-drawer-identity">
+            <h2 class="testimonial-drawer-name font-display" id="td-name" data-td-name></h2>
+            <p class="testimonial-drawer-meta">
+              <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+              <span class="google-badge">via Google</span>
+              <span class="testimonial-drawer-badge" data-td-badge hidden></span>
+              <span class="testimonial-drawer-date" data-td-date></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="testimonial-drawer-quote font-display" data-td-quote></div>
+
+        <div class="testimonial-drawer-response" data-td-response-wrap>
+          <p class="testimonial-drawer-response-label">Key2Nest's reply</p>
+          <div class="testimonial-drawer-response-body" data-td-response></div>
+        </div>
+
+        <div class="testimonial-drawer-actions">
+          <a class="btn btn-ghost btn-sm" data-td-link href="#" target="_blank" rel="noopener">View on Google →</a>
+          <div class="testimonial-drawer-nav">
+            <button type="button" class="testimonial-drawer-nav-btn" data-td-prev aria-label="Previous review">←</button>
+            <button type="button" class="testimonial-drawer-nav-btn" data-td-next aria-label="Next review">→</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="main.js?v=rev60" defer></script>
+  <script src="main.js?v=rev69" defer></script>
+  <script src="testimonials.js?v=rev69" defer></script>
 </body>
 </html>

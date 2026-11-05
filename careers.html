@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev60" />
+  <link rel="stylesheet" href="styles.css?v=rev69" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -331,6 +331,187 @@
           <div class="why-chip"><strong>Remote flexibility</strong><span>Work where you work best.</span></div>
           <div class="why-chip"><strong>Room to grow</strong><span>An expanding company where early people shape what comes next.</span></div>
           <div class="why-chip"><strong>K2N Originator's Desk</strong><span>Manage client relationships, create branded marketing, and get mortgage-focused guidance from your AI assistant &mdash; all in one place.</span></div>
+        </div>
+      </section>
+
+      <!-- Life at Key2Nest — gives candidates a human face between the perks
+           (why join) and the role cards (what to apply for). Phase 1: team
+           strip only. Phase 2 will add a Google Reviews section below this
+           to show the borrower voice as social proof. -->
+      <section class="careers-section careers-life" aria-labelledby="life-h">
+        <p class="eyebrow">Life at Key2Nest</p>
+        <h2 class="careers-h2" id="life-h">The team you'd join</h2>
+        <p class="careers-life-lede">A founder-led team with access to 20+ lenders and one shared standard: every borrower gets a real person who sees their file from first conversation to closing. You'd work alongside the team below.</p>
+
+        <!-- Stats row — two numeric proof points plus one durable qualitative
+             signal. "20+" self-scales as the lender list grows, "11 states"
+             changes a few times a year and gets updated with each license,
+             and "Founder-led" never needs updating — it also reframes small
+             team size as a feature (hands-on leadership) rather than a
+             limitation. Diplomatic framing per client request. -->
+        <ul class="careers-stats-row">
+          <li>
+            <span class="careers-stat-num font-display">20+</span>
+            <span class="careers-stat-label">Lender relationships</span>
+          </li>
+          <li>
+            <span class="careers-stat-num font-display">11</span>
+            <span class="careers-stat-label">Licensed states</span>
+          </li>
+          <li>
+            <span class="careers-stat-num careers-stat-num-text font-display">Founder-led</span>
+            <span class="careers-stat-label">Team &amp; culture</span>
+          </li>
+        </ul>
+
+        <ul class="careers-team-strip">
+          <li class="careers-team-card">
+            <img src="assets/Vivek.jpeg?v=3" alt="Portrait of Sai Vivek Boddu" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sai Vivek Boddu</p>
+            <p class="careers-team-role">President &amp; CEO · Senior MLO</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Naveen.jpeg?v=2" alt="Portrait of Naveen Cheedhalla" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Naveen Cheedhalla</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Rajaneesh_new.png?v=3" alt="Portrait of (RJ) Venkata Rajaneesh Jandhyam" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">RJ Jandhyam</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Lakshmi.jpeg?v=2" alt="Portrait of Sreelakshmi Jasti" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sreelakshmi Jasti</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Sreedhar.jpeg?v=1" alt="Portrait of Sreedhar Seelam" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sreedhar Seelam</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+        </ul>
+
+        <p class="careers-life-cta">
+          <a class="link-brass" href="/team">Meet the full team →</a>
+        </p>
+
+        <!-- Google Reviews — client feedback explicitly asked for testimonials
+             on the careers page alongside the website. Full 6-card wall here
+             mirrors the homepage so direct /careers visitors (from job boards,
+             LinkedIn, etc.) see borrower voices without first visiting the
+             homepage. Cards use the shared testimonial drawer in
+             testimonials.js — click any to read the full review + reply. -->
+        <div class="careers-google-reviews">
+          <p class="eyebrow">In their words</p>
+          <h3 class="careers-google-reviews-h font-display">What borrowers say about working with the team.</h3>
+
+          <div class="google-stats">
+            <div class="google-stats-rating">
+              <span class="google-stats-score font-display">5.0</span>
+              <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
+              <span class="google-stats-sr-only">5 out of 5 stars</span>
+            </div>
+            <p class="google-stats-meta">Based on <strong>16 Google reviews</strong></p>
+          </div>
+
+          <div class="testimonials-grid">
+
+            <article class="testimonial-card" data-testimonial-id="manju-h" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Manju H">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The entire team was professional, knowledgeable, and highly responsive throughout the process. They explained every step clearly and made sure I was comfortable with the decisions being made.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">M</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Manju H</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="naveen" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Naveen">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">He was extremely patient and knowledgeable, and genuinely cared about understanding our needs. Working with Vivek made our entire mortgage experience smooth, seamless, and stress-free.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">N</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Naveen</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="shravan" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Shravan Kumar Amjala">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The process was smooth, quick, and hassle-free from start to finish. They kept me informed every step of the way and made sure everything went smoothly through closing.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">S</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Shravan Kumar Amjala <span class="google-local-guide">· Local Guide</span></p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="anik-das" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Anik Das">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">The team was very responsive, professional, and easy to work with throughout the entire loan process. The loan process was quick and smooth, which made the whole experience much less stressful.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Anik Das</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="amrth-ganapathy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amrth Ganapathy">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">Worked with RJ twice and both has been exceptional experience. Quick connect with reasonable solutions.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Amrth Ganapathy</p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" data-testimonial-id="amruth-reddy" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Read the full review from Amruth Reddy">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">They help you to understand every line item and walk you through all possible options. Love to recommend their services for anyone interested.</blockquote>
+              <div class="testimonial-attribution">
+                <span class="testimonial-initial font-display" aria-hidden="true">A</span>
+                <div class="testimonial-identity">
+                  <p class="testimonial-name">Amruth Reddy <span class="google-local-guide">· Local Guide</span></p>
+                  <p class="testimonial-meta">
+                    <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span class="google-badge">via Google</span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="google-reviews-cta">
+            <a class="btn btn-ghost btn-sm" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read all reviews on Google →</a>
+          </p>
         </div>
       </section>
 
@@ -672,8 +853,54 @@
     </div>
   </footer>
 
-  <script src="main.js?v=rev60" defer></script>
-  <script src="careers.js?v=rev60" defer></script>
+  <!-- Testimonial drawer — same markup as index.html so testimonials.js
+       finds it on this page too. Clicking any testimonial card opens this
+       drawer populated from the matching entry in TESTIMONIALS. -->
+  <div id="testimonial-drawer" class="testimonial-drawer" hidden aria-hidden="true">
+    <div class="testimonial-drawer-overlay" data-td-close aria-hidden="true"></div>
+    <aside class="testimonial-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="td-name">
+      <div class="testimonial-drawer-content">
+        <div class="testimonial-drawer-top">
+          <button type="button" class="testimonial-drawer-close" data-td-close aria-label="Close review">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+          </button>
+          <span class="testimonial-drawer-count" data-td-count>1 of 6</span>
+        </div>
+
+        <div class="testimonial-drawer-head">
+          <span class="testimonial-initial testimonial-initial-xl font-display" data-td-initial aria-hidden="true">N</span>
+          <div class="testimonial-drawer-identity">
+            <h2 class="testimonial-drawer-name font-display" id="td-name" data-td-name></h2>
+            <p class="testimonial-drawer-meta">
+              <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+              <span class="google-badge">via Google</span>
+              <span class="testimonial-drawer-badge" data-td-badge hidden></span>
+              <span class="testimonial-drawer-date" data-td-date></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="testimonial-drawer-quote font-display" data-td-quote></div>
+
+        <div class="testimonial-drawer-response" data-td-response-wrap>
+          <p class="testimonial-drawer-response-label">Key2Nest's reply</p>
+          <div class="testimonial-drawer-response-body" data-td-response></div>
+        </div>
+
+        <div class="testimonial-drawer-actions">
+          <a class="btn btn-ghost btn-sm" data-td-link href="#" target="_blank" rel="noopener">View on Google →</a>
+          <div class="testimonial-drawer-nav">
+            <button type="button" class="testimonial-drawer-nav-btn" data-td-prev aria-label="Previous review">←</button>
+            <button type="button" class="testimonial-drawer-nav-btn" data-td-next aria-label="Next review">→</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="main.js?v=rev69" defer></script>
+  <script src="careers.js?v=rev69" defer></script>
+  <script src="testimonials.js?v=rev69" defer></script>
 
   <!-- Careers quick-interest form handler.
        Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js

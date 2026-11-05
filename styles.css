@@ -4957,3 +4957,617 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   line-height: 1.55;
   margin: 10px 0 20px;
 }
+
+/* =====================  /careers — Life at Key2Nest  =====================
+   Sits between "Why join" (perks) and the role cards. A short lede plus a
+   horizontal strip of team portraits so candidates see the humans before
+   they click into a role. Portraits are square with a soft hairline border;
+   the grid wraps gracefully from 6 on desktop → 3 on tablet → 2 on phone. */
+
+.careers-life { margin-top: 56px; }
+
+.careers-life-lede {
+  max-width: 68ch;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 10px 0 32px;
+}
+
+.careers-team-strip {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.careers-team-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.careers-team-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--hairline-soft);
+  background: var(--navy-800);
+}
+
+.careers-team-name {
+  font-size: 14.5px;
+  line-height: 1.3;
+  margin: 12px 0 2px;
+  color: var(--text-primary);
+}
+
+.careers-team-role {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.careers-life-cta {
+  margin: 0;
+  font-size: 14.5px;
+}
+
+@media (max-width: 960px) {
+  .careers-team-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .careers-team-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .careers-team-name { font-size: 13.5px; }
+  .careers-team-role { font-size: 12px; }
+}
+
+/* =====================  Google Reviews extras  =====================
+   Builds on the existing `.testimonial-card` / `.testimonials-grid` styles
+   from the homepage. Adds the Google-specific pieces: stat tile with
+   overall rating + review count, a 5-star row under each card, and a
+   subtle "via Google" attribution badge. Used on both homepage and
+   /careers (where the grid becomes 2x2 instead of 3-up). */
+
+.google-stats {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.google-stats-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.google-stats-score {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 600;
+}
+.google-stats-stars {
+  color: var(--gold-text);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.google-stats-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.google-stats-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+.google-stats-meta strong { color: var(--cream); font-weight: 600; }
+
+/* Per-card star row + "via Google" badge, replacing the default city/loan
+   meta line. Stars use the brass gold, badge is a subtle outlined pill. */
+.testimonial-stars {
+  color: var(--gold-text);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  margin-right: 10px;
+}
+.google-badge {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.google-local-guide {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+}
+
+.google-reviews-cta {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+/* /careers Google Reviews sub-section (inside Life at Key2Nest) */
+.careers-google-reviews {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline-soft);
+}
+.careers-google-reviews-h {
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.25;
+  color: var(--cream);
+  margin: 6px 0 24px;
+  letter-spacing: -0.01em;
+}
+
+/* On /careers, the testimonials grid inherits the homepage 3-up layout
+   (6 cards fit as 2 rows of 3). Just adds a top margin so it breathes
+   below the stat tile. */
+.careers-google-reviews .testimonials-grid { margin-top: 24px; }
+
+/* =====================  /careers — Stats row + Social strip  =====================
+   Replaces the 6-card Google Reviews block that lived here before. Industry
+   research (top 10 US mortgage recruiters) showed none use borrower reviews
+   on their careers pages; we substitute with recruit-facing signals instead.
+
+   Pattern 1: a numeric stats row ("The team you'd join") above the team
+              photos — small-shop transparency advantage vs. the big lenders.
+   Pattern 2: a single compact social-proof strip below the team photos that
+              keeps the Google rating signal without duplicating the homepage
+              testimonial wall. */
+
+.careers-stats-row {
+  list-style: none;
+  padding: 24px 28px;
+  margin: 24px 0 40px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.careers-stats-row li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  padding: 4px 8px;
+  border-right: 1px solid var(--hairline-soft);
+}
+.careers-stats-row li:last-child { border-right: 0; }
+.careers-stat-num {
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.1;
+  color: var(--cream);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+/* When the "stat" is a word rather than a number (e.g. "Founder-led"),
+   step the size down slightly so it sits in balanced visual weight with
+   the two numeric values beside it. Same cream color and non-italic
+   display serif as the numbers — italics on this site are reserved for
+   testimonial quotes, so a word-stat uses the regular weight to read as
+   a confident claim, not an emphasised phrase. */
+.careers-stat-num-text {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-style: normal;
+  font-weight: 500;
+  font-variation-settings: "opsz" 32, "wght" 500;
+  letter-spacing: -0.005em;
+}
+.careers-stat-label {
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+@media (max-width: 640px) {
+  .careers-stats-row { grid-template-columns: 1fr; padding: 20px 16px; }
+  .careers-stats-row li { border-right: 0; border-bottom: 1px solid var(--hairline-soft); padding-bottom: 14px; }
+  .careers-stats-row li:last-child { border-bottom: 0; padding-bottom: 4px; }
+}
+
+.careers-social-strip {
+  margin: 56px 0 0;
+  padding: 24px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.careers-social-strip-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.careers-social-strip-score {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 600;
+}
+.careers-social-strip-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.careers-social-strip-frame {
+  flex: 1;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  min-width: 200px;
+}
+.careers-social-strip-cta {
+  flex-shrink: 0;
+}
+@media (max-width: 720px) {
+  .careers-social-strip { padding: 20px; gap: 14px; }
+  .careers-social-strip-cta { width: 100%; text-align: center; }
+}
+
+/* =====================  Testimonials — Editorial layout  =====================
+   Homepage uses a featured hero testimonial (pull-quote style) above a
+   horizontal stat strip and a 5-up grid of supporting reviews. /careers
+   skips the hero and uses just the 6-up equal grid. Both pages' cards are
+   clickable → open the testimonial drawer with the full verbatim review. */
+
+/* --- Initial circle (replaces reviewer avatars we can't legally host) --- */
+.testimonial-initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-text);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.testimonial-initial-lg {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+}
+.testimonial-initial-xl {
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+}
+
+/* --- Shared card update: cards are now interactive --- */
+.testimonial-card {
+  cursor: pointer;
+  user-select: none;
+}
+.testimonial-card:focus-visible {
+  outline: 2px solid var(--gold-text);
+  outline-offset: 3px;
+}
+
+/* Attribution row becomes a flex container so initial sits beside identity */
+.testimonial-attribution {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-identity { min-width: 0; flex: 1; }
+.testimonial-identity .testimonial-name { margin: 0 0 4px; }
+.testimonial-identity .testimonial-meta { margin: 0; }
+
+/* --- Featured testimonial (homepage hero pull-quote) --- */
+.testimonial-featured {
+  position: relative;
+  max-width: 820px;
+  margin: 48px auto 0;
+  padding: 48px 48px 36px;
+  background:
+    var(--paper-noise),
+    linear-gradient(180deg, var(--elev-2) 0%, var(--elev-1) 100%),
+    var(--navy);
+  background-blend-mode: overlay, normal, normal;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 22px;
+  cursor: pointer;
+  transition: border-color 320ms var(--ease-out), transform 320ms var(--ease-luxe);
+}
+.testimonial-featured:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-3px);
+}
+.testimonial-featured:focus-visible {
+  outline: 2px solid var(--gold-text);
+  outline-offset: 4px;
+}
+.testimonial-featured-mark {
+  font-family: "Source Serif 4", serif;
+  font-size: 96px;
+  line-height: 1;
+  color: var(--gold-text);
+  opacity: 0.4;
+  display: block;
+  margin-bottom: -28px;
+  font-style: italic;
+}
+.testimonial-featured-quote {
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--cream);
+  margin: 0 0 20px;
+  letter-spacing: -0.012em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 36, "wght" 420;
+}
+.testimonial-featured-sub {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+  max-width: 62ch;
+}
+.testimonial-featured-attribution {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline-soft);
+}
+.testimonial-featured-ident { flex: 1; min-width: 0; }
+.testimonial-featured-name {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  letter-spacing: 0.01em;
+}
+.testimonial-featured-meta { margin: 0; font-size: 12px; }
+.testimonial-featured-expand {
+  color: var(--gold-text);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .testimonial-featured { padding: 32px 24px 24px; }
+  .testimonial-featured-mark { font-size: 64px; margin-bottom: -18px; }
+  .testimonial-featured-expand { display: none; }
+}
+
+/* --- Horizontal stat strip (between featured and grid on homepage) --- */
+.google-stats-strip {
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.google-stats-strip .google-stats-rating { align-items: center; }
+.google-stats-strip .google-stats-score { font-size: 22px; }
+.google-stats-strip .google-stats-stars { font-size: 15px; }
+.google-stats-strip .google-stats-meta { font-size: 13px; }
+.google-stats-divider {
+  color: var(--text-quiet);
+  font-size: 15px;
+  opacity: 0.5;
+}
+.google-stats-link {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* =====================  Testimonial drawer  =====================
+   Visual language mirrors the /team member drawer: overlay + right-side
+   panel that slides in. On mobile becomes a bottom sheet for thumb reach.
+   Uses only existing design tokens so dark/light theme work for free. */
+
+.testimonial-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+}
+.testimonial-drawer[hidden] { display: none; }
+.testimonial-drawer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 17, 30, 0.6);
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out);
+}
+.testimonial-drawer.is-open .testimonial-drawer-overlay { opacity: 1; }
+.testimonial-drawer-panel {
+  position: relative;
+  width: min(560px, 100%);
+  height: 100%;
+  background: var(--navy);
+  border-left: 1px solid var(--hairline-soft);
+  box-shadow: -30px 0 80px -20px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 260ms var(--ease-luxe);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.testimonial-drawer.is-open .testimonial-drawer-panel { transform: translateX(0); }
+@media (max-width: 640px) {
+  .testimonial-drawer { align-items: flex-end; }
+  .testimonial-drawer-panel {
+    width: 100%;
+    max-height: 92vh;
+    border-left: 0;
+    border-top: 1px solid var(--hairline-soft);
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+  }
+  .testimonial-drawer.is-open .testimonial-drawer-panel { transform: translateY(0); }
+}
+.testimonial-drawer-content {
+  padding: 24px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (max-width: 480px) {
+  .testimonial-drawer-content { padding: 20px 20px 32px; gap: 20px; }
+}
+.testimonial-drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.testimonial-drawer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-soft);
+  background: transparent;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.testimonial-drawer-close:hover {
+  border-color: var(--gold-text);
+  color: var(--gold-text);
+}
+.testimonial-drawer-count {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.testimonial-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.testimonial-drawer-identity { min-width: 0; flex: 1; }
+.testimonial-drawer-name {
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--cream);
+  margin: 0 0 6px;
+  letter-spacing: -0.005em;
+}
+.testimonial-drawer-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  font-size: 12px;
+}
+.testimonial-drawer-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+.testimonial-drawer-date {
+  font-size: 11.5px;
+  color: var(--text-quiet);
+}
+.testimonial-drawer-quote {
+  font-family: "Source Serif 4", serif;
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--cream);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "wght" 420;
+}
+.testimonial-drawer-quote p {
+  margin: 0 0 14px;
+}
+.testimonial-drawer-quote p:last-child { margin-bottom: 0; }
+.testimonial-drawer-response {
+  padding: 20px 20px 18px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.testimonial-drawer-response-label {
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+.testimonial-drawer-response-body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.testimonial-drawer-response-body p { margin: 0 0 10px; }
+.testimonial-drawer-response-body p:last-child { margin-bottom: 0; }
+.testimonial-drawer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline-soft);
+}
+.testimonial-drawer-nav {
+  display: inline-flex;
+  gap: 6px;
+}
+.testimonial-drawer-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-soft);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.testimonial-drawer-nav-btn:hover {
+  border-color: var(--gold-text);
+  color: var(--gold-text);
+}
