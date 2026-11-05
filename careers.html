@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev60" />
+  <link rel="stylesheet" href="styles.css?v=rev61" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -332,6 +332,53 @@
           <div class="why-chip"><strong>Room to grow</strong><span>An expanding company where early people shape what comes next.</span></div>
           <div class="why-chip"><strong>K2N Originator's Desk</strong><span>Manage client relationships, create branded marketing, and get mortgage-focused guidance from your AI assistant &mdash; all in one place.</span></div>
         </div>
+      </section>
+
+      <!-- Life at Key2Nest — gives candidates a human face between the perks
+           (why join) and the role cards (what to apply for). Phase 1: team
+           strip only. Phase 2 will add a Google Reviews section below this
+           to show the borrower voice as social proof. -->
+      <section class="careers-section careers-life" aria-labelledby="life-h">
+        <p class="eyebrow">Life at Key2Nest</p>
+        <h2 class="careers-h2" id="life-h">The team you'd join</h2>
+        <p class="careers-life-lede">Six licensed originators, access to 20+ lenders, and one shared standard: every borrower gets a real person who sees their file from first conversation to closing. You'd work alongside the team below.</p>
+
+        <ul class="careers-team-strip">
+          <li class="careers-team-card">
+            <img src="assets/Vivek.jpeg?v=3" alt="Portrait of Sai Vivek Boddu" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sai Vivek Boddu</p>
+            <p class="careers-team-role">President &amp; CEO · Senior MLO</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Naveen.jpeg?v=2" alt="Portrait of Naveen Cheedhalla" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Naveen Cheedhalla</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Rajaneesh_new.png?v=3" alt="Portrait of (RJ) Venkata Rajaneesh Jandhyam" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">RJ Jandhyam</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Lakshmi.jpeg?v=2" alt="Portrait of Sreelakshmi Jasti" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sreelakshmi Jasti</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Sindhura.jpeg" alt="Portrait of Sindhura Purumandla" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sindhura Purumandla</p>
+            <p class="careers-team-role">Mortgage Loan Originator</p>
+          </li>
+          <li class="careers-team-card">
+            <img src="assets/Sreedhar.jpeg?v=1" alt="Portrait of Sreedhar Seelam" width="200" height="200" loading="lazy" decoding="async" />
+            <p class="careers-team-name font-display">Sreedhar Seelam</p>
+            <p class="careers-team-role">Senior Mortgage Loan Originator</p>
+          </li>
+        </ul>
+
+        <p class="careers-life-cta">
+          <a class="link-brass" href="/team">Meet the full team →</a>
+        </p>
       </section>
 
       <!-- Open roles -->
@@ -672,8 +719,8 @@
     </div>
   </footer>
 
-  <script src="main.js?v=rev60" defer></script>
-  <script src="careers.js?v=rev60" defer></script>
+  <script src="main.js?v=rev61" defer></script>
+  <script src="careers.js?v=rev61" defer></script>
 
   <!-- Careers quick-interest form handler.
        Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js

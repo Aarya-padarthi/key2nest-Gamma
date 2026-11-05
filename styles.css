@@ -4957,3 +4957,72 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   line-height: 1.55;
   margin: 10px 0 20px;
 }
+
+/* =====================  /careers — Life at Key2Nest  =====================
+   Sits between "Why join" (perks) and the role cards. A short lede plus a
+   horizontal strip of team portraits so candidates see the humans before
+   they click into a role. Portraits are square with a soft hairline border;
+   the grid wraps gracefully from 6 on desktop → 3 on tablet → 2 on phone. */
+
+.careers-life { margin-top: 56px; }
+
+.careers-life-lede {
+  max-width: 68ch;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 10px 0 32px;
+}
+
+.careers-team-strip {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.careers-team-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.careers-team-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--hairline-soft);
+  background: var(--navy-800);
+}
+
+.careers-team-name {
+  font-size: 14.5px;
+  line-height: 1.3;
+  margin: 12px 0 2px;
+  color: var(--text-primary);
+}
+
+.careers-team-role {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.careers-life-cta {
+  margin: 0;
+  font-size: 14.5px;
+}
+
+@media (max-width: 960px) {
+  .careers-team-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .careers-team-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .careers-team-name { font-size: 13.5px; }
+  .careers-team-role { font-size: 12px; }
+}
