@@ -5026,3 +5026,111 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   .careers-team-name { font-size: 13.5px; }
   .careers-team-role { font-size: 12px; }
 }
+
+/* =====================  Google Reviews extras  =====================
+   Builds on the existing `.testimonial-card` / `.testimonials-grid` styles
+   from the homepage. Adds the Google-specific pieces: stat tile with
+   overall rating + review count, a 5-star row under each card, and a
+   subtle "via Google" attribution badge. Used on both homepage and
+   /careers (where the grid becomes 2x2 instead of 3-up). */
+
+.google-stats {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, transparent 100%);
+}
+.google-stats-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.google-stats-score {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--cream);
+  font-weight: 600;
+}
+.google-stats-stars {
+  color: var(--gold-text);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.google-stats-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.google-stats-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+.google-stats-meta strong { color: var(--cream); font-weight: 600; }
+
+/* Per-card star row + "via Google" badge, replacing the default city/loan
+   meta line. Stars use the brass gold, badge is a subtle outlined pill. */
+.testimonial-stars {
+  color: var(--gold-text);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  margin-right: 10px;
+}
+.google-badge {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.google-local-guide {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+}
+
+.google-reviews-cta {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+/* /careers Google Reviews sub-section (inside Life at Key2Nest) */
+.careers-google-reviews {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline-soft);
+}
+.careers-google-reviews-h {
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.25;
+  color: var(--cream);
+  margin: 6px 0 24px;
+  letter-spacing: -0.01em;
+}
+
+/* On /careers, 4 testimonial cards fit better in a 2x2 grid than the
+   homepage's 3-up layout. Override the inherited grid-template-columns. */
+.careers-testimonials-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 24px;
+}
+@media (max-width: 900px) {
+  .careers-testimonials-grid { grid-template-columns: 1fr; }
+}

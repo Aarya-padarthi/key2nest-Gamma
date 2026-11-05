@@ -80,7 +80,7 @@
     } catch (e) { document.documentElement.dataset.theme = 'dark'; }
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=rev61" />
+  <link rel="stylesheet" href="styles.css?v=rev62" />
 
   <!-- Cloudflare Turnstile — bot protection for inquiry forms.
        Bootstrap runs first so the async loader's onload callback always exists,
@@ -865,49 +865,71 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS — HIDDEN until real client quotes arrive (client decision 2026-07-04).
-         To re-enable: remove the `hidden` attribute below and swap the 3 placeholder cards. -->
-    <section id="testimonials" class="section section-tinted" hidden>
+    <!-- TESTIMONIALS — Google Reviews. Three cards with verbatim quotes from
+         the Key2Nest Google Business Profile (NMLS #2819804). Stat tile shows
+         the overall rating + review count; the "Read all reviews" CTA opens
+         the live listing so visitors can verify and read more. Numbers are
+         hand-maintained — update them here when they change on Google. -->
+    <section id="testimonials" class="section section-tinted" aria-labelledby="testimonials-h">
       <div class="mx-auto max-w-site px-5 md:px-8">
         <header class="section-head" data-reveal>
           <p class="eyebrow">In their words</p>
-          <h2 class="section-title font-display">What clients say after closing.</h2>
-          <p class="section-lede">A few stories from borrowers we've helped move from <em>"I'm not sure I qualify"</em> to <em>"we got the keys."</em></p>
+          <h2 class="section-title font-display" id="testimonials-h">What clients say after closing.</h2>
+          <p class="section-lede">Real reviews from the <a class="link-brass" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Key2Nest Google Business Profile</a> — unedited, in the borrowers' own words.</p>
         </header>
+
+        <div class="google-stats mt-6" data-reveal>
+          <div class="google-stats-rating">
+            <span class="google-stats-score font-display">5.0</span>
+            <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
+            <span class="google-stats-sr-only">5 out of 5 stars</span>
+          </div>
+          <p class="google-stats-meta">Based on <strong>16 Google reviews</strong></p>
+        </div>
 
         <div class="testimonials-grid mt-6 md:mt-8">
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote about working with Key2Nest — what changed, how it felt, the outcome.</blockquote>
+            <blockquote class="testimonial-quote font-display">I had an excellent experience working with Key2Nest Home Loans. The entire team was professional, knowledgeable, and highly responsive throughout the process. They explained every step clearly and made sure I was comfortable with the decisions being made.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <p class="testimonial-name">Manju H</p>
+              <p class="testimonial-meta">
+                <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="google-badge">via Google</span>
+              </p>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
           </article>
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote — ideally with a concrete detail (days to close, savings, complexity).</blockquote>
+            <blockquote class="testimonial-quote font-display">We had an excellent experience working with Sai Vivek at Key2Nest. He was extremely patient and knowledgeable, and genuinely cared about understanding our needs. Working with Vivek made our entire mortgage experience smooth, seamless, and stress-free.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <p class="testimonial-name">Naveen</p>
+              <p class="testimonial-meta">
+                <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="google-badge">via Google</span>
+              </p>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
           </article>
 
-          <article class="testimonial-card testimonial-pending" data-reveal>
+          <article class="testimonial-card" data-reveal>
             <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-            <blockquote class="testimonial-quote font-display">A short, specific quote — pull out one detail that another buyer would relate to.</blockquote>
+            <blockquote class="testimonial-quote font-display">They are very good and help you to understand every line item and walk you through all possible options. Love to recommend their services for anyone interested.</blockquote>
             <div class="testimonial-attribution">
-              <p class="testimonial-name">[Client Name]</p>
-              <p class="testimonial-meta">[City, ST] · <span class="testimonial-loan-type">[Loan Type]</span></p>
+              <p class="testimonial-name">Amruth Reddy <span class="google-local-guide">· Local Guide</span></p>
+              <p class="testimonial-meta">
+                <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="google-badge">via Google</span>
+              </p>
             </div>
-            <span class="testimonial-pending-badge">Pending</span>
           </article>
 
         </div>
+
+        <p class="google-reviews-cta" data-reveal>
+          <a class="btn btn-ghost btn-sm" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read all reviews on Google →</a>
+        </p>
       </div>
     </section>
 
@@ -1399,6 +1421,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script src="main.js?v=rev61" defer></script>
+  <script src="main.js?v=rev62" defer></script>
 </body>
 </html>

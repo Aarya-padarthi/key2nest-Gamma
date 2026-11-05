@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev61" />
+  <link rel="stylesheet" href="styles.css?v=rev62" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -379,6 +379,82 @@
         <p class="careers-life-cta">
           <a class="link-brass" href="/team">Meet the full team →</a>
         </p>
+
+        <!-- Google Reviews — same component as the homepage testimonials
+             section, pulled onto /careers to show candidates how borrowers
+             describe working with Key2Nest. 4 cards here (vs 3 on homepage)
+             because the extra slot is RJ-focused, which is relevant on the
+             recruiter-facing page. Rating + review count are hand-maintained;
+             update when they change on Google. -->
+        <div class="careers-google-reviews">
+          <p class="eyebrow">In their words</p>
+          <h3 class="careers-google-reviews-h font-display">What borrowers say about working with the team.</h3>
+
+          <div class="google-stats">
+            <div class="google-stats-rating">
+              <span class="google-stats-score font-display">5.0</span>
+              <span class="google-stats-stars" aria-hidden="true">★★★★★</span>
+              <span class="google-stats-sr-only">5 out of 5 stars</span>
+            </div>
+            <p class="google-stats-meta">Based on <strong>16 Google reviews</strong></p>
+          </div>
+
+          <div class="testimonials-grid careers-testimonials-grid">
+
+            <article class="testimonial-card">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">I had an excellent experience working with Key2Nest Home Loans. The entire team was professional, knowledgeable, and highly responsive throughout the process. They explained every step clearly and made sure I was comfortable with the decisions being made.</blockquote>
+              <div class="testimonial-attribution">
+                <p class="testimonial-name">Manju H</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">We had an excellent experience working with Sai Vivek at Key2Nest. He was extremely patient and knowledgeable, and genuinely cared about understanding our needs. Working with Vivek made our entire mortgage experience smooth, seamless, and stress-free.</blockquote>
+              <div class="testimonial-attribution">
+                <p class="testimonial-name">Naveen</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">Worked with RJ twice and both has been exceptional experience. Quick connect with reasonable solutions.</blockquote>
+              <div class="testimonial-attribution">
+                <p class="testimonial-name">Amrth Ganapathy</p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <span class="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
+              <blockquote class="testimonial-quote font-display">They are very good and help you to understand every line item and walk you through all possible options. Love to recommend their services for anyone interested.</blockquote>
+              <div class="testimonial-attribution">
+                <p class="testimonial-name">Amruth Reddy <span class="google-local-guide">· Local Guide</span></p>
+                <p class="testimonial-meta">
+                  <span class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span class="google-badge">via Google</span>
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="google-reviews-cta">
+            <a class="btn btn-ghost btn-sm" href="https://maps.app.goo.gl/bovhtUGU9RqtTmoa8" target="_blank" rel="noopener">Read all reviews on Google →</a>
+          </p>
+        </div>
       </section>
 
       <!-- Open roles -->
@@ -719,8 +795,8 @@
     </div>
   </footer>
 
-  <script src="main.js?v=rev61" defer></script>
-  <script src="careers.js?v=rev61" defer></script>
+  <script src="main.js?v=rev62" defer></script>
+  <script src="careers.js?v=rev62" defer></script>
 
   <!-- Careers quick-interest form handler.
        Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js
