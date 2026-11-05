@@ -5125,12 +5125,7 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   letter-spacing: -0.01em;
 }
 
-/* On /careers, 4 testimonial cards fit better in a 2x2 grid than the
-   homepage's 3-up layout. Override the inherited grid-template-columns. */
-.careers-testimonials-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 24px;
-}
-@media (max-width: 900px) {
-  .careers-testimonials-grid { grid-template-columns: 1fr; }
-}
+/* On /careers, the testimonials grid inherits the homepage 3-up layout
+   (6 cards fit as 2 rows of 3). Just adds a top margin so it breathes
+   below the stat tile. */
+.careers-google-reviews .testimonials-grid { margin-top: 24px; }
