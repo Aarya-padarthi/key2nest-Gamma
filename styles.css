@@ -5170,12 +5170,16 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
 }
 /* When the "stat" is a word rather than a number (e.g. "Founder-led"),
    step the size down slightly so it sits in balanced visual weight with
-   the two numeric values beside it. Also italicizes to signal that this
-   is a claim, not a count. */
+   the two numeric values beside it. Same cream color and non-italic
+   display serif as the numbers — italics on this site are reserved for
+   testimonial quotes, so a word-stat uses the regular weight to read as
+   a confident claim, not an emphasised phrase. */
 .careers-stat-num-text {
-  font-size: clamp(22px, 2.3vw, 28px);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "wght" 500;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-style: normal;
+  font-weight: 500;
+  font-variation-settings: "opsz" 32, "wght" 500;
+  letter-spacing: -0.005em;
 }
 .careers-stat-label {
   font-size: 11.5px;
