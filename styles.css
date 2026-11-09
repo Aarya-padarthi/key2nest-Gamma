@@ -4931,6 +4931,15 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   border-radius: 10px;
   font-size: 14px;
 }
+
+/* JS-only selector hook (Project 1 L-02) — the inline interest-form
+   handler finds this <span> to swap the leading sentence of the generic
+   failure banner based on the specific failure cause. No visual styles
+   are intentional: the span inherits all presentation from its parent
+   .careers-interest-failure block so swapping text produces no layout
+   shift. Declared here so a static cross-reference pass between the
+   markup and this file can see the selector has been considered. */
+.careers-interest-failure-text { /* intentionally empty */ }
 .careers-interest-success {
   background: var(--success-bg);
   color: var(--success-text);
@@ -4943,6 +4952,40 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
 }
 .careers-interest-success p,
 .careers-interest-failure p { margin: 0; line-height: 1.5; }
+
+/* Project 1 H-03 — Turnstile-unavailable fallback panel.
+   Visually distinct from the generic error banner so candidates can tell
+   a form validation error apart from a security-check infrastructure
+   issue. Styling echoes .careers-top-contact-card so the direct-contact
+   fallback reads as an elevated, trusted alternative. */
+.careers-interest-ts-unavailable {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  background: linear-gradient(180deg, rgba(var(--brass-rgb), 0.08), rgba(var(--brass-rgb), 0.02));
+  border: 1px solid var(--hairline);
+  color: var(--text-primary);
+}
+.careers-interest-ts-unavailable p { margin: 0 0 10px; }
+.careers-interest-ts-unavailable p:last-child { margin-bottom: 0; }
+.careers-interest-ts-unavailable-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.careers-interest-ts-unavailable-list li { margin: 0; }
+.careers-interest-ts-retry {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
 
 /* Elevated recruiter card next to the form */
 .careers-top-contact-card {
