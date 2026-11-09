@@ -30,12 +30,21 @@ Roll back **if and only if** at least one of the following is true on live produ
 **Time to restore:** ≤ 1 minute of user action; ≤ 30 seconds Netlify propagation.
 **Pre-requisite:** Netlify dashboard access with the Key2Nest site role of Owner or Developer.
 
-1. Open `https://app.netlify.com` and select the Key2Nest site.
-2. Click the **Deploys** tab.
-3. Locate the deploy whose commit is `66efe6a3466503747f7f3495ac6ffa6b661cf5ba` ("Release: Life at Key2Nest, Google Reviews testimonials, careers refinements"). It will be the most recent deploy published before the Project 1 release.
-4. On that row, click **⋯ → Publish deploy**.
-5. Netlify confirms; new serving version takes ~30 seconds to propagate.
-6. **Verification (from a logged-out browser, in incognito):**
+**Exact deploy to republish** (verified via Netlify MCP on 2026-11-09):
+
+- Netlify Site ID: `0b000aea-f79e-4bc3-ab81-53e4f692b632`
+- Deploy ID to publish: **`6aed0771bc2340cb535a91f6`**
+- Admin URL (direct): `https://app.netlify.com/sites/0b000aea-f79e-4bc3-ab81-53e4f692b632/deploys/6aed0771bc2340cb535a91f6`
+- Snapshot URL (if needed to confirm content before publishing): `https://6aed0771bc2340cb535a91f6--gilded-peony-fba821.netlify.app/`
+- Builds from commit: `66efe6a3466503747f7f3495ac6ffa6b661cf5ba` ("Release: Life at Key2Nest, Google Reviews testimonials, careers refinements")
+- Status at time of verification: `ready`
+
+### Procedure
+
+1. Open the admin URL above (requires owner/developer role on the Netlify site).
+2. Click **⋯ → Publish deploy**.
+3. Netlify confirms; new serving version takes ~30 seconds to propagate.
+4. **Verification (from a logged-out browser, in incognito):**
    - `curl -I https://www.key2nesthomeloans.com/careers.html` returns `200 OK`.
    - View page source → `<link rel="stylesheet" href="styles.css?v=rev69" />` is present (rev69 is the baseline cache-bust rev).
    - Both `#careers-interest-form` and `#careers-form` render.
@@ -156,9 +165,24 @@ If a rollback is executed, within 30 minutes:
 | Verify bundle integrity | `git bundle verify …bundle` → "complete history", "bundle is okay" ✅ |
 | Verify bundle checksum | `sha256sum …bundle` → `dd5aad6afc21c3939dc3a43161cce337c64bf8ee5e44cf8b50697cab3212952b` ✅ |
 | Verify bundle refs | 3 refs enumerated, including `backup/project-1-prod-2026-11-09-66efe6a` pointing at `66efe6a` ✅ |
-| Rehearse restore into isolated workspace | **Not executed** to avoid disk pressure; command sequence recorded in Section 4 and is non-destructive against production. |
+| Rehearse restore into isolated workspace | Non-destructive rehearsal executed on 2026-11-09: clone `backup/project-1-bundle-archive` → clone from bundle → `git checkout 66efe6a` → restored tree SHA == baseline `e29358e69129b6026b5e87c37299e2466ee1de35` ✅ |
+| **Re-verified under Phase F (2026-11-09 post-hardening)** | Same clone+bundle-checkout sequence re-executed; checksum `OK`; tree SHA still matches. Second non-destructive rehearsal in this session ✅ |
+| Verify Netlify production deploy identifier | Via Netlify MCP: current prod deploy = `6aed0771bc2340cb535a91f6`, state `ready`, context `production`, branch `main`, from commit `66efe6a` ✅ |
 
 **Live rollback rehearsal against the Netlify "Publish deploy" affordance was deliberately not executed** (the brief forbids executing a production rollback to test the mechanism). The documented procedure has been exercised by the operator during previous releases this session (the user's own publish-to-prod and Netlify deployment workflow is well-established).
+
+---
+
+## 7.5 Orthogonal rollback domains (per final hardening brief Phase F)
+
+**Git rollback does not automatically roll back:**
+
+- The **production Apps Script** (lives entirely in the client's Google account). Apps Script rollback requires executing §5 of this runbook in the Apps Script editor as a separate action.
+- The **Applications Google Sheet** (schema or rows). Nothing in a repo revert touches it.
+- **Drive files** (resumes uploaded during the release window). A repo revert does not and cannot delete them.
+- **Third-party configuration** — Cloudflare Turnstile Script Property, GA4 settings, DNS, etc. All out of scope for a repo rollback.
+
+If a problem traces to the backend (Apps Script code), the frontend rollback paths §1–§4 are **not** the fix — §5 (Apps Script version rollback) is. Likewise if a problem traces to a Drive sharing or Sheet schema change, no git operation fixes it; the appropriate dashboard action does.
 
 ---
 
