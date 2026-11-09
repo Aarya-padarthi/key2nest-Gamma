@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
 
-  <!-- Google tag (gtag.js) — Key2Nest GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLH3F0F15H"></script>
+  <!-- PREVIEW BRANCH ONLY — GA4 is DISABLED on this isolated preview so
+       synthetic test events do not pollute the production analytics
+       property. The gtag() global is stubbed to a no-op so the inline
+       handlers that call gtag('event', …) remain safe to execute. This
+       block replaces the production GA4 loader on this branch only. -->
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TLH3F0F15H');
+    window.gtag = function(){ /* preview: no-op (GA4 disabled) */ };
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0B1A2E" />
@@ -170,6 +171,27 @@
   </script>
 </head>
 <body class="bg-navy text-cream font-sans antialiased legal-page">
+
+  <!-- PREVIEW BANNER — only renders on the preview branch. The banner is
+       built from window.__k2nIsPreview, published by preview-config.js,
+       so if preview-config.js is ever absent, nothing renders. The
+       banner is unstyleable from external CSS (inline styles). -->
+  <div id="k2n-preview-banner" role="status" aria-live="polite" style="display:none;background:#8b0000;color:#fff;font-family:system-ui,sans-serif;font-weight:700;padding:10px 14px;text-align:center;letter-spacing:.02em;position:sticky;top:0;z-index:99999;border-bottom:2px solid #000;">
+    PREVIEW — isolated test environment · submissions go to a TEST Apps Script, NOT production · GA4 disabled
+  </div>
+  <script>
+    (function () {
+      try {
+        if (window.__k2nIsPreview === true) {
+          var el = document.getElementById('k2n-preview-banner');
+          if (el) el.style.display = 'block';
+          if (window.__k2nCareersEndpoint == null) {
+            el.textContent = 'PREVIEW — endpoint NOT CONFIGURED · both careers forms will refuse to submit · substitute PREVIEW_CAREERS_ENDPOINT in preview-config.js';
+          }
+        }
+      } catch (e) { /* fail silent — banner is a hint, not a guard */ }
+    })();
+  </script>
 
   <a href="#main" class="skip-link">Skip to main content</a>
 
@@ -929,6 +951,15 @@
     </aside>
   </div>
 
+  <!-- PREVIEW BRANCH ONLY — preview-config.js is loaded SYNCHRONOUSLY (no
+       defer, no async) and BEFORE any other script that might read or
+       write window.__k2nCareersEndpoint. It uses Object.defineProperty
+       with writable:false, configurable:false to publish an immutable
+       global, so later scripts cannot overwrite the endpoint. If the
+       preview config does not resolve a valid isolated /exec, the global
+       is set to null and both careers forms refuse to submit. This file
+       and this tag must NOT be merged to main. -->
+  <script src="preview-config.js"></script>
   <script src="main.js?v=rev69" defer></script>
   <script src="careers.js?v=rev70" defer></script>
   <script src="testimonials.js?v=rev69" defer></script>
@@ -951,11 +982,16 @@
       const form = document.getElementById('careers-interest-form');
       if (!form) return;
 
-      /* Endpoint resolution — prefer the authoritative copy published by
-         careers.js (so an endpoint rotation only has to edit careers.js),
-         fall back to the literal if careers.js hasn't loaded yet. */
-      const CAREERS_ENDPOINT_FALLBACK = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
-      const careersEndpoint = () => window.__k2nCareersEndpoint || CAREERS_ENDPOINT_FALLBACK;
+      /* PREVIEW BRANCH ONLY — fail-closed endpoint resolution. The
+         isolated endpoint is published by preview-config.js (loaded
+         synchronously above the deferred scripts, so it runs first).
+         On the preview branch there is intentionally NO literal
+         production fallback here; a null return makes submit() throw
+         'endpoint-not-configured' and the form stays closed. */
+      const careersEndpoint = () => {
+        const v = window.__k2nCareersEndpoint;
+        return (typeof v === 'string' && v.length > 0) ? v : null;
+      };
 
       const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
       /* Polling cadence for the Turnstile global. Honest 20 s cap so slow
@@ -1104,7 +1140,9 @@
         submitBtn.textContent = 'Sending…';
 
         try {
-          const res = await fetch(careersEndpoint(), {
+          const endpoint = careersEndpoint();
+          if (!endpoint) throw new Error('endpoint-not-configured');
+          const res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({
