@@ -1,4 +1,13 @@
-# Key2Nest — Project 1 Release Readiness Report
+> **Superseded.** This report was the Phase 7 readiness checkpoint before
+> the final hardening pass. For the authoritative post-hardening verdict,
+> independent QA result, and corrected scope of the release candidates,
+> see **`final-release-report.md`** (in this same folder).
+>
+> This document is preserved for change history.
+
+---
+
+# Key2Nest — Project 1 Release Readiness Report (Phase 7 — superseded)
 
 **Project:** Recruitment Infrastructure Audit, Remediation, Backup & Rollback
 **Prepared:** 2026-11-09
