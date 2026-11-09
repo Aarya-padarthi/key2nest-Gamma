@@ -159,8 +159,13 @@ function doGet() {
 }
 
 function doPost(e) {
+  // Isolation guard runs OUTSIDE the try/catch so a violation is
+  // surfaced as a real HTTP-level error (and a legible execution-log
+  // entry with "ISOLATION VIOLATION…"), not silently absorbed into
+  // {ok:false, code:'server_error'}. This matches the behaviour of
+  // doGet() and setup() where assertIsolated is also unguarded.
+  assertIsolated();
   try {
-    assertIsolated();
     const data = JSON.parse(e.postData.contents);
 
     const ts = verifyTurnstile(data.turnstileToken);
@@ -185,11 +190,16 @@ function doPost(e) {
 
     const bytes = Utilities.base64Decode(data.resumeData);
     if (bytes.length > MAX_RESUME_BYTES) return json({ ok: false, error: 'Resume over 5 MB.' });
+    // Preview-template MIME policy is strict: the declared Content-Type
+    // MUST be one of the known resume MIME types. This differs from the
+    // production release candidate (which falls back to filename
+    // extension) so a link-holder cannot stage arbitrary bytes into the
+    // operator's Drive under a .pdf extension and a hostile MIME.
     const ext = ALLOWED_MIME[data.resumeType];
-    const nameExt = String(data.resumeName).toLowerCase().replace(/^.*(\.[a-z0-9]+)$/, '$1');
-    if (!ext && !['.pdf', '.doc', '.docx'].includes(nameExt)) {
-      return json({ ok: false, error: 'Resume must be PDF or Word.' });
+    if (!ext) {
+      return json({ ok: false, error: 'Resume must be a PDF or Word document (strict preview MIME check).' });
     }
+    const nameExt = String(data.resumeName).toLowerCase().replace(/^.*(\.[a-z0-9]+)$/, '$1');
 
     const safe = sanitiseCell;
     const parts = safe(data.name).split(/\s+/);
