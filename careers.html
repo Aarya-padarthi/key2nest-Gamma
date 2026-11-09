@@ -43,7 +43,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=rev69" />
+  <link rel="stylesheet" href="styles.css?v=rev70" />
 
   <!-- Cloudflare Turnstile — same bootstrap pattern as index.html so the
        async loader's onload callback always exists. -->
@@ -281,12 +281,23 @@
                 </div>
                 <div class="form-field">
                   <label for="qi-role" class="form-label">Role of interest</label>
+                  <!-- Interest form role values must match the data-role-apply
+                       values on the full-application role cards below so
+                       interest rows and application rows for the same role
+                       sort together when filtering the Applications sheet by
+                       Role. Historical interest rows written before this
+                       change use the prior abbreviated labels (e.g. "MLO —
+                       Purchase Specialist") and remain in the sheet
+                       unchanged; see docs/recruitment-project/
+                       recruitment-admin.md "Role taxonomy migration" for the
+                       legacy → current mapping. -->
                   <select id="qi-role" name="role" class="form-input form-select">
                     <option value="">Not sure / general interest</option>
+                    <option value="Mortgage Loan Originator (Retail)">Mortgage Loan Originator (Retail)</option>
                     <option value="Senior Mortgage Loan Originator">Senior Mortgage Loan Originator</option>
-                    <option value="MLO — Purchase Specialist">MLO — Purchase Specialist</option>
-                    <option value="MLO — Self-Generated Business">MLO — Self-Generated Business</option>
-                    <option value="Entry-Level MLO">Entry-Level MLO</option>
+                    <option value="Mortgage Loan Originator — Purchase Specialist">Mortgage Loan Originator — Purchase Specialist</option>
+                    <option value="Mortgage Loan Originator — Self-Generated Business">Mortgage Loan Originator — Self-Generated Business</option>
+                    <option value="Entry-Level Mortgage Loan Originator">Entry-Level Mortgage Loan Originator</option>
                   </select>
                 </div>
               </div>
@@ -296,8 +307,28 @@
               <div class="careers-interest-success" hidden role="status" aria-live="polite">
                 <p><strong>Thanks — we'll reach out within one business day.</strong></p>
               </div>
+              <!-- Generic failure (validation errors AND transport errors).
+                   The handler sets the text dynamically so candidates can
+                   distinguish a validation problem ("please enter your name
+                   and a valid email") from a transport problem ("couldn't
+                   send that right now"). -->
               <div class="careers-interest-failure" hidden role="alert">
-                <p>Couldn't send that. Please email <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1&nbsp;(972)&nbsp;565-2199</a>.</p>
+                <p><span class="careers-interest-failure-text">Couldn't send that right now.</span> Please email <a href="mailto:admin@key2nesthomeloans.com" class="link-brass">admin@key2nesthomeloans.com</a> or call <a href="tel:+19725652199" class="link-brass">+1&nbsp;(972)&nbsp;565-2199</a>.</p>
+              </div>
+              <!-- Turnstile-unavailable fallback (H-03).
+                   Shown when the Cloudflare Turnstile script fails to load
+                   (CDN blocked, strict ad-blocker, etc.) OR has not loaded
+                   after an extended wait. Server-side abuse protection stays
+                   enforced — the form does NOT bypass Turnstile. Candidates
+                   get a clear explanation plus prominent direct-contact
+                   routes so they are never silently locked out. -->
+              <div class="careers-interest-ts-unavailable" hidden role="alert">
+                <p><strong>Our security check couldn't load.</strong> It can be blocked by strict privacy extensions or corporate networks. Please reach us directly and we'll get back within one business day:</p>
+                <ul class="careers-interest-ts-unavailable-list">
+                  <li><a href="mailto:admin@key2nesthomeloans.com?subject=Career%20inquiry" class="link-brass">admin@key2nesthomeloans.com</a></li>
+                  <li><a href="tel:+19725652199" class="link-brass">+1&nbsp;(972)&nbsp;565-2199</a></li>
+                </ul>
+                <p><button type="button" class="careers-interest-ts-retry link-brass">Try reloading the security check</button></p>
               </div>
             </form>
           </div>
@@ -899,7 +930,7 @@
   </div>
 
   <script src="main.js?v=rev69" defer></script>
-  <script src="careers.js?v=rev69" defer></script>
+  <script src="careers.js?v=rev70" defer></script>
   <script src="testimonials.js?v=rev69" defer></script>
 
   <!-- Careers quick-interest form handler.
@@ -908,20 +939,74 @@
        dual-mode backend routes it correctly: lands in the careers sheet
        (1CsqHDqz…) and emails admin@key2nesthomeloans.com, not the customer
        leads pipeline. Turnstile widget is rendered on page load and the
-       token is included on submit; same site-key as the full apply form. -->
+       token is included on submit; same site-key as the full apply form.
+
+       The endpoint URL is now owned by careers.js, which publishes it as
+       window.__k2nCareersEndpoint before this handler reads it. A hard-coded
+       literal remains as defense-in-depth fallback so an out-of-order load
+       cannot leave the form silently pointed at nothing (Project 1 M-02). -->
   <script>
     (function () {
       'use strict';
       const form = document.getElementById('careers-interest-form');
       if (!form) return;
-      // Same /exec URL careers.js posts to. Keeping it inline (rather than
-      // sharing with careers.js) so this handler is self-contained; a change
-      // of endpoint needs to be mirrored in careers.js and here.
-      const CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
+
+      /* Endpoint resolution — prefer the authoritative copy published by
+         careers.js (so an endpoint rotation only has to edit careers.js),
+         fall back to the literal if careers.js hasn't loaded yet. */
+      const CAREERS_ENDPOINT_FALLBACK = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
+      const careersEndpoint = () => window.__k2nCareersEndpoint || CAREERS_ENDPOINT_FALLBACK;
+
       const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
+      /* Polling cadence for the Turnstile global. Honest 20 s cap so slow
+         mobile networks and Cloudflare CDN cold-starts get a fair chance;
+         after that we fall back to the "Turnstile unavailable" UI so
+         candidates get a clear message instead of a stuck-looking form. */
+      const TS_POLL_INTERVAL_MS = 150;
+      const TS_POLL_TIMEOUT_MS = 20000;
 
       let tsToken = '';
       let tsWidget = null;
+      let tsAvailable = false;
+
+      const successEl   = form.querySelector('.careers-interest-success');
+      const failureEl   = form.querySelector('.careers-interest-failure');
+      const failureText = failureEl ? failureEl.querySelector('.careers-interest-failure-text') : null;
+      const tsFallbackEl = form.querySelector('.careers-interest-ts-unavailable');
+      const tsRetryBtn  = tsFallbackEl ? tsFallbackEl.querySelector('.careers-interest-ts-retry') : null;
+      const submitBtn   = form.querySelector('.careers-interest-submit');
+      let sending = false;
+
+      /* Hide every result banner (success, generic failure, Turnstile
+         fallback). Called on every new submit attempt so the UI never shows
+         two conflicting states at the same time. */
+      function clearBanners() {
+        successEl.hidden = true;
+        failureEl.hidden = true;
+        if (tsFallbackEl) tsFallbackEl.hidden = true;
+      }
+
+      /* Show the generic failure banner with a specific reason (L-02).
+         The banner stays visually identical; only the leading sentence
+         changes so the user can tell a form error apart from a network
+         error. A scrollIntoView follows so the error cannot hide under
+         the submit button on short viewports (L-03). */
+      function showFailure(reason) {
+        if (failureText && reason) failureText.textContent = reason;
+        failureEl.hidden = false;
+        failureEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      /* Show the dedicated Turnstile-unavailable UI (H-03).
+         We DO NOT bypass Turnstile client-side. The form remains locked
+         because the server still requires a valid token; the UI simply
+         communicates this clearly and routes candidates to direct-contact
+         options instead of silent rejection. */
+      function showTurnstileFallback() {
+        if (!tsFallbackEl) { showFailure("Our security check couldn't load. Please contact us directly."); return; }
+        tsFallbackEl.hidden = false;
+        tsFallbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
 
       function renderTs() {
         const slot = document.getElementById('turnstile-careers-interest');
@@ -931,40 +1016,85 @@
           theme: document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
           size: 'flexible',
           'refresh-expired': 'auto',
-          callback: (t) => { tsToken = t; },
+          callback: (t) => { tsToken = t; tsAvailable = true; if (tsFallbackEl) tsFallbackEl.hidden = true; },
           'expired-callback': () => { tsToken = ''; },
           'error-callback': () => { tsToken = ''; }
         });
-      }
-      // Wait for the turnstile global the shared loader exposes
-      if (window.turnstile) renderTs();
-      else {
-        const poll = setInterval(() => { if (window.turnstile) { clearInterval(poll); renderTs(); } }, 150);
-        setTimeout(() => clearInterval(poll), 10000);
+        tsAvailable = true;
       }
 
-      const successEl = form.querySelector('.careers-interest-success');
-      const failureEl = form.querySelector('.careers-interest-failure');
-      const submitBtn = form.querySelector('.careers-interest-submit');
-      let sending = false;
+      /* Try once immediately if the shared loader has already published the
+         global; otherwise poll up to TS_POLL_TIMEOUT_MS and then — only if
+         still not available — surface the clear fallback UI. We also respect
+         window.__k2nTs.failed (shared loader signal) and short-circuit to
+         the fallback immediately when the loader itself has given up. */
+      (function startTurnstile() {
+        if (window.__k2nTs && window.__k2nTs.failed) { showTurnstileFallback(); return; }
+        if (window.turnstile) { renderTs(); return; }
+        const start = Date.now();
+        const poll = setInterval(() => {
+          if (window.turnstile) { clearInterval(poll); renderTs(); return; }
+          if (window.__k2nTs && window.__k2nTs.failed) { clearInterval(poll); showTurnstileFallback(); return; }
+          if (Date.now() - start >= TS_POLL_TIMEOUT_MS) { clearInterval(poll); showTurnstileFallback(); }
+        }, TS_POLL_INTERVAL_MS);
+      })();
+
+      /* Manual retry button inside the Turnstile-unavailable panel.
+         Re-enters the same polling flow so a candidate who disabled an
+         ad-blocker or re-connected can succeed without reloading the page. */
+      if (tsRetryBtn) {
+        tsRetryBtn.addEventListener('click', () => {
+          if (tsFallbackEl) tsFallbackEl.hidden = true;
+          tsAvailable = false;
+          tsWidget = null;
+          tsToken = '';
+          const slot = document.getElementById('turnstile-careers-interest');
+          if (slot) slot.innerHTML = '';
+          if (window.turnstile) { renderTs(); return; }
+          const start = Date.now();
+          const poll = setInterval(() => {
+            if (window.turnstile) { clearInterval(poll); renderTs(); return; }
+            if (Date.now() - start >= TS_POLL_TIMEOUT_MS) { clearInterval(poll); showTurnstileFallback(); }
+          }, TS_POLL_INTERVAL_MS);
+        });
+      }
+
+      /* Phone normalisation — digits-only representation written into
+         the submitted payload (L-01). The visible <input> keeps whatever
+         the candidate typed, so no formatting surprise, but the sheet
+         gets a clean 10- or 11-digit string that joins across rows. */
+      function normalisedPhone(raw) {
+        const d = (raw || '').replace(/\D/g, '');
+        if (!d) return '';
+        if (d.length === 10) return d;
+        if (d.length === 11 && d[0] === '1') return d;
+        return d; // write whatever digits the candidate gave; backend still sanitises
+      }
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (sending) return;
-        successEl.hidden = true;
-        failureEl.hidden = true;
+        clearBanners();
 
         const name = form.name.value.trim();
         const email = form.email.value.trim();
-        const phone = form.phone.value.trim();
+        const phone = normalisedPhone(form.phone.value);
         const role = form.role.value;
 
-        if (!name || !email || !/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
-          failureEl.hidden = false;
+        /* Field validation first — surfaces a specific message instead of
+           the generic "couldn't send that" (L-02). */
+        if (!name) { showFailure('Please enter your name before sending.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+          showFailure('Please enter a valid email address so we can reach you.');
           return;
         }
+
+        /* Turnstile status — surfaces the dedicated fallback UI if the
+           security check never loaded (H-03). We never bypass client-side;
+           the server still requires a token. */
+        if (!window.turnstile || !tsAvailable) { showTurnstileFallback(); return; }
         if (!tsToken) {
-          failureEl.hidden = false;
+          showFailure('Please complete the security check above, then try again.');
           return;
         }
 
@@ -974,7 +1104,7 @@
         submitBtn.textContent = 'Sending…';
 
         try {
-          const res = await fetch(CAREERS_ENDPOINT, {
+          const res = await fetch(careersEndpoint(), {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({
@@ -995,7 +1125,7 @@
           successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           if (window.gtag) gtag('event', 'generate_lead', { form: 'careers_interest' });
         } catch (err) {
-          failureEl.hidden = false;
+          showFailure("Couldn't send that right now.");
         } finally {
           sending = false;
           submitBtn.disabled = false;

@@ -10,8 +10,15 @@
 
   /* Paste the /exec URL of the deployed careers Apps Script here.
      Until it is set, submissions show the failure message with the
-     email fallback instead of pretending to succeed. */
+     email fallback instead of pretending to succeed.
+
+     This is the authoritative location for the careers endpoint URL
+     (Project 1 M-02). The inline quick-interest handler in careers.html
+     reads window.__k2nCareersEndpoint so an endpoint rotation only has
+     to be edited here. A literal fallback remains in the inline handler
+     as defense-in-depth if careers.js hasn't loaded yet. */
   const CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg/exec';
+  window.__k2nCareersEndpoint = CAREERS_ENDPOINT;
 
   const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
   const MAX_RESUME_BYTES = 5 * 1024 * 1024;

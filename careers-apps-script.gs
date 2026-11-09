@@ -72,6 +72,38 @@ function getResumeFolder() {
   return it.hasNext() ? it.next() : DriveApp.createFolder(FOLDER_NAME);
 }
 
+/* M-01 — Unicode-aware cell sanitiser used before any value is appended to
+ * the Applications sheet or inlined into a notification email.
+ *
+ * Preserves:
+ *  - Letters in any script (\p{L}) so names like "André", "Søren", "李雷"
+ *    arrive intact instead of being silently corrupted to spaces.
+ *  - Digits in any numeric script (\p{N}).
+ *  - The existing punctuation allowlist: space . , ' @ ( ) + - plus the
+ *    curly apostrophe ’ which iOS keyboards insert by default.
+ *
+ * Removes:
+ *  - Any character outside the allowlist (replaced with a space).
+ *  - Collapsed runs of whitespace.
+ *  - Leading / trailing whitespace.
+ *  - Length above 200 chars (hard cap).
+ *
+ * Also defends against spreadsheet formula injection by prepending a
+ * single apostrophe when the sanitised value begins with =, +, -, or @.
+ * Google Sheets treats a leading apostrophe as a "text-only" marker and
+ * hides it in display; without this, a value written via appendRow can be
+ * interpreted as a formula by the Sheet renderer.
+ */
+function sanitiseCell(s) {
+  var v = String(s == null ? '' : s)
+    .replace(/[^\p{L}\p{N} .,'’@()+\-]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 200);
+  if (/^[=+\-@]/.test(v)) v = "'" + v;
+  return v;
+}
+
 function doGet() {
   return json({ ok: true, service: 'key2nest-careers' });
 }
@@ -81,7 +113,7 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
 
     const ts = verifyTurnstile(data.turnstileToken);
-    if (!ts.ok) return json({ ok: false, error: ts.error });
+    if (!ts.ok) return json({ ok: false, code: 'turnstile_failed', error: ts.error });
 
     /* ------------------------------------------------------------------
        Two submission types land in this script and the same careers sheet:
@@ -133,12 +165,39 @@ function doPost(e) {
       return json({ ok: false, error: 'Resume must be PDF or Word.' });
     }
 
-    const safe = (s) => String(s).replace(/[^\w .,'@()+-]/g, ' ').trim().slice(0, 200);
+    const safe = sanitiseCell;
     const parts = safe(data.name).split(/\s+/);
     const fileName = (parts[parts.length - 1] || 'Applicant') + '_' + (parts[0] || '') +
       '_' + safe(data.role).replace(/\s+/g, '-') + (ext || nameExt);
     const blob = Utilities.newBlob(bytes, data.resumeType || 'application/octet-stream', fileName);
     const file = getResumeFolder().createFile(blob);
+    /* M-04 — explicit privacy pin on the created resume file.
+     *
+     * Files created by Apps Script typically inherit the containing
+     * folder's sharing, which in turn inherits the script-owning
+     * account's defaults (usually "Restricted"). This call makes that
+     * posture explicit at the file level so an operator reorganising
+     * the folder later cannot accidentally expose previously-uploaded
+     * resumes via link inheritance.
+     *
+     * DEPLOYMENT NOTE — Project 1 authorisation requires the client to
+     * first validate current Drive sharing behavior in an ISOLATED test
+     * Apps Script project before this code is deployed to production.
+     * The validation procedure is documented at:
+     *   docs/recruitment-project/drive-sharing-validation.md
+     * Do not redeploy the production script with this call active until
+     * that test confirms (a) current newly-created files are not already
+     * link-shared, and (b) setSharing(PRIVATE, NONE) does not block
+     * recruiters who already have folder access from opening the file.
+     */
+    try {
+      file.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.NONE);
+    } catch (shareErr) {
+      // Non-fatal — a sharing-API failure must never block an application
+      // from being recorded. The file still inherits folder permissions;
+      // the issue is surfaced via the execution log for operator action.
+      console.error('resume setSharing failed (non-fatal): ' + (shareErr && shareErr.message));
+    }
     const resumeUrl = file.getUrl();
 
     sheet.appendRow([
@@ -163,12 +222,29 @@ function doPost(e) {
         'NMLS ID:   ' + safe(data.nmls || '—') + '\n' +
         'Resume:    ' + resumeUrl + '  (also attached to this email)\n\n' +
         'Message:\n' + String(data.message || '—').slice(0, 2000) + '\n\n' +
+        /* M-05 — recipient-side scan reminder. Google Drive performs a
+         * malware scan at download time for files under a size threshold
+         * (not at upload time), so even though the attachment has already
+         * been accepted into Drive, opening it on an endpoint should be
+         * done with the Drive link rather than the raw email attachment
+         * whenever convenient. */
+        'Note: the resume is scanned by Google Drive at download time.\n' +
+        'Prefer opening via the Drive link above so the scan runs.\n\n' +
         'Sheet: ' + ss.getUrl()
     });
 
     return json({ ok: true });
   } catch (err) {
-    return json({ ok: false, error: 'Server error: ' + err.message });
+    /* H-01 — never return the raw exception message to the public endpoint;
+       applicants see the on-page failure panel with the direct-contact
+       fallback. Internal diagnostics go to the Apps Script execution log
+       (View → Executions in the Apps Script editor), capped to avoid
+       accidentally including applicant payload fragments carried inside
+       long error messages. The applicant payload is never logged here. */
+    const errName = (err && err.name) ? String(err.name) : 'Error';
+    const errMsg  = (err && err.message) ? String(err.message).slice(0, 200) : '(no message)';
+    console.error('careers-apps-script doPost failure — ' + errName + ': ' + errMsg);
+    return json({ ok: false, code: 'server_error' });
   }
 }
 
@@ -189,7 +265,7 @@ function handleInterest(data) {
   const sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) return json({ ok: false, error: 'Sheet not set up — run setup() first.' });
 
-  const safe = (s) => String(s || '').replace(/[^\w .,'@()+-]/g, ' ').trim().slice(0, 200);
+  const safe = sanitiseCell;
   const chosenRole = safe(data.role || '').trim() || 'General';
   const roleLabel = 'Interest — ' + chosenRole;
 
