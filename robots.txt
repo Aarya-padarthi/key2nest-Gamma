@@ -1,8 +1,9 @@
-# Key2Nest robots.txt
-# All search engines welcome
+# Key2Nest — PREVIEW BRANCH robots.txt
+# This branch (release/project-1-frontend-preview) MUST NOT be indexed
+# by any search engine. It is an isolated test environment whose
+# submissions route to a test Apps Script, not production.
+# The production branch (main) ships a different robots.txt that
+# welcomes crawlers.
 
 User-agent: *
-Allow: /
-Disallow: /assets/home_hero.mp4
-
-Sitemap: https://key2nesthomeloans.com/sitemap.xml
+Disallow: /

@@ -99,6 +99,14 @@ function loadConfigWithEndpointOverride(overrideUrl) {
     `wrong host → ${JSON.stringify(w.__k2nCareersEndpoint)}`);
 }
 
+// T3d — /exec as a path component but NOT the terminator (hostile open-redirect-style)
+{
+  const w = loadConfigWithEndpointOverride(
+    'https://script.google.com/macros/s/AKfycbzPREVIEWTESTISOLATEDFAKE1234567890abcdefghij/exec/x?r=https://attacker.example/');
+  record('T3d-exec-not-terminator-rejected', w.__k2nCareersEndpoint === null,
+    `/exec not terminator → ${JSON.stringify(w.__k2nCareersEndpoint)}`);
+}
+
 // T3c — non-string / empty
 {
   const w = loadConfigWithEndpointOverride('');
@@ -203,11 +211,18 @@ const VALID_ISOLATED =
   const src = fs.readFileSync(CAREERS_HTML, 'utf8');
   const previewTag = /<script src="preview-config\.js"><\/script>/;
   const mainTag = /<script src="main\.js\?v=rev69" defer>/;
+  // Match ONLY the real <body …> opening tag (not references inside
+  // HTML comments) — the real one has a class attribute on this page.
+  const bodyTag = /^<body\s[^>]*>/m;
   const previewIdx = src.search(previewTag);
   const mainIdx = src.search(mainTag);
-  record('T12-preview-config-first',
-    previewIdx > 0 && mainIdx > previewIdx,
-    `preview-config.js @ ${previewIdx} < main.js @ ${mainIdx}`);
+  const bodyIdx = src.search(bodyTag);
+  // preview-config.js must be inside <head>, i.e. before the real
+  // <body …> opening tag, so the banner inline script (which runs
+  // at <body>-parse time) sees window.__k2nIsPreview.
+  record('T12-preview-config-in-head',
+    previewIdx > 0 && previewIdx < bodyIdx && mainIdx > previewIdx,
+    `preview-config.js @ ${previewIdx} < body @ ${bodyIdx} < main.js @ ${mainIdx}`);
 }
 
 // ---------------------------------------------------------------------------

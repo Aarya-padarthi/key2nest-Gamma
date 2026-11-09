@@ -58,14 +58,19 @@
 
   var PLACEHOLDER_SENTINEL = 'PLACEHOLDER-ISOLATED-TEST-ENDPOINT-HERE';
 
+  /* Anchor the full shape so `/exec` must be the path terminator (an
+     optional query string is allowed). A hostile URL that merely CONTAINS
+     `/exec` as a substring — e.g.
+     `https://script.google.com/macros/s/<id>/exec/x?r=https://attacker/`
+     — is therefore rejected even though the host prefix is correct. */
+  var VALID_SHAPE =
+    /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{40,}\/exec(\?[^\s]*)?$/;
+
   function isValidPreviewEndpoint(url) {
     if (typeof url !== 'string') return false;
     if (url === PLACEHOLDER_SENTINEL) return false;
-    if (url.length < 40) return false;
     if (url.indexOf(PRODUCTION_DEPLOYMENT_ID) !== -1) return false;
-    if (url.indexOf('https://script.google.com/macros/s/') !== 0) return false;
-    if (url.indexOf('/exec') === -1) return false;
-    return true;
+    return VALID_SHAPE.test(url);
   }
 
   var endpointForPreview = isValidPreviewEndpoint(PREVIEW_CAREERS_ENDPOINT)
@@ -100,21 +105,4 @@
       enumerable: true
     });
   } catch (e) { /* ok — flag is cosmetic for the banner */ }
-
-  /* Expose the validator in case a QA harness wants to call it directly
-     without relying on inspecting the published global. Non-essential. */
-  try {
-    Object.defineProperty(window, '__k2nPreviewConfigDiagnostics', {
-      value: Object.freeze({
-        endpointPublished: endpointForPreview !== null,
-        placeholderDetected: PREVIEW_CAREERS_ENDPOINT === PLACEHOLDER_SENTINEL,
-        productionIdBlocked: typeof PREVIEW_CAREERS_ENDPOINT === 'string'
-          && PREVIEW_CAREERS_ENDPOINT.indexOf(PRODUCTION_DEPLOYMENT_ID) !== -1,
-        validator: isValidPreviewEndpoint
-      }),
-      writable: false,
-      configurable: false,
-      enumerable: false
-    });
-  } catch (e) { /* diagnostics are optional */ }
 })();

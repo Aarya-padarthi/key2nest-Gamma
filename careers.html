@@ -12,6 +12,14 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function(){ /* preview: no-op (GA4 disabled) */ };
   </script>
+  <!-- PREVIEW BRANCH ONLY — preview-config.js is loaded SYNCHRONOUSLY
+       in <head>, before <body> is parsed. By the time the banner script
+       runs inside <body>, window.__k2nIsPreview and
+       window.__k2nCareersEndpoint have already been published as
+       immutable (writable:false, configurable:false) properties. Later
+       scripts cannot overwrite the endpoint. This file and this tag
+       must NOT be merged to main. -->
+  <script src="preview-config.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0B1A2E" />
   <meta name="description" content="Careers at Key2Nest Home Loans — open mortgage loan originator roles across Arizona, Arkansas, Colorado, Connecticut, Florida, Georgia, Kansas, New Jersey, Oklahoma, Tennessee, and Texas. Remote-friendly, founder-led, NMLS #2819804." />
@@ -951,31 +959,22 @@
     </aside>
   </div>
 
-  <!-- PREVIEW BRANCH ONLY — preview-config.js is loaded SYNCHRONOUSLY (no
-       defer, no async) and BEFORE any other script that might read or
-       write window.__k2nCareersEndpoint. It uses Object.defineProperty
-       with writable:false, configurable:false to publish an immutable
-       global, so later scripts cannot overwrite the endpoint. If the
-       preview config does not resolve a valid isolated /exec, the global
-       is set to null and both careers forms refuse to submit. This file
-       and this tag must NOT be merged to main. -->
-  <script src="preview-config.js"></script>
+  <!-- preview-config.js is loaded in <head> — see the top of this file. -->
   <script src="main.js?v=rev69" defer></script>
   <script src="careers.js?v=rev70" defer></script>
   <script src="testimonials.js?v=rev69" defer></script>
 
-  <!-- Careers quick-interest form handler.
-       Posts to the CAREERS Apps Script endpoint (same /exec URL careers.js
-       uses for the full application) with submissionType='interest' so the
-       dual-mode backend routes it correctly: lands in the careers sheet
-       (1CsqHDqz…) and emails admin@key2nesthomeloans.com, not the customer
-       leads pipeline. Turnstile widget is rendered on page load and the
-       token is included on submit; same site-key as the full apply form.
-
-       The endpoint URL is now owned by careers.js, which publishes it as
-       window.__k2nCareersEndpoint before this handler reads it. A hard-coded
-       literal remains as defense-in-depth fallback so an out-of-order load
-       cannot leave the form silently pointed at nothing (Project 1 M-02). -->
+  <!-- Careers quick-interest form handler — PREVIEW BRANCH VARIANT.
+       Posts to the ISOLATED test Apps Script /exec with
+       submissionType='interest'. The endpoint is published as an
+       immutable `window.__k2nCareersEndpoint` by preview-config.js
+       (loaded synchronously in <head>). There is intentionally NO
+       hard-coded fallback on the preview branch: if the config did
+       not resolve a valid isolated URL, the global is null, and the
+       submit path throws 'endpoint-not-configured' before any fetch
+       is attempted. Turnstile widget uses the PRODUCTION site key on
+       this branch unless the operator substitutes Cloudflare's public
+       test site key (1x00000000000000000000AA) before deployment. -->
   <script>
     (function () {
       'use strict';

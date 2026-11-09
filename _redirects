@@ -1,3 +1,9 @@
+# PREVIEW BRANCH ONLY — hide the local /tests/ fixtures that live at
+# the repo root (which Netlify publishes). They are not sensitive, but
+# the preview deploy should not advertise them. Any path under /tests/
+# answers 404 using Netlify's built-in response.
+/tests/*          /                             404
+
 # Key2Nest digital business cards — clean per-person URLs under /team/.
 # 200 rewrites keep the pretty URL in the address bar while serving the
 # card page from /cards/<slug>/. Card pages use absolute /cards/ asset
