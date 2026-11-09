@@ -78,6 +78,10 @@ function getResumeFolder() {
  * Preserves:
  *  - Letters in any script (\p{L}) so names like "André", "Søren", "李雷"
  *    arrive intact instead of being silently corrupted to spaces.
+ *  - Combining marks (\p{M}) — essential for Devanagari, Arabic, Thai,
+ *    Vietnamese tone marks, etc. Combining marks cannot exist as a valid
+ *    independent formula injection, so including them does not weaken the
+ *    spreadsheet-injection protection.
  *  - Digits in any numeric script (\p{N}).
  *  - The existing punctuation allowlist: space . , ' @ ( ) + - plus the
  *    curly apostrophe ’ which iOS keyboards insert by default.
@@ -96,7 +100,7 @@ function getResumeFolder() {
  */
 function sanitiseCell(s) {
   var v = String(s == null ? '' : s)
-    .replace(/[^\p{L}\p{N} .,'’@()+\-]/gu, ' ')
+    .replace(/[^\p{L}\p{M}\p{N} .,'’@()+\-]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 200);
