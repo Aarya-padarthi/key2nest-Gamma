@@ -42,22 +42,53 @@ $ git ls-remote origin refs/heads/backup/project-1-prod-2026-11-09-66efe6a
 
 | Field | Value |
 |---|---|
-| Path | `/tmp/claude-0/-home-user-key2nest-Gamma/3b65a6bb-23a1-5ed2-85ad-653475151b9f/scratchpad/project-1/key2nest-prod-2026-11-09-66efe6a.bundle` |
+| **Durable location (authoritative)** | Orphan branch `origin/backup/project-1-bundle-archive`, path `backups/key2nest-prod-2026-11-09-66efe6a.bundle` + `.sha256` |
+| Branch head SHA | `b87232ffa102942997bcdb79212d1cf584a7ac5b` (verified by `git ls-remote origin refs/heads/backup/project-1-bundle-archive` on 2026-11-09) |
 | Size | 33,022,730 bytes |
 | Hash algorithm (bundle internal) | SHA-1 |
 | SHA-256 of bundle file | `dd5aad6afc21c3939dc3a43161cce337c64bf8ee5e44cf8b50697cab3212952b` |
-| Checksum file | `/tmp/claude-0/-home-user-key2nest-Gamma/3b65a6bb-23a1-5ed2-85ad-653475151b9f/scratchpad/project-1/key2nest-prod-2026-11-09-66efe6a.bundle.sha256` |
 | Refs contained | `refs/heads/main`, `refs/heads/claude/key2nest-review-d0ywn8`, `refs/heads/backup/project-1-prod-2026-11-09-66efe6a` |
 | Bundle verification | `git bundle verify`: *"The bundle records a complete history. The bundle is okay."* |
 
-#### Durable storage
+#### Durable storage — on GitHub, outside any release branch's working tree
 
-The scratchpad is session-scoped; it will be reclaimed when this session ends. Durability for Project 1 recovery is provided by:
+The bundle and its checksum live on a dedicated **orphan branch** `backup/project-1-bundle-archive` (root commit `b87232f…`). An orphan branch shares no history with `main`, `audit/project-1-recruitment`, or the split release candidates, so merges never drag the 33 MB binary into a release-candidate tree. The branch itself is a durable storage location on GitHub — no deletion policy applies to branches on this repository, and the branch is excluded from the Phase 3 release branches.
 
-1. **Primary (always available)** — the `backup/project-1-prod-2026-11-09-66efe6a` **branch on GitHub**. This is the authoritative durable reference.
-2. **Secondary (session-local)** — the bundle file above, which can be used to reconstruct a full clone offline if GitHub is unavailable.
+Three independent durability layers now stand behind this baseline:
 
-**User action recommended (optional but preferred):** download the bundle + checksum files from the scratchpad path above to a durable location under client control (e.g., client-owned cloud drive, encrypted backup). The bundle + checksum pair is self-contained and does not require GitHub access to restore from.
+1. **Primary (always available)** — the named backup ref `origin/backup/project-1-prod-2026-11-09-66efe6a` points at commit `66efe6a` directly (no bundle required).
+2. **Secondary (offline-capable)** — the bundle on `origin/backup/project-1-bundle-archive` provides a self-contained restore that does not require history traversal through any other branch.
+3. **Tertiary (platform)** — the Netlify deploy of `66efe6a` can be re-published via the dashboard without touching the repo.
+
+#### Independent recovery verification (recorded 2026-11-09)
+
+```
+git clone --branch backup/project-1-bundle-archive --single-branch --depth 1 \
+    https://github.com/Aarya-padarthi/key2nest-Gamma.git k2n-indep-verify
+# Clone succeeded.
+
+cd k2n-indep-verify
+sha256sum -c backups/key2nest-prod-2026-11-09-66efe6a.bundle.sha256
+# Result: key2nest-prod-2026-11-09-66efe6a.bundle: OK
+
+git bundle verify backups/key2nest-prod-2026-11-09-66efe6a.bundle
+# Result: "The bundle records a complete history. The bundle is okay."
+
+git clone backups/key2nest-prod-2026-11-09-66efe6a.bundle restored
+cd restored
+git checkout 66efe6a3466503747f7f3495ac6ffa6b661cf5ba
+git rev-parse HEAD^{tree}
+# Result: e29358e69129b6026b5e87c37299e2466ee1de35   (matches baseline tree SHA)
+
+ls -la careers.html careers.js careers-apps-script.gs testimonials.js
+# Result: all four Project 1 files restored at their baseline byte sizes.
+```
+
+**Verification result: PASS** — the production baseline is fully recoverable from the orphan archive branch alone, without any dependency on temporary session storage, the audit branch, or the live `main`.
+
+#### Previous bundle location (superseded)
+
+The bundle was briefly committed to `docs/recruitment-project/backups/` on the audit branch between commits `1cdbd5d` → `<the removal commit>`. It is removed from the audit branch starting with that commit. Earlier commits on the audit branch that contain the blob are preserved (no history rewrite); they are no longer required for recovery since the orphan branch is authoritative.
 
 ---
 
