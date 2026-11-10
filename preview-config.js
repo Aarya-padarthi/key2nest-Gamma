@@ -42,7 +42,7 @@
      That URL MUST NOT contain the production deployment ID listed in the
      blocklist below; if it does, this config refuses to publish it.
      ----------------------------------------------------------------------- */
-  var PREVIEW_CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzw7F9qVaM2pLZMGTD5IHmrTX8t6_18uoCTuBtFdFwFYCG66rxCq6JpDJ6w002fKwKhwg/exec';
+  var PREVIEW_CAREERS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNyLttEtL03qtwA8FMEAwa3qMzVy0tHqHZYYbPLLH9YemcqvJ0h2SpXD7oE_jeVttz/exec';
 
   /* Blocklist — the exact deployment ID (the opaque id in the middle of
      the production /exec URL) of the production careers Apps Script. If
