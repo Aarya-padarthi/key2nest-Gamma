@@ -62,13 +62,13 @@ function loadConfigWithEndpointOverride(overrideUrl) {
 }
 
 // ---------------------------------------------------------------------------
-// T1 — placeholder left in → null
+// T1 — placeholder sentinel → null (regardless of the file's current literal)
 // ---------------------------------------------------------------------------
 {
-  const w = loadConfigWithEndpointOverride(null); // uses the file's current literal
+  const w = loadConfigWithEndpointOverride('PLACEHOLDER-ISOLATED-TEST-ENDPOINT-HERE');
   const okNull = w.__k2nCareersEndpoint === null;
   record('T1-placeholder-null', okNull,
-    `endpoint with placeholder = ${JSON.stringify(w.__k2nCareersEndpoint)}`);
+    `placeholder sentinel → ${JSON.stringify(w.__k2nCareersEndpoint)}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -97,6 +97,18 @@ function loadConfigWithEndpointOverride(overrideUrl) {
     'https://evil.example.com/macros/s/AKfycbzTEST123FAKEISOLATEDTEST/exec');
   record('T3b-wrong-host-rejected', w.__k2nCareersEndpoint === null,
     `wrong host → ${JSON.stringify(w.__k2nCareersEndpoint)}`);
+}
+
+// T1b — file's CURRENT literal in preview-config.js resolves to a non-null
+// endpoint, i.e. the operator has substituted the placeholder with a real
+// isolated URL. This is the "preview is actually configured" check.
+{
+  const w = loadConfigWithEndpointOverride(null); // uses the file's current literal
+  const configured = typeof w.__k2nCareersEndpoint === 'string'
+    && w.__k2nCareersEndpoint.length > 0
+    && w.__k2nCareersEndpoint.indexOf('AKfycbzYJ7nsKdWAEm_Pn0qjowMYxfo__lxgXyQTJ5X-u-NFXwyrdSDcKdalTYcIxqmmBvo-mg') === -1;
+  record('T1b-file-literal-valid-nonprod', configured,
+    `file literal → ${JSON.stringify(w.__k2nCareersEndpoint)}`);
 }
 
 // T3d — /exec as a path component but NOT the terminator (hostile open-redirect-style)
