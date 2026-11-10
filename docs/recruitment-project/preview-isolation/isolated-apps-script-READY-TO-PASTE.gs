@@ -2,10 +2,13 @@
  * Key2Nest — CAREERS isolated preview backend — READY TO PASTE
  * ==============================================================
  *
- * Operator: Aarya Padarthi.
+ * Operator: Aarya Padarthi (deploying under the company Workspace account
+ *   admin@key2nesthomeloans.com).
  * Prepared: 2026-11-10 for the isolated Preview of Project 1.
- * Test sheet: 1IVtktXMRh1w3eZYaNy2g0mQOu3eLNtLb1RDLjkJz_l0
- * Test mailbox: aarya.2.padarthi+k2n-preview@gmail.com (plus-aliased)
+ * Test sheet: 1IXMHU8hKZaMgqyRR9TeX_jevb3PvuH8Kb3yFtnvar9g
+ * Test mailbox: admin+k2n-preview@key2nesthomeloans.com (plus-aliased to
+ *   admin@key2nesthomeloans.com; delivered there, filterable by the
+ *   +k2n-preview tag in the To: header).
  * Test resume folder: K2N-Preview-Test-Resumes (auto-created on setup)
  * Turnstile secret: Cloudflare public always-pass test key
  *                   `1x0000000000000000000000000000000AA`
@@ -34,14 +37,16 @@
  * preview deploy will be enabled. Production remains untouched.
  */
 
-// ⚠ TEST-ONLY CONSTANTS — baked in for the Key2Nest isolated preview.
-// SHEET_ID below is the test sheet the operator created on 2026-11-10.
-// NOTIFY_EMAIL is a plus-aliased copy of the operator's personal mailbox,
-// routing to the same inbox but clearly tagged for preview traffic so a
-// stray delivery is instantly distinguishable from production email that
-// goes to admin@key2nesthomeloans.com.
-const NOTIFY_EMAIL = 'aarya.2.padarthi+k2n-preview@gmail.com';
-const SHEET_ID     = '1IVtktXMRh1w3eZYaNy2g0mQOu3eLNtLb1RDLjkJz_l0';
+// ⚠ TEST-ONLY CONSTANTS — baked in for the Key2Nest Workspace preview.
+// SHEET_ID below is the company-Workspace test sheet created on 2026-11-10.
+// NOTIFY_EMAIL uses Gmail Workspace plus-aliasing so delivery lands in the
+// `admin@key2nesthomeloans.com` inbox (as requested) while the To: header
+// carries a filterable `+k2n-preview` tag that cleanly distinguishes test
+// email from genuine applicant mail. assertIsolated() still refuses to run
+// if NOTIFY_EMAIL is set to the bare production literal, preserving the
+// isolation guard against an accidental equality-match configuration.
+const NOTIFY_EMAIL = 'admin+k2n-preview@key2nesthomeloans.com';
+const SHEET_ID     = '1IXMHU8hKZaMgqyRR9TeX_jevb3PvuH8Kb3yFtnvar9g';
 const SHEET_NAME   = 'Applications';
 const FOLDER_NAME  = 'K2N-Preview-Test-Resumes';
 const MAX_RESUME_BYTES = 5 * 1024 * 1024;
