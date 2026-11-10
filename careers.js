@@ -21,7 +21,14 @@
     return (typeof v === 'string' && v.length > 0) ? v : null;
   };
 
-  const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
+  // PREVIEW BRANCH — Cloudflare's PUBLIC always-pass TEST site key.
+  // Pairs with the always-pass TEST secret
+  //   1x0000000000000000000000000000000AA
+  // configured in the isolated Apps Script's TURNSTILE_SECRET_KEY Script
+  // Property. Required because the production site key is bound to
+  // key2nesthomeloans.com and rejects Netlify branch-deploy origins
+  // (Turnstile error 110200). This file must NOT be merged to main.
+  const TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
   const MAX_RESUME_BYTES = 5 * 1024 * 1024;
   const RESUME_EXTS = ['.pdf', '.doc', '.docx'];
 

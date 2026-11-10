@@ -992,7 +992,9 @@
         return (typeof v === 'string' && v.length > 0) ? v : null;
       };
 
-      const TURNSTILE_SITE_KEY = '0x4AAAAAADvDb65eLmlL1DhS';
+      // PREVIEW BRANCH — Cloudflare's PUBLIC always-pass TEST site key.
+      // See careers.js for the matching documentation. Must NOT reach main.
+      const TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
       /* Polling cadence for the Turnstile global. Honest 20 s cap so slow
          mobile networks and Cloudflare CDN cold-starts get a fair chance;
          after that we fall back to the "Turnstile unavailable" UI so
