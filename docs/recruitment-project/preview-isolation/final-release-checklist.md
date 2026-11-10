@@ -1,6 +1,32 @@
 # Key2Nest — Project 1 Final Release Checklist
 
+**STATUS: CANDIDATES FROZEN · AWAITING `APPROVE_PROJECT_1_RELEASE`**
+
 Single-page release plan. No new tests, no new reviews beyond existing evidence.
+
+## 0. Freeze and verification (2026-11-10)
+
+| Item | Value |
+|---|---|
+| Frontend candidate (frozen) | `release/project-1-frontend` @ `de93d89f65647f5d72b70e02449e83e20b7c6e98` |
+| Apps Script candidate (frozen) | `release/project-1-apps-script` @ `91fb1eddeb05ffd94c3d82eae17a780b925f5a0d` |
+| Production baseline | `main` @ `66efe6a3466503747f7f3495ac6ffa6b661cf5ba` |
+| Current Netlify production deploy | `6aed0771bc2340cb535a91f6` (`ready`, context `production`, branch `main`, commit `66efe6a`). **Rollback target.** |
+| Current Apps Script rollback version | The version immediately preceding the Project 1 deployment (Apps Script editor → Deploy → Manage deployments → ✏️ → Version dropdown). `/exec` URL unchanged across versions, so no frontend change needed to roll back. |
+| Baseline backup branch | `backup/project-1-prod-2026-11-09-66efe6a` @ `66efe6a` (on origin) |
+| Baseline backup bundle | `backup/project-1-bundle-archive` @ `b87232f` (SHA-256-verified offline bundle) |
+| Preview sign-off | Operator-verified end-to-end on `release/project-1-frontend-preview` @ `5df8413`, Netlify deploy `6af35afc05c4aa0c1da68a17`: candidate inquiry PASS (sheet row + email), full application PASS (resume upload + expected behaviour) |
+
+**Preview-only-in-production guard — all production-destined refs PASS:**
+
+```
+tools/preview-guard.sh --ref main                           → PASS
+tools/preview-guard.sh --ref release/project-1-frontend     → PASS
+tools/preview-guard.sh --ref release/project-1-apps-script  → PASS
+tools/preview-guard.sh --ref release/project-1-frontend-preview → FAIL (sanity — expected)
+```
+
+No preview-only test keys, endpoints, or config files are in any of the three production-destined refs. The guard will be run again immediately before the Netlify `main` push.
 
 ---
 
