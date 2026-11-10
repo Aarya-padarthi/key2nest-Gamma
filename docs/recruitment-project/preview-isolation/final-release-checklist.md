@@ -27,9 +27,24 @@ Production baseline (unchanged) — `main` @ `66efe6a3466503747f7f3495ac6ffa6b66
 | Independent preview code review (fresh reviewer) | PASS (after remediation) | session scratchpad transcript; findings in `deployment-approval-packet.md §1` |
 | Independent Apps Script template review (fresh reviewer) | PASS-WITH-NOTES → PASS (after remediation) | same |
 | Preview-contamination guard | PASS on `main`, PASS on `release/project-1-frontend`, FAIL on preview (correct) | `tools/preview-guard.sh` |
-| Preview branch-deploy build | `ready`, deploy `6af3405d4f031e5c50b541bf`, SHA `9af286f`, no build error | Netlify |
+| Preview branch-deploy build | `ready`, latest deploy `6af35afc05c4aa0c1da68a17`, SHA `5df8413`, no build error | Netlify |
 
-Live operator smoke-tests (visual + 1 inquiry + 1 full application) are in progress separately.
+Preview deploy history (all `ready`, all `branch-deploy`, all on `release/project-1-frontend-preview`):
+
+| Deploy ID | Commit | Content |
+|---|---|---|
+| `6af35afc05c4aa0c1da68a17` | `5df8413` | **Current** — Workspace-account isolated `/exec` substituted |
+| `6af34377a2a1c96d01d1af43` | `998d42e` | Cloudflare test Turnstile site key swap (110200 fix) |
+| `6af3405d4f031e5c50b541bf` | `9af286f` | First branch-deploy build (empty commit) |
+
+Isolated backend (Workspace account `admin@key2nesthomeloans.com`):
+
+- `/exec` deployment id: `AKfycbwNyLttEtL03qtwA8FMEAwa3qMzVy0tHqHZYYbPLLH9YemcqvJ0h2SpXD7oE_jeVttz`
+- Sheet id: `1IXMHU8hKZaMgqyRR9TeX_jevb3PvuH8Kb3yFtnvar9g`
+- Notify mailbox: `admin+k2n-preview@key2nesthomeloans.com` (plus-aliased, delivers to `admin@`)
+- Turnstile pair: site `1x00000000000000000000AA` + secret `1x0000000000000000000000000000000AA` (Cloudflare always-pass test pair)
+
+Live operator smoke-tests (visual + 1 inquiry + 1 full application with a dummy PDF) are in progress against the preview URL below.
 
 ---
 
