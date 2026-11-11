@@ -5571,3 +5571,100 @@ html[data-theme="light"] .member-drawer-contact-line:hover {
   border-color: var(--gold-text);
   color: var(--gold-text);
 }
+
+/* =========================================================================
+   Header call-us dropdown
+   Icon-only trigger in the site header; clicking it reveals a small menu
+   with the two Key2Nest phone numbers (direct line + toll-free). Mirrors
+   the look of .nav-dropdown-panel so it feels like part of the nav.
+   ========================================================================= */
+.header-call { position: relative; }
+.header-call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  color: rgba(var(--cream-rgb), 0.78);
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.header-call-btn:hover,
+.header-call-btn:focus-visible {
+  color: var(--brass-400);
+  background: rgba(var(--brass-rgb), 0.08);
+  outline: none;
+}
+.header-call-btn[aria-expanded="true"] {
+  color: var(--brass-400);
+  background: rgba(var(--brass-rgb), 0.08);
+}
+.header-call-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 15rem;
+  padding: 0.25rem 0;
+  background: rgba(11, 26, 46, 0.98);
+  border: 1px solid rgba(var(--cream-rgb), 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.55);
+  z-index: 60;
+}
+.header-call-option {
+  display: block;
+  padding: 0.5rem 0.875rem;
+  color: var(--cream);
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.header-call-option + .header-call-option {
+  border-top: 1px solid rgba(var(--cream-rgb), 0.08);
+}
+.header-call-option:hover,
+.header-call-option:focus-visible {
+  background: rgba(var(--brass-rgb), 0.12);
+  color: var(--brass-400);
+  outline: none;
+}
+.header-call-option-label {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(var(--cream-rgb), 0.6);
+  margin-bottom: 0.125rem;
+}
+.header-call-option-number {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Light theme — match .nav-dropdown-panel surface. */
+html[data-theme="light"] .header-call-btn {
+  color: rgba(11, 26, 46, 0.72);
+}
+html[data-theme="light"] .header-call-btn:hover,
+html[data-theme="light"] .header-call-btn:focus-visible,
+html[data-theme="light"] .header-call-btn[aria-expanded="true"] {
+  color: var(--brass-700);
+  background: rgba(var(--brass-rgb), 0.12);
+}
+html[data-theme="light"] .header-call-menu {
+  background: rgba(255, 253, 247, 0.98);
+  border-color: rgba(139, 96, 10, 0.22);
+  box-shadow: 0 18px 44px -18px rgba(11, 26, 46, 0.22);
+}
+html[data-theme="light"] .header-call-option { color: rgba(11, 26, 46, 0.78); }
+html[data-theme="light"] .header-call-option:hover,
+html[data-theme="light"] .header-call-option:focus-visible {
+  background: rgba(var(--brass-rgb), 0.14);
+  color: #0B1A2E;
+}
+html[data-theme="light"] .header-call-option-label { color: rgba(11, 26, 46, 0.54); }

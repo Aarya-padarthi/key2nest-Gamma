@@ -1179,3 +1179,69 @@
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 })();
+
+/* ==========================================================================
+   Header call-us dropdown — icon-only trigger reveals two phone numbers.
+   One listener per instance; click-outside and Escape close the menu;
+   following a tel: link also closes it. Fully keyboard-reachable because
+   the trigger is a real <button> and the options are real <a> tags.
+   ========================================================================== */
+(function () {
+  'use strict';
+  const roots = document.querySelectorAll('[data-header-call]');
+  if (!roots.length) return;
+
+  const closeAll = function (except) {
+    roots.forEach(function (root) {
+      if (root === except) return;
+      const btn = root.querySelector('.header-call-btn');
+      const menu = root.querySelector('.header-call-menu');
+      if (btn && menu) {
+        menu.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+
+  roots.forEach(function (root) {
+    const btn = root.querySelector('.header-call-btn');
+    const menu = root.querySelector('.header-call-menu');
+    if (!btn || !menu) return;
+
+    const setOpen = function (open) {
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const willOpen = menu.hidden;
+      closeAll(root);
+      setOpen(willOpen);
+    });
+
+    menu.querySelectorAll('.header-call-option').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    for (const root of roots) {
+      if (root.contains(e.target)) return;
+    }
+    closeAll(null);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      let returnFocus = null;
+      roots.forEach(function (root) {
+        const btn = root.querySelector('.header-call-btn');
+        const menu = root.querySelector('.header-call-menu');
+        if (btn && menu && !menu.hidden) returnFocus = btn;
+      });
+      closeAll(null);
+      if (returnFocus) returnFocus.focus();
+    }
+  });
+})();
