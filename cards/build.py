@@ -143,6 +143,32 @@ PEOPLE = [
         "whatsapp": "15085728811",
         "bio": "Extensive experience across all mortgage types, having closed millions in loans — bringing seasoned execution and broad lender knowledge to every file.",
     },
+    {
+        "slug": "sindhura",
+        "name": "Sindhura Purumandla",
+        "first": "Sindhura", "last": "Purumandla",
+        "apply_name": "Sindhura",
+        "title": "Mortgage Loan Originator",
+        "nmls": "2814496",
+        "photo": "Sindhura.jpeg",
+        "phone": "+14848366613", "phone_display": "+1 (484) 836-6613",
+        "email": "sindhura@key2nesthomeloans.com",
+        "whatsapp": "14848366613",
+        "bio": "A Mortgage Loan Originator at Key2Nest Home Loans — working with first-time homebuyers and homeowners looking to refinance, and guiding each client through the mortgage process from the first conversation to closing.\n\nBuying or refinancing a home is a significant financial decision — the goal is to make it feel less overwhelming. Expect clear explanations, prompt responses, and steady updates at every step, so you can move forward with confidence.",
+    },
+    {
+        "slug": "sridhar",
+        "name": "Sridhar Sannidhi",
+        "first": "Sridhar", "last": "Sannidhi",
+        "apply_name": "Sridhar",
+        "title": "Mortgage Loan Originator",
+        "nmls": "2811504",
+        "photo": "Sridhar.jpeg",
+        "phone": "+17327622870", "phone_display": "+1 (732) 762-2870",
+        "email": "sridhar.sannidhi@key2nesthomeloans.com",
+        "whatsapp": "17327622870",
+        "bio": "A Mortgage Loan Originator at Key2Nest Home Loans — working with first-time homebuyers and homeowners looking to refinance, and guiding each client through the mortgage process from the first conversation to closing.\n\nBuying or refinancing a home is a significant financial decision — the goal is to make it feel less overwhelming. Expect clear explanations, prompt responses, and steady updates at every step, so you can move forward with confidence.",
+    },
 ]
 
 # --------------------------------------------------------------------------
