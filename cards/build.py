@@ -151,9 +151,9 @@ PEOPLE = [
         "title": "Mortgage Loan Originator",
         "nmls": "2907111",
         "photo": "Imaad.jpeg",
-        "phone": "+17736838608", "phone_display": "+1 (773) 683-8608",
+        "phone": "+14694410316", "phone_display": "+1 (469) 441-0316",
         "email": "ghourii@key2nesthomeloans.com",
-        "whatsapp": "17736838608",
+        "whatsapp": "14694410316",
         "bio": "A Mortgage Loan Originator at Key2Nest Home Loans — working with first-time homebuyers and homeowners looking to refinance, and guiding each client through the mortgage process from the first conversation to closing.\n\nBuying or refinancing a home is a significant financial decision — the goal is to make it feel less overwhelming. Expect clear explanations, prompt responses, and steady updates at every step, so you can move forward with confidence.",
     },
     {
